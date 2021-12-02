@@ -19,6 +19,8 @@ import { MatDialogModule} from '@angular/material/dialog';
 import { RoomComponent } from './pages/room/room.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AnnouncementComponent } from './pages/announcement/announcement.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     SidebarComponent,
     HomeComponent,
     RoomComponent,
+    AnnouncementComponent,
 
   ],
   imports: [
@@ -43,7 +46,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatIconModule,
     MatDialogModule,
     MatToolbarModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

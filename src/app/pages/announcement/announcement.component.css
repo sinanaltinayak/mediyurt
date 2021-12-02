@@ -1,0 +1,21 @@
+mat-toolbar {
+    justify-content: space-between;
+}
+
+.content {
+    padding: 50px;
+    background-color: #310f5cf8!important;
+}
+
+.content>mat-card {
+    margin-bottom: 16px;
+}
+
+.panignator {
+    margin-top: 50px;
+}
+
+.mat-toolbar.mat-primary {
+    background: black;
+    color: #fff;
+}

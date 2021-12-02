@@ -1,0 +1,40 @@
+<div class="d-flex bd-highlight" style="height: 100%">
+
+    <app-sidebar></app-sidebar>
+    <div class="content">
+
+        <mat-toolbar color="primary">
+            <span>Available Rooms</span>
+            <button mat-button fxHide.lt-md>
+                <span *ngIf="userType == 'management'">Add Announcement</span>
+            </button>
+        </mat-toolbar>
+
+        <div fxLayout="row wrap" fxLayoutGap="16px grid">
+            <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let num of [1,2,3,4,5,6,7]">
+                <mat-card class="mat-elevation-z4">
+                    <mat-card-header>
+                        <mat-card-title>Announcement {{num}}</mat-card-title>
+                    </mat-card-header>
+                    <img mat-card-image src="./../assets/photos/announcements/announcement.jpg">
+                    <mat-card-content>
+                        <p>
+                            İstanbul’da hayatı olumsuz etkileyen lodos nedeniyle İstanbul Valiliği’nin aldığı karar çerçevesinde 30 Kasım Salı günü üniversitemizde yüz yüze eğitim yapılmayacak, tüm eğitimler çevrimiçi/online şekilde icra edilecektir.
+                        </p>
+                        <p>
+                            <strong>Date:</strong> 2.12.2021
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-button>Examine</button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+        </div>
+        <div class="panignator">
+            <mat-paginator [length]="7" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </div>
+
+</div>
