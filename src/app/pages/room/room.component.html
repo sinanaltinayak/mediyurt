@@ -23,11 +23,11 @@
                             Here’s a sample floor plan of a standard Cluster room with communal living and dining space. Please note that layout and size may vary by room and apartment.
                         </p>
                     </mat-card-content>
-                    <mat-card-actions> 
-                        <div *ngIf="userType == 'student'; then studentButtons; else managementButtons" ></div>
+                    <mat-card-actions>
+                        <div *ngIf="userType == 'student'; then studentButtons; else managementButtons"></div>
                         <ng-template #studentButtons>
-                            <div *ngIf="haveRoom == 0; then apply; else requestChange" ></div>
-                            <ng-template #apply><button mat-button >Apply</button></ng-template>
+                            <div *ngIf="haveRoom == 0; then apply; else requestChange"></div>
+                            <ng-template #apply><button mat-button>Apply</button></ng-template>
                             <ng-template #requestChange><button mat-button>Request a Room Change</button></ng-template>
                         </ng-template>
                         <ng-template #managementButtons>
@@ -38,6 +38,6 @@
                 </mat-card>
             </div>
         </div>
-   
+
     </div>
 </div>

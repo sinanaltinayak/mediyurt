@@ -4,9 +4,14 @@ mat-toolbar {
 
 .content {
     padding: 50px;
-    background-color: rgb(163, 163, 207)!important;
+    background-color: #630000!important;
 }
 
-.content > mat-card {
+.content>mat-card {
     margin-bottom: 16px;
+}
+
+.mat-toolbar.mat-primary {
+    background: #000000;
+    color: #fff;
 }
