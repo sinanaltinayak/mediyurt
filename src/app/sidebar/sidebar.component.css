@@ -1,0 +1,52 @@
+.bi {
+    vertical-align: -.125em;
+    pointer-events: none;
+    fill: currentColor;
+}
+
+.dropdown-toggle {
+    outline: 0;
+}
+
+.nav-flush .nav-link {
+    border-radius: 0;
+}
+
+.crosshair {
+    cursor: pointer!important;
+}
+
+.scrollarea {
+    overflow-y: auto;
+}
+
+.fw-semibold {
+    font-weight: 600;
+}
+
+.lh-tight {
+    line-height: 1.25;
+}
+
+.sidebar {
+    width: 280px;
+    height: 100%;
+    background-color: #8E9775!important;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+li:hover {
+    background-color: #FAF2DA;
+}
+
+.sidebar li.active {
+    background-color: #5B6D5B;
+    color: #FAF2DA;
+}
+
+hr,
+title,
+li {
+    color: #0D2818;
+}

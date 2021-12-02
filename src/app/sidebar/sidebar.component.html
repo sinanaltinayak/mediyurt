@@ -1,0 +1,53 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 sidebar">
+    <div class="d-flex align-items-center text-decoration-none title">
+
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bullseye"></use></svg>
+        <span class="fs-4">MEDIYURT</span>
+         
+    </div>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li routerLink="../home" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" class="nav-link link-dark crosshair">
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+            Home
+        </li>
+        <li routerLink="../announcements" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" class="nav-link link-dark crosshair" >
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#announcements"></use></svg>
+            Announcements
+        </li>
+        <li *ngIf="userType=='student' || userType=='management'" routerLink="../rooms" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" class="nav-link link-dark crosshair" >
+            <img style="max-height: 20px; margin-right: 4px;margin-bottom: 5px;" src="../../assets/icons/rooms.ico">
+            Rooms
+        </li>
+        <li *ngIf="userType=='student'" routerLink="../profile" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" class="nav-link link-dark crosshair" >
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#profile"></use></svg>
+            Profile
+        </li>
+        <li *ngIf="userType=='management'" routerLink="../management" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" class="nav-link link-dark crosshair" >
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#management"></use></svg>
+            Management
+        </li>
+        <li *ngIf="userType=='management'" routerLink="../payment" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" class="nav-link link-dark crosshair" >
+            <svg class="bi me-2" width="16" height="16"><use xlink:href="#payment"></use></svg>
+            Payment
+        </li>
+    </ul>
+    <hr>
+    <div>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <div *ngIf="userType=='default'; then login; else logout" ></div>
+            <ng-template #login>
+                <li  routerLink="../login" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" class="nav-link link-dark crosshair">
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#log-in"></use></svg>
+                    Log In
+                </li>
+            </ng-template>
+            <ng-template #logout>
+                <li  routerLink="../login" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" class="nav-link link-dark crosshair">
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#log-out"></use></svg>
+                    Log Out
+                </li>
+            </ng-template>
+        </ul>
+    </div>
+</div>
