@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-announcement',
@@ -6,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./announcement.component.css']
 })
 export class AnnouncementComponent implements OnInit {
+  
+  announcements = [1,2,3,4,5,6,7];
+  length = this.announcements.length;
+  pageSize = 10;
+  pageIndex = 0;
+  pageSizeOptions = [5, 10, 25];
+  showFirstLastButtons = true;
 
   title = 'Announcements';
 
@@ -18,4 +26,9 @@ export class AnnouncementComponent implements OnInit {
 
   userType:string = "management";
 
+  handlePageEvent(event: PageEvent) {
+    this.length = event.length;
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+  }
 }

@@ -21,6 +21,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AnnouncementComponent } from './pages/announcement/announcement.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { NgImageSliderModule } from 'ng-image-slider';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 @NgModule({
   declarations: [
@@ -47,7 +51,10 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatDialogModule,
     MatToolbarModule,
     FlexLayoutModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    NgImageSliderModule,
+    MatMenuModule,
+    MatCheckboxModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

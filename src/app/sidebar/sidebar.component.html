@@ -37,10 +37,29 @@
         <ul class="nav nav-pills flex-column mb-auto">
             <div *ngIf="userType=='default'; then login; else logout" ></div>
             <ng-template #login>
-                <li  routerLink="../login" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" class="nav-link link-dark crosshair">
+                <li [matMenuTriggerFor]="menu" class="nav-link link-dark crosshair">
                     <svg class="bi me-2" width="16" height="16"><use xlink:href="#log-in"></use></svg>
                     Log In
                 </li>
+                <mat-menu #menu="matMenu">
+                    <div (click) = "$event.stopPropagation()" class="login-container">
+                        <mat-form-field>
+                            <mat-label>Username</mat-label>
+                             <input matInput>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Password</mat-label>
+                             <input matInput [type]="hidePassword ? 'password' : 'text'">
+                             <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                              </button>
+                        </mat-form-field>
+                        <button mat-button>Sign in</button>
+                        <div class="dropdown-divider"></div>
+                        <button mat-button ngbDropdownItem>New around here? Sign up</button>
+                    </div>
+                  </mat-menu>
+                    
             </ng-template>
             <ng-template #logout>
                 <li  routerLink="../login" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" class="nav-link link-dark crosshair">

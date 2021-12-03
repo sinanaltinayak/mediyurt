@@ -8,8 +8,8 @@ import { AppModule } from '../app.module';
 })
 export class SidebarComponent implements OnInit {
 
-  userType:string = "management";
-
+  userType:string = "default";
+  hidePassword = true;
   constructor() { }
 
   ngOnInit(): void {
