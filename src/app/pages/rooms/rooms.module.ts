@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatPaginatorModule} from '@angular/material/paginator';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatToolbarModule,
     MatButtonModule,
     FlexLayoutModule,
+    MatPaginatorModule,
   ],
   declarations: [RoomsComponent]
 })
