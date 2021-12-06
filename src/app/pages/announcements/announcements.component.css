@@ -2,6 +2,10 @@ mat-toolbar {
     justify-content: space-between;
 }
 
+body {
+    background-color: #310f5cf8!important;
+}
+
 .content {
     padding: 50px;
     background-color: #310f5cf8!important;

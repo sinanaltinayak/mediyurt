@@ -1,3 +1,5 @@
+<body>
+
 
     <div class="content">
 
@@ -30,13 +32,8 @@
             </div>
         </div>
         <div class="paginator">
-            <mat-paginator (page)="handlePageEvent($event)"
-            [length]="length"
-            [pageSize]="pageSize"
-            [showFirstLastButtons]="showFirstLastButtons"
-            [pageSizeOptions]="pageSizeOptions"
-            [pageIndex]="pageIndex"
-            aria-label="Select page">>
+            <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize" [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions" [pageIndex]="pageIndex" aria-label="Select page">>
             </mat-paginator>
         </div>
     </div>
+</body>
