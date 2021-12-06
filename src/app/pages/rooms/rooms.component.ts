@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-room',
-  templateUrl: './room.component.html',
-  styleUrls: ['./room.component.css']
+  templateUrl: './rooms.component.html',
+  styleUrls: ['./rooms.component.css']
 })
-export class RoomComponent {
+export class RoomsComponent {
   title = 'Rooms';
 
   gridColumns = 3;

@@ -1,0 +1,66 @@
+<div class="sidebar">
+  <div class="d-flex align-items-center text-decoration-none title">
+
+    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bullseye"></use></svg>
+    <span class="fs-4">MEDIYURT</span>
+     
+  </div>
+  <hr>
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-link link-dark crosshair" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" routerLink="../home" >
+      <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use>
+      </svg>Home
+    </li>
+    <li class="nav-link link-dark crosshair" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"  routerLink="../announcements">
+      <svg class="bi me-2" width="16" height="16"><use xlink:href="#announcements"></use></svg>Announcements</li>
+    <li *ngIf="userType=='student' || userType=='management'"class="nav-link link-dark crosshair" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" routerLink="../rooms">
+      <img style="max-height: 20px; margin-right: 4px;margin-bottom: 5px;" src="../../../assets/icons/rooms.ico">Rooms
+    </li>
+    <li *ngIf="userType=='student'" class="nav-link link-dark crosshair" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"  routerLink="../profile">
+      <svg class="bi me-2" width="16" height="16"><use xlink:href="#profile"></use></svg>Profile
+    </li>
+    <li *ngIf="userType=='management'" class="nav-link link-dark crosshair" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"  routerLink="../management">
+      <svg class="bi me-2" width="16" height="16"><use xlink:href="#management"></use></svg>Management
+    </li>
+    <li *ngIf="userType=='management'" class="nav-link link-dark crosshair" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"  routerLink="../payments">
+      <svg class="bi me-2" width="16" height="16"><use xlink:href="#payment"></use></svg>Payments
+    </li>
+  </ul>
+  <hr>
+  <div>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <div *ngIf="userType=='default'; then login; else logout" ></div>
+        <ng-template #login>
+            <li [matMenuTriggerFor]="menu" class="nav-link link-dark crosshair">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#log-in"></use></svg>
+                Log In
+            </li>
+            <mat-menu #menu="matMenu">
+                <div (click) = "$event.stopPropagation()" class="login-container">
+                    <mat-form-field>
+                        <mat-label>Username</mat-label>
+                          <input matInput>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Password</mat-label>
+                          <input matInput [type]="hidePassword ? 'password' : 'text'">
+                          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+                            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                          </button>
+                    </mat-form-field>
+                    <button mat-button>Sign in</button>
+                    <div class="dropdown-divider"></div>
+                    <button mat-button ngbDropdownItem>New around here? Sign up</button>
+                </div>
+              </mat-menu>
+                
+        </ng-template>
+        <ng-template #logout>
+            <li  routerLink="../login" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" class="nav-link link-dark crosshair">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#log-out"></use></svg>
+                Log Out
+            </li>
+        </ng-template>
+    </ul>
+  </div>
+</div>

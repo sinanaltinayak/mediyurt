@@ -1,60 +1,48 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { HomeComponent } from './pages/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule} from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input'
-import { MatCardModule } from '@angular/material/card'
-import { MatButtonModule } from '@angular/material/button'
-import { MatIconModule} from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule} from '@angular/material/dialog';
-import { RoomComponent } from './pages/room/room.component';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { AnnouncementComponent } from './pages/announcement/announcement.component';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import { NgImageSliderModule } from 'ng-image-slider';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule} from '@angular/material/checkbox';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeModule } from './pages/home/home.module';
+import { LayoutModule } from './layout/layout.module';
+import { AnnouncementsModule } from './pages/announcements/announcements.module';
+import { RoomsModule } from './pages/rooms/rooms.module';
 
+
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+];
 
 @NgModule({
   declarations: [
     AppComponent,
-    SidebarComponent,
-    HomeComponent,
-    RoomComponent,
-    AnnouncementComponent,
-
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    RouterModule.forRoot(routes),
     HttpClientModule,
     CommonModule,
-    FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatInputModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
     MatDialogModule,
-    MatToolbarModule,
-    FlexLayoutModule,
-    MatPaginatorModule,
-    NgImageSliderModule,
-    MatMenuModule,
     MatCheckboxModule,
+
+    HomeModule,
+    AnnouncementsModule,
+    RoomsModule,
+    LayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

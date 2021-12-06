@@ -1,7 +1,8 @@
 
 .content {
-    padding: 50px;
-    background-color: rgb(163, 163, 207)!important;
+  padding: 50px;
+  background-color: rgb(163, 163, 207)!important;
+  flex: 1 1 auto!important;
 }
 
 .container {

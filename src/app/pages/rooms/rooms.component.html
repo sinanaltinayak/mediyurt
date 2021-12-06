@@ -1,14 +1,9 @@
 <div class="d-flex bd-highlight" style="height: 100%">
 
-    <app-sidebar></app-sidebar>
     <div class="content">
 
         <mat-toolbar color="primary">
             <span>Available Rooms</span>
-            <button mat-button (click)="toggleGridColumns()" fxHide.lt-md>
-                <span *ngIf="gridColumns === 4">Three Columns</span>
-                <span *ngIf="gridColumns === 3">Four Columns</span>
-            </button>
         </mat-toolbar>
 
         <div fxLayout="row wrap" fxLayoutGap="16px grid">
@@ -32,7 +27,7 @@
                         </ng-template>
                         <ng-template #managementButtons>
                             <button mat-button>Edit</button>
-                            <button mat-button>Unpost</button>
+                            <button mat-button>Remove</button>
                         </ng-template>
                     </mat-card-actions>
                 </mat-card>

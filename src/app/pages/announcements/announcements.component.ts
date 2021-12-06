@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {PageEvent} from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-announcement',
-  templateUrl: './announcement.component.html',
-  styleUrls: ['./announcement.component.css']
+  selector: 'app-announcements',
+  templateUrl: './announcements.component.html',
+  styleUrls: ['./announcements.component.css']
 })
-export class AnnouncementComponent implements OnInit {
+export class AnnouncementsComponent implements OnInit {
   
   announcements = [1,2,3,4,5,6,7];
   length = this.announcements.length;
