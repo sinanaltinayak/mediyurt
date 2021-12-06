@@ -14,6 +14,7 @@ import { HomeModule } from './pages/home/home.module';
 import { LayoutModule } from './layout/layout.module';
 import { AnnouncementsModule } from './pages/announcements/announcements.module';
 import { RoomsModule } from './pages/rooms/rooms.module';
+import { ProfileModule } from './pages/profile/profile.module';
 
 
 const routes: Routes = [
@@ -38,7 +39,7 @@ const routes: Routes = [
     MatInputModule,
     MatDialogModule,
     MatCheckboxModule,
-
+    ProfileModule,
     HomeModule,
     AnnouncementsModule,
     RoomsModule,
