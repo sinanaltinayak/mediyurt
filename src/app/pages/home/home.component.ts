@@ -11,6 +11,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  gridColumns = 3;
+
   imageObject: Array<object> = [{
     image: '../../../assets/photos/home/6.jpg',
     thumbImage: '../../../assets/photos/home/6.jpg',
@@ -26,6 +29,6 @@ export class HomeComponent implements OnInit {
     thumbImage: '../../../assets/photos/home/1.jpg',
     title: 'Male Dorm - North Campus',
     alt: 'Image alt',
-  }
-];
+  }];
+  
 }

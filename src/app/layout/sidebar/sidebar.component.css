@@ -1,7 +1,7 @@
 .sidebar {
     width: 250px;
     height: 100%;
-    background-color: #dbd2be!important;
+    background-color: #EEE0CB!important;
     overflow-y: hidden;
     overflow-x: hidden;
     display: flex;
@@ -41,12 +41,12 @@
 }
 
 li:hover {
-    background-color: #f1e8d3;
+    background-color: #BAA898;
 }
 
 .sidebar li.active {
-    background-color: #a39d90;
-    color: #f1e8d3;
+    background-color: #c2847a45;
+    color: black;
 }
 
 hr,

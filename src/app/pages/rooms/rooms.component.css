@@ -1,13 +1,11 @@
-mat-toolbar {
-    justify-content: space-between;
+
+.canvas {
+    min-height: 100%;
+    display: flex;
 }
 
-body {
-    background-color: #630000!important;
-}
 
 .content {
-    height: 100%;
     padding: 50px;
     background-color: #630000!important;
 }
@@ -16,12 +14,21 @@ body {
     margin-bottom: 16px;
 }
 
-.mat-toolbar.mat-primary {
-    background: #000000;
+mat-toolbar {
+    justify-content: space-between;
+    background: #242F40;
     color: #fff;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
 
-.paginator {
-    position: sticky;
-    margin-top: 50px;
+mat-paginator{
+    background: #242F40;
+    color: white;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+
+mat-card{
+    background-color: #EEE0CB;
 }

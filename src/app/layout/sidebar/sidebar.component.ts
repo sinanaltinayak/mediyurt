@@ -12,6 +12,6 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  userType:string = "student";
+  userType:string = "management";
   hidePassword = true;
 }

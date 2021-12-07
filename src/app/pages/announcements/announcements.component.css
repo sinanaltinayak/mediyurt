@@ -1,25 +1,34 @@
-mat-toolbar {
-    justify-content: space-between;
+
+.canvas {
+    min-height: 100%;
+    display: flex;
 }
 
-body {
-    background-color: #310f5cf8!important;
-}
 
 .content {
     padding: 50px;
-    background-color: #310f5cf8!important;
+    background-color: #630000!important;
 }
 
 .content>mat-card {
     margin-bottom: 16px;
 }
 
-.paginator {
-    margin-top: 50px;
+mat-toolbar {
+    justify-content: space-between;
+    background: #242F40;
+    color: #fff;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
 
-.mat-toolbar.mat-primary {
-    background: black;
-    color: #fff;
+mat-paginator{
+    background: #242F40;
+    color: white;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+
+mat-card{
+    background-color: #EEE0CB;
 }

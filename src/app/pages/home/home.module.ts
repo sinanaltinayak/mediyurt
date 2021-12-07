@@ -7,6 +7,7 @@ import { HomeComponent } from './home.component';
 
 import { MatCardModule } from '@angular/material/card';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
     FormsModule,
     MatCardModule,
     NgImageSliderModule,
+    FlexLayoutModule,
   ],
   declarations: [HomeComponent]
 })

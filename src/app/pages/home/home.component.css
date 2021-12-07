@@ -1,33 +1,64 @@
+
+.canvas {
+    min-height: 100%;
+    display: flex;
+}
+
+
 .content {
     padding: 50px;
-    padding-top: 30px;
-    background-color: rgb(163, 163, 207)!important;
+    background-color: #630000!important;
     flex: 1 1 auto!important;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow-x: hidden;
 }
 
 .container {
     position: relative;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+
+.container-text-border{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+
 }
 
 .container-text {
-    position: absolute;
-    top: 12.5%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    text-align: center;
     color: white;
-    font-size: 64px;
-    line-height: 64px;
+    font-size: 48px;
+    line-height: 48px;
     background: rgb(0, 0, 0);
     background: rgba(0, 0, 0, 0.5);
-    color: #f1f1f1;
-    width: 98%;
-    padding: 40px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    width: 53.5%;
+    margin: 0 auto;
+}
+
+.card-container{
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.card-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .mat-elevation-z4 {
     margin: 15px;
     padding: 55px;
+    background-color: #EEE0CB;
 }
 
 mat-card img {

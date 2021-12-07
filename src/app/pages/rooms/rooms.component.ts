@@ -13,12 +13,12 @@ export class RoomsComponent {
 
   rooms = [1,2,3,4,5,6,7];
   length = this.rooms.length;
-  pageSize = 10;
+  pageSize = 9;
   pageIndex = 0;
-  pageSizeOptions = [5, 10, 25];
+  pageSizeOptions = [3, 9, 18];
   showFirstLastButtons = true;
 
-  userType:string = "student";
+  userType:string = "management";
   haveRoom:number = 1;
 
   toggleGridColumns() {
