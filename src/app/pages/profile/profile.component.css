@@ -1,7 +1,9 @@
 body {
-    background-color: rgb(163, 163, 207);
     overflow: hidden;
-    width: 110em;
+    width: 103.3em;
+    background-color: #630000!important;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .main {
@@ -25,6 +27,8 @@ body {
     height: auto;
     margin-bottom: 20px;
     padding: 20px 0 20px 50px;
+    background-color: rgba(255, 255, 255, 0.616);
+    border: solid;
 }
 
 .main .card table {
@@ -38,4 +42,24 @@ body {
     position: absolute;
     color: #e7e7e8;
     right: 14%;
+}
+
+button img {
+    height: 40px;
+}
+
+button {
+    background-color: rgba(255, 255, 255, 0.616);
+    border: none;
+    width: 150px;
+    height: 80px;
+    border-radius: 1em;
+    font-size: 25px;
+    border: solid rgb(92, 62, 47) 0.2em;
+    margin-left: 65px;
+}
+
+button:hover {
+    background-color: rgba(175, 175, 175, 0.616);
+    cursor: pointer;
 }
