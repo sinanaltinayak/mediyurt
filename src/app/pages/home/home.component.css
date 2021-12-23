@@ -1,9 +1,7 @@
-
 .canvas {
     min-height: 100%;
     display: flex;
 }
-
 
 .content {
     padding: 50px;
@@ -22,12 +20,10 @@
     margin: 0 auto;
 }
 
-
-.container-text-border{
+.container-text-border {
     position: absolute;
     display: flex;
     flex-direction: column;
-
 }
 
 .container-text {
@@ -43,13 +39,14 @@
     margin: 0 auto;
 }
 
-.card-container{
+.card-container {
     align-items: stretch;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-.card-row{
+
+.card-row {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -58,7 +55,7 @@
 .mat-elevation-z4 {
     margin: 15px;
     padding: 55px;
-    background-color: #EEE0CB;
+    background-color: rgba(245, 245, 245, 0.884);
 }
 
 mat-card img {
