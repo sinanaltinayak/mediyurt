@@ -46,6 +46,7 @@ const routes: Routes = [
     LayoutModule,
   ],
   providers: [],
+  entryComponents: [RoomsModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

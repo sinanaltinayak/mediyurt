@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import {PageEvent} from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { ExamineRoomDialogComponent } from './examine-room-dialog/examine-room-dialog.component';
 
 @Component({
   selector: 'app-room',
@@ -7,6 +9,8 @@ import {PageEvent} from '@angular/material/paginator';
   styleUrls: ['./rooms.component.css']
 })
 export class RoomsComponent {
+  constructor(public dialog: MatDialog) {}
+
   title = 'Rooms';
 
   gridColumns = 3;
@@ -29,6 +33,14 @@ export class RoomsComponent {
     this.length = event.length;
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
+  }
+
+  openExamineRoomDialog() {
+    const dialogRef = this.dialog.open(ExamineRoomDialogComponent, {height: "90%", width: "90%"});
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }

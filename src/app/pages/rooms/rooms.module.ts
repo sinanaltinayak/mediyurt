@@ -10,6 +10,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatPaginatorModule} from '@angular/material/paginator';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ExamineRoomDialogComponent } from './examine-room-dialog/examine-room-dialog.component';
+
 
 
 @NgModule({
@@ -22,7 +25,10 @@ import { MatPaginatorModule} from '@angular/material/paginator';
     MatButtonModule,
     FlexLayoutModule,
     MatPaginatorModule,
+    MatDialogModule,
   ],
-  declarations: [RoomsComponent]
+  declarations: [RoomsComponent, ExamineRoomDialogComponent]
 })
 export class RoomsModule { }
+
+

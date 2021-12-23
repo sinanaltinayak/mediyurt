@@ -20,6 +20,7 @@
                         </p>
                     </mat-card-content>
                     <mat-card-actions>
+                        <button mat-button (click)="openExamineRoomDialog()">Examine</button>
                         <div *ngIf="userType == 'student'; then studentButtons; else managementButtons"></div>
                         <ng-template #studentButtons>
                             <div *ngIf="haveRoom == 0; then apply; else requestChange"></div>
@@ -41,3 +42,5 @@
         </div>
     </div>
 </div>
+
+
