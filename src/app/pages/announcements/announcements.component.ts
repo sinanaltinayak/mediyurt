@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {PageEvent} from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
+import { ExamineAnnouncementComponent } from './examine-announcement/examine-announcement.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
+
 
 @Component({
   selector: 'app-announcements',
@@ -17,7 +21,12 @@ export class AnnouncementsComponent implements OnInit {
 
   title = 'Announcements';
 
-  constructor() { }
+  dialogTitle!: string;
+  content!: string;
+
+  todayDate: Date = new Date();
+
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -31,4 +40,23 @@ export class AnnouncementsComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
   }
+
+  openExamineAnnouncementDialog() {
+    const dialogRef = this.dialog.open(ExamineAnnouncementComponent, {width: "50%"});
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openAddAnnouncementDialog(): void {
+    const dialogRef = this.dialog.open(AddAnnouncementComponent, {width: "50%"});
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
 }
+
+

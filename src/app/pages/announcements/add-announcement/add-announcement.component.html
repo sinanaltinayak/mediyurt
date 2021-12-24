@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Add Announcement</h2>
+<mat-dialog-content class="mat-typography">
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+
+        <label style="font-size: 18px;">Title:</label> <br>
+        <input matInput type="text" name="organisationName" ngModel required> <br><br><br>
+        <label style="font-size: 18px;">Content:</label><br>
+        <textarea matInput rows="20" cols="100" name="enabled" ngModel required></textarea>
+
+    </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Post</button>
+</mat-dialog-actions>

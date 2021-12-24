@@ -10,7 +10,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatPaginatorModule} from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
-
+import { ExamineAnnouncementComponent } from './examine-announcement/examine-announcement.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 @NgModule({
   imports: [
     CommonModule,
@@ -21,7 +24,9 @@ import { MatButtonModule } from '@angular/material/button';
     FlexLayoutModule,
     MatPaginatorModule,
     MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
   ],
-  declarations: [AnnouncementsComponent]
+  declarations: [AnnouncementsComponent, ExamineAnnouncementComponent, AddAnnouncementComponent]
 })
 export class AnnouncementsModule { }
