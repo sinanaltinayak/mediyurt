@@ -1,0 +1,51 @@
+<body>
+
+    <br><br><br>
+    <h3 class="p-3 text-center">Room Change Requests</h3>
+    <div class="container">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Room</th>
+                    <th>Requested Room</th>
+                    <th>Reason</th>
+                    <th>Decision</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let student of requestStudents">
+                    <td>{{student.firstName}} {{student.lastName}}</td>
+                    <td>{{student.room}}</td>
+                    <td>{{student.newRoom}}</td>
+                    <td>{{student.message}} </td>
+                    <td class="lastItem">
+                        <div class="decision"><button><img src="../../../assets/photos/management/approved.png"></button><button><img src="../../../assets/photos/management/reject.png"></button></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br><br>
+    <h3 class="p-3 text-center">Room Applications</h3>
+    <div class="container">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Applied Room</th>
+                    <th>Decision</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let student of applicationStudents">
+                    <td>{{student.firstName}} {{student.lastName}}</td>
+                    <td>{{student.newRoom}}</td>
+                    <td class="lastItem">
+                        <div class="decision"><button>Approve</button><button>Reject</button></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>

@@ -1,0 +1,33 @@
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    width: 105em;
+    display: table-cell;
+    vertical-align: middle;
+    background-color: #EEE2DC;
+}
+
+table {
+    border-color: black;
+}
+
+.lastItem {
+    width: 300px;
+    position: relative;
+}
+
+.decision {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+button img {
+    height: 40px;
+}
