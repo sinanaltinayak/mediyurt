@@ -15,6 +15,8 @@ import { LayoutModule } from './layout/layout.module';
 import { AnnouncementsModule } from './pages/announcements/announcements.module';
 import { RoomsModule } from './pages/rooms/rooms.module';
 import { ProfileModule } from './pages/profile/profile.module';
+import { ManagementModule } from './pages/management/management.module';
+import { MatListModule } from '@angular/material/list';
 
 
 const routes: Routes = [
@@ -44,6 +46,8 @@ const routes: Routes = [
     AnnouncementsModule,
     RoomsModule,
     LayoutModule,
+    ManagementModule,
+    MatListModule,
   ],
   providers: [],
   entryComponents: [RoomsModule],

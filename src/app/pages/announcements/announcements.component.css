@@ -5,7 +5,7 @@
 
 .content {
     padding: 50px;
-    background-color: #630000!important;
+    background-color: #BAB2B5!important;
 }
 
 .content>mat-card {
@@ -28,5 +28,5 @@ mat-paginator {
 }
 
 mat-card {
-    background-color: rgba(245, 245, 245, 0.884);
+    background-color: #EEE2DC;
 }

@@ -5,7 +5,7 @@
 
 .content {
     padding: 50px;
-    background-color: #630000!important;
+    background-color: #C5CBE3;
     flex: 1 1 auto!important;
     display: flex;
     flex-direction: column;
@@ -55,7 +55,7 @@
 .mat-elevation-z4 {
     margin: 15px;
     padding: 55px;
-    background-color: rgba(245, 245, 245, 0.884);
+    background-color: #EEE2DC;
 }
 
 mat-card img {
