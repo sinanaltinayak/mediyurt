@@ -1,17 +1,21 @@
-<h2 mat-dialog-title>{{currentRoom.name}}</h2>
-<mat-dialog-content class="mat-typography">
+<h1 mat-dialog-title>{{currentRoom.name}}</h1>
 
-    <img mat-card-image src="{{currentRoom.imagePath}}" style="height: 70%; width: 70%;">
-    <h3>Description</h3>
-    <p>{{currentRoom.description}}</p>
+<div class="container">
+    <div class="mat-typography container-image">
+        <img mat-card-image src="{{currentRoom.imagePath}}">
+    </div>
+    <div class="container-info">
+        <h3>Description</h3>
+        <p>{{currentRoom.description}}</p>
+    
+        <h3>Capacity</h3>
+        <p>{{currentRoom.capacity}}</p>
+    
+        <h3>Price</h3>
+        <p>{{currentRoom.price}} TL</p>
+    </div>
+</div>
 
-    <h3>Capacity</h3>
-    <p>{{currentRoom.capacity}}</p>
-
-    <h3>Price</h3>
-    <p>{{currentRoom.price}} TL</p>
-
-</mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cancel</button>
     <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Apply</button>

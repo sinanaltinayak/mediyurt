@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>{{data.applicationType}}</h1>
+
+<div *ngIf="data.applicationType == 'Room Application'; then apply; else requestChange"></div>
+<ng-template #apply>
+    <mat-dialog-content class="container">
+        <mat-form-field appearance="fill">
+            <mat-label>Student Name</mat-label>
+            <input matInput readonly ngModel="{{currentStudent.name}}">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Wanted Room</mat-label>
+            <input matInput readonly ngModel="{{currentRoom.name}}">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Notes</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+    </mat-dialog-content>
+</ng-template>
+<ng-template #requestChange>
+    <mat-dialog-content class="container">
+        <mat-form-field appearance="fill">
+            <mat-label>Student Name</mat-label>
+            <input matInput readonly ngModel="{{currentStudent.name}}">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Current Room</mat-label>
+            <input matInput readonly ngModel="Room {{currentStudent.currentRoomID}}">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Wanted Room</mat-label>
+            <input matInput readonly ngModel="{{currentRoom.name}}">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Notes</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+    </mat-dialog-content>
+</ng-template>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Apply</button>
+</mat-dialog-actions>
+
