@@ -36,6 +36,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Applied Room</th>
+                    <th>Reason</th>
                     <th>Decision</th>
                 </tr>
             </thead>
@@ -43,6 +44,7 @@
                 <tr *ngFor="let student of applicationStudents">
                     <td>{{student.firstName}} {{student.lastName}}</td>
                     <td>{{student.newRoom}}</td>
+                    <td>{{student.message}} </td>
                     <td class="lastItem">
                         <div class="decision"><button>Approve</button><button>Reject</button></div>
                     </td>

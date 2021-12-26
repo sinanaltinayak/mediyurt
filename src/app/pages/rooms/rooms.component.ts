@@ -11,7 +11,7 @@ import { ApplicationDialogComponent } from './application-dialog/application-dia
   styleUrls: ['./rooms.component.css']
 })
 export class RoomsComponent {
-  constructor(public dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) {}
 
   title = 'Rooms';
 
@@ -38,7 +38,7 @@ export class RoomsComponent {
   }
 
   openExamineRoomDialog() {
-    const dialogRef = this.dialog.open(ExamineRoomDialogComponent, {height: "70%", width: "90%"});
+    const dialogRef = this.dialog.open(ExamineRoomDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -55,8 +55,13 @@ export class RoomsComponent {
   
   openApplicationDialog(appType: string) {
     const dialogRef = this.dialog.open(ApplicationDialogComponent, {
+      width: "50%",
       data: { applicationType: appType },
+      disableClose: true,
+      hasBackdrop: false,
+      autoFocus: false
     });
+
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

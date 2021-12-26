@@ -21,11 +21,11 @@ export class ManagementComponent implements OnInit {
 ];
 
   applicationStudents = [
-    { firstName: 'Frank', lastName: 'Murphy', newRoom: 'Room1' },
-    { firstName: 'Vic', lastName: 'Reynolds', newRoom: 'Room3' },
-    { firstName: 'Gina', lastName: 'Jabowski', newRoom: 'Room1' },
-    { firstName: 'Jessi', lastName: 'Glaser', newRoom: 'Room6' },
-    { firstName: 'Jay', lastName: 'Bilzerian', newRoom: 'Room10' }
+    { firstName: 'Frank', lastName: 'Murphy', newRoom: 'Room1', message: 'İhtiyacım var :(' },
+    { firstName: 'Vic', lastName: 'Reynolds', newRoom: 'Room3', message: 'Deniz manzarası var.'  },
+    { firstName: 'Gina', lastName: 'Jabowski', newRoom: 'Room1', message: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi quod voluptatum accusantium impedit labore, sit tenetur fuga iste facilis eius. Error culpa eligendi mollitia voluptates autem non, cum quis nisi! Loremipsum dolor sit amet, consectetur adipisicing elit. Quis incidunt ad hic ullam commodi sunt, velit ex ipsa laudantium expedita voluptatibus, eveniet optio excepturi ab perspiciatis iure eius asperiores fugiat.'  },
+    { firstName: 'Jessi', lastName: 'Glaser', newRoom: 'Room6', message: 'Oda güzel.'  },
+    { firstName: 'Jay', lastName: 'Bilzerian', newRoom: 'Room10', message: 'Canım öyle istedi' }
   ];
 
 }
