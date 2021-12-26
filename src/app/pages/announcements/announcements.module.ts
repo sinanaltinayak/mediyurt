@@ -14,6 +14,8 @@ import { ExamineAnnouncementComponent } from './examine-announcement/examine-ann
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -26,6 +28,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatInputModule,
   ],
   declarations: [AnnouncementsComponent, ExamineAnnouncementComponent, AddAnnouncementComponent]
 })

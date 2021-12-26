@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatListModule } from '@angular/material/list';
-import { ManagementRoutingModule } from './management-routing.module';
-import { ManagementComponent } from './management.component';
+
+import { PaymentsRoutingModule } from './payments-routing.module';
+import { PaymentsComponent } from './payments.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import {MatSortModule} from '@angular/material/sort';
@@ -15,8 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 @NgModule({
   imports: [
     CommonModule,
-    ManagementRoutingModule,
-    MatListModule,
+    PaymentsRoutingModule,
     MatToolbarModule,
     MatButtonModule,
     MatSortModule,
@@ -24,7 +23,8 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatTableModule,
     MatInputModule,
+
   ],
-  declarations: [ManagementComponent]
+  declarations: [PaymentsComponent]
 })
-export class ManagementModule { }
+export class PaymentsModule { }

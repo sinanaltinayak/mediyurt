@@ -16,7 +16,7 @@ import { EditRoomDialogComponent } from './edit-room-dialog/edit-room-dialog.com
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule} from '@angular/material/menu';
 import { MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule} from '@angular/material/select';
 import { ApplicationDialogComponent } from './application-dialog/application-dialog.component';
 
 

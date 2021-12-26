@@ -3,11 +3,11 @@
 <mat-dialog-content class="container">
     <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
-        <input matInput ngModel="{{currentRoom.name}}">
+        <input matInput ngModel="{{currentRoom.name}}" required>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
-        <textarea matInput ngModel="{{currentRoom.description}}"></textarea>
+        <textarea matInput ngModel="{{currentRoom.description}}" required></textarea>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Capacity</mat-label>
@@ -21,7 +21,7 @@
     </mat-form-field>
     <mat-form-field appearance="fill" floatLabel="always">
         <mat-label>Price</mat-label>
-        <input matInput type="number" ngModel="{{currentRoom.price}}"  class="right-align">
+        <input matInput type="number" ngModel="{{currentRoom.price}}"  class="right-align" required>
         <span matSuffix>.00 TL</span>
     </mat-form-field>
 </mat-dialog-content>

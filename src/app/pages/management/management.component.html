@@ -1,55 +1,122 @@
-<body>
+<div class="canvas">
+    <div class="content">
 
-    <br><br><br>
+        <div class="container">
+            <mat-toolbar>
+                <span>Room Applications</span>
+            </mat-toolbar>
 
-    <div class="container">
-        <h1 class="p-3 text-center">Room Change Requests</h1>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Room</th>
-                    <th>Requested Room</th>
-                    <th>Reason</th>
-                    <th>Decision</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let student of requestStudents">
-                    <td>{{student.firstName}} {{student.lastName}}</td>
-                    <td>{{student.room}}</td>
-                    <td>{{student.newRoom}}</td>
-                    <td>{{student.message}} </td>
-                    <td class="lastItem">
-                        <div class="decision"><button><img src="../../../assets/photos/management/approved.png"></button><button><img src="../../../assets/photos/management/reject.png"></button></div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <mat-form-field appearance="standard">
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Yenisey" #input>
+            </mat-form-field>
+
+            <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource" matSort>
+
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+                        <td mat-cell *matCellDef="let row"> {{row.type}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="studentName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Name </th>
+                        <td mat-cell *matCellDef="let row"> {{row.studentName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="currentRoom">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Current Room </th>
+                        <td mat-cell *matCellDef="let row">
+                            <span *ngIf="row.currentRoom != ''">{{row.currentRoom}}</span>
+                            <span *ngIf="row.currentRoom == ''"> — </span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="appliedRoom">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Applied Room </th>
+                        <td mat-cell *matCellDef="let row"> {{row.appliedRoom}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                        <td mat-cell *matCellDef="let row"> {{row.date | date:'shortDate'}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="note">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="lastItem">Note</th>
+                        <td mat-cell *matCellDef="let row" class="lastItem">
+                            <span *ngIf="row.note != ''">{{row.note}}</span>
+                            <span *ngIf="row.note == ''"> — </span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                        <td mat-cell *matCellDef="let row"> {{row.date | date:'shortDate'}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                    </tr>
+                </table>
+
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+            </div>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Room</th>
+                        <th>Requested Room</th>
+                        <th>Reason</th>
+                        <th>Decision</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let student of requestStudents">
+                        <td>{{student.firstName}} {{student.lastName}}</td>
+                        <td>{{student.room}}</td>
+                        <td>{{student.newRoom}}</td>
+                        <td>{{student.message}} </td>
+                        <td class="lastItem">
+                            <div class="decision"><button><img src="../../../assets/photos/management/approved.png"></button><button><img src="../../../assets/photos/management/reject.png"></button></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br><br><br>
+
+        <div class="container">
+            <h1 class="p-3 text-center">Room Applications</h1>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Applied Room</th>
+                        <th>Reason</th>
+                        <th>Decision</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let student of applicationStudents">
+                        <td>{{student.firstName}} {{student.lastName}}</td>
+                        <td>{{student.newRoom}}</td>
+                        <td>{{student.message}} </td>
+                        <td class="lastItem">
+                            <div class="decision"><button>Approve</button><button>Reject</button></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <br><br><br>
-
-    <div class="container">
-        <h1 class="p-3 text-center">Room Applications</h1>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Applied Room</th>
-                    <th>Reason</th>
-                    <th>Decision</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let student of applicationStudents">
-                    <td>{{student.firstName}} {{student.lastName}}</td>
-                    <td>{{student.newRoom}}</td>
-                    <td>{{student.message}} </td>
-                    <td class="lastItem">
-                        <div class="decision"><button>Approve</button><button>Reject</button></div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</body>
+</div>

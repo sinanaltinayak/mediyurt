@@ -17,6 +17,7 @@ import { RoomsModule } from './pages/rooms/rooms.module';
 import { ProfileModule } from './pages/profile/profile.module';
 import { ManagementModule } from './pages/management/management.module';
 import { MatListModule } from '@angular/material/list';
+import { PaymentsModule } from './pages/payments/payments.module';
 
 
 const routes: Routes = [
@@ -48,6 +49,7 @@ const routes: Routes = [
     LayoutModule,
     ManagementModule,
     MatListModule,
+    PaymentsModule
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}

@@ -1,0 +1,46 @@
+.canvas {
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    left: 0;
+    top: 0;
+}
+
+.content {
+  width: 100%;
+    padding: 50px;
+    background-color: #BAB2B5!important;
+}
+
+
+
+
+mat-toolbar {
+  justify-content: space-between;
+  background: #242F40;
+  color: #fff;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+mat-paginator {
+  background: #242F40;
+  color: white;
+  margin-top: 5px;
+  border-radius: 5px;
+}
+
+
+table {
+    width: 100%;
+  }
+  
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+  
+td, th {
+  width: 20%;
+}
+  

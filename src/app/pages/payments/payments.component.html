@@ -1,0 +1,59 @@
+<div class="canvas">
+    <div class="content">
+        <mat-toolbar>
+            <span>Payments</span>
+        </mat-toolbar>
+
+        <mat-form-field appearance="standard">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Yenisey" #input>
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="studentName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Name </th>
+                    <td mat-cell *matCellDef="let row"> {{row.studentName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="currentRoom">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Room </th>
+                    <td mat-cell *matCellDef="let row"> {{row.currentRoom}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="price">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+                    <td mat-cell *matCellDef="let row"> {{row.price}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                    <td mat-cell *matCellDef="let row"> {{row.date | date:'shortDate'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="isPaid">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Payment Status</th>
+                    <td mat-cell *matCellDef="let row">
+                        <button mat-raised-button *ngIf="row.isPaid == true">Charge</button>
+                        <span *ngIf="row.isPaid == false">Paid</span>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        </div>
+    </div>
+</div>

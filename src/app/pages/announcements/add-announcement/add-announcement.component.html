@@ -1,13 +1,17 @@
-<h2 mat-dialog-title>Add Announcement</h2>
-<mat-dialog-content class="mat-typography">
-    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+<h1 mat-dialog-title>Add Announcement</h1>
 
-        <label style="font-size: 18px;">Title:</label> <br>
-        <input matInput type="text" name="organisationName" ngModel required> <br><br><br>
-        <label style="font-size: 18px;">Content:</label><br>
-        <textarea matInput rows="20" cols="100" name="enabled" ngModel required></textarea>
+<mat-dialog-content class="container">
+    <mat-form-field appearance="fill">
 
-    </form>
+        <mat-label>Title</mat-label>
+        <input matInput type="text" required>
+
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Content</mat-label>
+        <textarea matInput rows="10" required></textarea>
+
+    </mat-form-field>
 
 </mat-dialog-content>
 

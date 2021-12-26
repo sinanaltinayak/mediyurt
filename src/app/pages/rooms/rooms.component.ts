@@ -24,7 +24,7 @@ export class RoomsComponent {
   pageSizeOptions = [3, 9, 18];
   showFirstLastButtons = true;
 
-  userType:string = "student";
+  userType:string = "management";
   haveRoom:number = 0;
 
   toggleGridColumns() {
