@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    margin-top: 30px;
+}
+
+.container-image {
+    flex-basis: 750px;
+}
+
+.container-info {
+    margin-left: 50px;
+    flex-basis: 250px;
+}

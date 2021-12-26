@@ -24,11 +24,11 @@
                         <div *ngIf="userType == 'student'; then studentButtons; else managementButtons"></div>
                         <ng-template #studentButtons>
                             <div *ngIf="haveRoom == 0; then apply; else requestChange"></div>
-                            <ng-template #apply><button mat-button>Apply</button></ng-template>
-                            <ng-template #requestChange><button mat-button>Request a Room Change</button></ng-template>
+                            <ng-template #apply><button mat-button (click)="openApplicationDialog('Room Application')">Apply</button></ng-template>
+                            <ng-template #requestChange><button mat-button (click)="openApplicationDialog('Room Change Request')">Request a Room Change</button></ng-template>
                         </ng-template>
                         <ng-template #managementButtons>
-                            <button mat-button>Edit</button>
+                            <button mat-button (click)="openEditRoomDialog()">Edit</button>
                             <button mat-button>Remove</button>
                         </ng-template>
                     </mat-card-actions>

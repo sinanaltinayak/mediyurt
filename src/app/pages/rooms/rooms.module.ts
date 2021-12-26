@@ -12,6 +12,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatPaginatorModule} from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ExamineRoomDialogComponent } from './examine-room-dialog/examine-room-dialog.component';
+import { EditRoomDialogComponent } from './edit-room-dialog/edit-room-dialog.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule} from '@angular/material/menu';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import { ApplicationDialogComponent } from './application-dialog/application-dialog.component';
 
 
 
@@ -26,8 +32,12 @@ import { ExamineRoomDialogComponent } from './examine-room-dialog/examine-room-d
     FlexLayoutModule,
     MatPaginatorModule,
     MatDialogModule,
+    MatInputModule,
+    MatMenuModule,
+    MatFormFieldModule,
+    MatSelectModule,
   ],
-  declarations: [RoomsComponent, ExamineRoomDialogComponent]
+  declarations: [RoomsComponent, ExamineRoomDialogComponent, EditRoomDialogComponent, ApplicationDialogComponent]
 })
 export class RoomsModule { }
 

@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
-import { MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeModule } from './pages/home/home.module';
@@ -49,7 +49,9 @@ const routes: Routes = [
     ManagementModule,
     MatListModule,
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
+  ],
   entryComponents: [RoomsModule],
   bootstrap: [AppComponent]
 })
