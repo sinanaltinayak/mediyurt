@@ -31,5 +31,5 @@
             </div>
         </div>
     </div>
-    <button mat-raised-button style="font-size: 18px;"><img src="../../../assets/photos/profile/payment-history.png"> <br> Payment History</button>
+    <button matBadge="{{number}}" [matBadgeHidden]="number==0" (click)="toggleBadgeVisibility()" matBadgeColor="warn" mat-raised-button style="font-size: 18px;"><img src="../../../assets/photos/profile/payment-history.png"> <br>Payments On Wait</button>
 </body>

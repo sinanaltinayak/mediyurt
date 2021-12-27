@@ -5,19 +5,28 @@ import { FormsModule } from '@angular/forms';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileComponent } from './profile.component';
 
-import { MatCardModule } from '@angular/material/card';
-import { NgImageSliderModule } from 'ng-image-slider';
 import { MatButtonModule } from '@angular/material/button';
+import { MatBadgeModule } from '@angular/material/badge';
+import { PaymentDialogComponent } from './payment-dialog/payment-dialog.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule} from '@angular/material/menu';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   imports: [
     CommonModule,
     ProfileRoutingModule,
     FormsModule,
-    MatCardModule,
-    NgImageSliderModule,
     MatButtonModule,
+    MatBadgeModule,
+    MatInputModule,
+    MatMenuModule,
+    MatFormFieldModule,
+    MatDialogModule,
+    MatSelectModule,
   ],
-  declarations: [ProfileComponent]
+  declarations: [ProfileComponent, PaymentDialogComponent]
 })
 export class ProfileModule { }

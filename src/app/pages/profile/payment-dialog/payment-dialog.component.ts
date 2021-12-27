@@ -1,0 +1,22 @@
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { Room } from 'src/app/models/room';
+import { Student } from 'src/app/models/student';
+
+@Component({
+  selector: 'app-payment-dialog',
+  templateUrl: './payment-dialog.component.html',
+  styleUrls: ['./payment-dialog.component.css']
+})
+export class PaymentDialogComponent implements OnInit {
+
+  constructor(public dialog: MatDialogModule, @Inject(MAT_DIALOG_DATA) public data: {applicationType: string}) { }
+
+  ngOnInit(): void {
+  }
+
+  currentStudent: Student = new Student(1,"Sinan Altınayak",64170004,2);
+  currentRoom: Room = new Room(1,"Room 4","./../assets/photos/rooms/4.jpg",3,"güzel oda",25000,1);
+
+}
