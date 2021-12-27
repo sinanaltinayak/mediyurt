@@ -1,6 +1,8 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { Application } from 'src/app/models/application';
 import {MatTableDataSource} from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-management',
@@ -11,6 +13,9 @@ export class ManagementComponent implements AfterViewInit {
 
   displayedColumns: string[] = ['id', 'type', 'studentName', 'currentRoom', 'appliedRoom', 'date', 'note', 'status'];
   dataSource: MatTableDataSource<Application>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor() { 
 
@@ -25,6 +30,8 @@ export class ManagementComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() { 
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
