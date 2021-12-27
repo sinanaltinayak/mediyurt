@@ -9,7 +9,7 @@ import {MatTableDataSource} from '@angular/material/table';
 })
 export class ManagementComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'type', 'studentName', 'currentRoom', 'appliedRoom', 'date', 'note'];
+  displayedColumns: string[] = ['id', 'type', 'studentName', 'currentRoom', 'appliedRoom', 'date', 'note', 'status'];
   dataSource: MatTableDataSource<Application>;
 
   constructor() { 

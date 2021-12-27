@@ -7,6 +7,7 @@ import { ProfileComponent } from './profile.component';
 
 import { MatCardModule } from '@angular/material/card';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
     FormsModule,
     MatCardModule,
     NgImageSliderModule,
+    MatButtonModule,
   ],
   declarations: [ProfileComponent]
 })

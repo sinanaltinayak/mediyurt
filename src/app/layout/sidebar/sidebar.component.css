@@ -1,7 +1,7 @@
 .sidebar {
     width: 250px;
     height: 100%;
-    background-color: #EEE0CB!important;
+    background-color: #EEE2DC!important;
     overflow-y: hidden;
     overflow-x: hidden;
     display: flex;
@@ -41,11 +41,11 @@
 }
 
 li:hover {
-    background-color: #BAA898;
+    background-color: #e4928545;
 }
 
 .sidebar li.active {
-    background-color: #c2847a45;
+    background-color: #41181245;
     color: black;
 }
 
@@ -55,6 +55,6 @@ li {
     color: #000000;
 }
 
-.login-container{
+.login-container {
     margin: 25px;
 }

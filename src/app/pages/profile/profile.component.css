@@ -1,7 +1,7 @@
 body {
     overflow: hidden;
-    width: 103.3em;
-    background-color: #EDC7B7!important;
+    width: 100%;
+    background-color: #BAB2B5!important;
     background-attachment: fixed;
     background-size: cover;
 }
@@ -50,16 +50,5 @@ button img {
 
 button {
     background-color: #EEE2DC;
-    border: none;
-    width: 150px;
-    height: 80px;
-    border-radius: 1em;
-    font-size: 25px;
-    border: solid rgb(92, 62, 47) 0.2em;
     margin-left: 65px;
-}
-
-button:hover {
-    background-color: rgba(175, 175, 175, 0.616);
-    cursor: pointer;
 }

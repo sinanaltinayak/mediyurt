@@ -46,7 +46,7 @@ export class RoomsComponent {
   }
 
   openEditRoomDialog() {
-    const dialogRef = this.dialog.open(EditRoomDialogComponent);
+    const dialogRef = this.dialog.open(EditRoomDialogComponent, {width: "50%",});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

@@ -7,40 +7,41 @@
 }
 
 .content {
-  width: 100%;
+    width: 100%;
     padding: 50px;
     background-color: #BAB2B5!important;
 }
 
-
-
-
 mat-toolbar {
-  justify-content: space-between;
-  background: #242F40;
-  color: #fff;
-  border-radius: 5px;
-  margin-bottom: 5px;
+    justify-content: space-between;
+    background: #242F40;
+    color: #fff;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
 
 mat-paginator {
-  background: #242F40;
-  color: white;
-  margin-top: 5px;
-  border-radius: 5px;
+    background: #242F40;
+    color: white;
+    margin-top: 5px;
+    border-radius: 5px;
 }
-
 
 table {
     width: 100%;
-  }
-  
+    background-color: #fff6f2;
+}
+
+button {
+    background-color: #fffcfaef;
+}
+
 .mat-form-field {
-  font-size: 14px;
-  width: 100%;
+    font-size: 14px;
+    width: 100%;
 }
-  
-td, th {
-  width: 20%;
+
+td,
+th {
+    width: 20%;
 }
-  
