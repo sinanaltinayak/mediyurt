@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "mediyurt-ee079": {
+      "hosting": {
+        "mediyurt": [
+          "mediyurt-ee079"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "mediyurt-ee079"
+  }
+}

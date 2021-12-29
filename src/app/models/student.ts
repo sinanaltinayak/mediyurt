@@ -1,13 +1,16 @@
 export class Student{
-    id!: number;
-    name!: string;
+    fullname!: string;
     number!: number;
-    currentRoomID!: number;
+    currentRoomID!: string;
+    username!: string;
+    password!: string;
 
-    constructor(id: number, name: string, number: number, currentRoomID: number) {
-        this.id = id;
-        this.name = name;
+    constructor(fullname: string, number: number, currentRoomID: string, username: string, password: string) {
+        this.fullname = fullname;
         this.number = number;
         this.currentRoomID = currentRoomID;
+        this.username = username;
+        this.password = password;
     }
+
 }

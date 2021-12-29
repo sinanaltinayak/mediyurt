@@ -16,7 +16,7 @@ export class ApplicationDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  currentStudent: Student = new Student(1,"Sinan Altınayak",64170004,2);
+  currentStudent: Student = new Student("Sinan Altınayak",64170004,"2","sinoş","123");
   currentRoom: Room = new Room(1,"Room 4","./../assets/photos/rooms/4.jpg",3,"güzel oda",25000,1);
 
 }
