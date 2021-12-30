@@ -13,11 +13,17 @@ export class AppComponent {
   title = 'mediyurt';
 
   currentUser!:Student;
+  studentList!: Student[];
 
-  constructor (private store: AngularFirestore) {  }
+  constructor (private store: AngularFirestore) { 
+    
+   }
 
   getAll(){    
-    this.store.collection('student').get().subscribe((querySnapshot) => { 
+    // this.store.collection('students').get().subscribe((querySnapshot) =>
+    // console.log(querySnapshot.query.where("username","==","sinoş")));
+
+    this.store.collection('students').get().subscribe((querySnapshot) => { 
     querySnapshot.forEach((doc) => {
          console.log(doc.id, "=>", doc.data());  
        })
@@ -26,7 +32,10 @@ export class AppComponent {
   }
 
   get() {
-    this.store.collection('student', ref=>ref.where("fullname","==","sinan")).get().subscribe(data=>data.forEach(el=>console.log(el.data())));
+    this.store.collection('student', ref=>ref.where("fullname","==","sinan")).get().subscribe(data=>
+      data.forEach(el=>
+        console.log(el.data())
+        ));
   }
   save(){
 

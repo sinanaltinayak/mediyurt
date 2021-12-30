@@ -35,6 +35,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 
+
 const routes: Routes = [
   {
     path: '',
@@ -52,7 +53,6 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     HttpClientModule,
     CommonModule,
-    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatInputModule,
     MatDialogModule,
@@ -87,6 +87,6 @@ const routes: Routes = [
 })
 export class AppModule { 
 
-  static globalUserID: number;
+  static globalUserID: string = "";
 
 }
