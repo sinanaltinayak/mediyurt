@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Announcement } from 'src/app/models/announcement';
+import { AnnouncementsService } from 'src/app/services/announcements.service';
 
 @Component({
   selector: 'app-add-announcement',
@@ -9,20 +10,18 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class AddAnnouncementComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  title: string = "";
+  content: string = "";
+  date: string = new Date().toString();
+
+  constructor(public dialog: MatDialog, public _service: AnnouncementsService) { }
 
   ngOnInit(): void {
   }
 
-  onSubmit(form: NgForm){  
-    if(form.status === 'INVALID')
-    {
-      // display error in your form
-    }else{
-        console.log(form.value)
-        this.dialog.closeAll(); // Close opened diaglo
-      // do whatever you want to do with your data
-    }
-    
+  addAnnouncement(){
+    let announcement = new Announcement(this.title, this.content, this.date);
+    this._service.create(announcement);
   }
+
 }

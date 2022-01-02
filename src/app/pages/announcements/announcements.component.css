@@ -4,6 +4,7 @@
 }
 
 .content {
+    width: 100%;
     padding: 50px;
     background-color: #BAB2B5!important;
 }
@@ -29,4 +30,9 @@ mat-paginator {
 
 mat-card {
     background-color: #EEE2DC;
+}
+
+mat-card-header {
+    overflow: hidden;
+    overflow-wrap: anywhere;
 }

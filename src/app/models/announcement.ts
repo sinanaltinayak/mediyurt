@@ -1,11 +1,9 @@
 export class Announcement{
-    id!: number;
     title!: string;
     content!: string;
-    date!: Date;
+    date!: string;
 
-    constructor(id: number, title: string, content: string, date: Date) {
-        this.id = id;
+    constructor(title: string, content: string, date: string) {
         this.title = title;
         this.content = content;
         this.date = date;

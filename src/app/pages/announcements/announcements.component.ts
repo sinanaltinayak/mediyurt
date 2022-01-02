@@ -3,6 +3,9 @@ import { PageEvent } from '@angular/material/paginator';
 import { ExamineAnnouncementComponent } from './examine-announcement/examine-announcement.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddAnnouncementComponent } from './add-announcement/add-announcement.component';
+import { AnnouncementsService } from 'src/app/services/announcements.service';
+import { map } from 'rxjs';
+import { Announcement } from 'src/app/models/announcement';
 
 
 @Component({
@@ -12,8 +15,10 @@ import { AddAnnouncementComponent } from './add-announcement/add-announcement.co
 })
 export class AnnouncementsComponent implements OnInit {
   
-  announcements = [1,2,3,4,5,6,7];
-  length = this.announcements.length;
+  currentAnnouncement = new Map<string, Announcement>();
+  allAnnouncements = new Map<string, Announcement>();
+  
+  length = 0;
   pageSize = 6;
   pageIndex = 0;
   pageSizeOptions = [3, 6, 9, 18];
@@ -21,14 +26,29 @@ export class AnnouncementsComponent implements OnInit {
 
   title = 'Announcements';
 
-  dialogTitle!: string;
-  content!: string;
+  constructor(public dialog: MatDialog, public _service: AnnouncementsService) { }
 
-  todayDate: Date = new Date();
-
-  constructor(public dialog: MatDialog) { }
+  getAll(){
+    this._service.getAll().snapshotChanges().pipe(
+      map(changes=> changes.map(c=>
+        ({id: c.payload.doc.id, 
+          title: c.payload.doc.data().title,
+          content: c.payload.doc.data().content, 
+          date: c.payload.doc.data().date, 
+        })
+        
+        )
+      )
+    ).subscribe(data => { 
+      data.forEach(el=> {
+        this.length++;
+        this.allAnnouncements.set(el.id, new Announcement(el.title, el.content, el.date))}
+      ); 
+    }); 
+  }
 
   ngOnInit(): void {
+    this.getAll();
   }
 
   gridColumns = 3;
@@ -41,8 +61,8 @@ export class AnnouncementsComponent implements OnInit {
     this.pageIndex = event.pageIndex;
   }
 
-  openExamineAnnouncementDialog() {
-    const dialogRef = this.dialog.open(ExamineAnnouncementComponent, {width: "50%"});
+  openExamineAnnouncementDialog(id: string) {
+    const dialogRef = this.dialog.open(ExamineAnnouncementComponent, {width: "50%", data: {announcementId: id}});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogModule } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { map } from 'rxjs';
 import { Announcement } from 'src/app/models/announcement';
+import { AnnouncementsService } from 'src/app/services/announcements.service';
 
 @Component({
   selector: 'app-examine-announcement',
@@ -9,13 +11,34 @@ import { Announcement } from 'src/app/models/announcement';
 })
 export class ExamineAnnouncementComponent implements OnInit {
 
-  constructor(public dialog: MatDialogModule) { }
+  currentAnnouncement = new Map<string, Announcement>();
+
+  constructor(public dialog: MatDialogModule, public _service: AnnouncementsService, @Inject(MAT_DIALOG_DATA) public data: {announcementId: string}) { }
 
   ngOnInit(): void {
+    this.getAnnouncement();
   }
-  
-  todayDate: Date = new Date();
-  content = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam soluta alias eius corrupti voluptas quae quibusdam non ipsa sed? Aspernatur placeat dolores non ipsum iste, nemo eligendi ad voluptate blanditiis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam soluta alias eius corrupti voluptas quae quibusdam non ipsa sed? Aspernatur placeat dolores non ipsum iste, nemo eligendi ad voluptate blanditiis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam soluta alias eius corrupti voluptas quae quibusdam non ipsa sed? Aspernatur placeat dolores non ipsum iste, nemo eligendi ad voluptate blanditiis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam soluta alias eius corrupti voluptas quae quibusdam non ipsa sed? Aspernatur placeat dolores non ipsum iste, nemo eligendi ad voluptate blanditiis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam soluta alias eius corrupti voluptas quae quibusdam non ipsa sed? Aspernatur placeat dolores non ipsum iste, nemo eligendi ad voluptate blanditiis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam soluta alias eius corrupti voluptas quae quibusdam non ipsa sed? Aspernatur placeat dolores non ipsum iste, nemo eligendi ad voluptate blanditiis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam soluta alias eius corrupti voluptas quae quibusdam non ipsa sed? Aspernatur placeat dolores non ipsum iste, nemo eligendi ad voluptate blanditiis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam soluta alias eius corrupti voluptas quae quibusdam non ipsa sed? Aspernatur placeat dolores non ipsum iste, nemo eligendi ad voluptate blanditiis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam soluta alias eius corrupti voluptas quae quibusdam non ipsa sed? Aspernatur placeat dolores non ipsum iste, nemo eligendi ad voluptate blanditiis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam soluta alias eius corrupti voluptas quae quibusdam non ipsa sed? Aspernatur placeat dolores non ipsum iste, nemo eligendi ad voluptate blanditiis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam soluta alias eius corrupti voluptas quae quibusdam non ipsa sed? Aspernatur placeat dolores non ipsum iste, nemo eligendi ad voluptate blanditiis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam soluta alias eius corrupti voluptas quae quibusdam non ipsa sed? Aspernatur placeat dolores non ipsum iste, nemo eligendi ad voluptate blanditiis.";
-  currentAnnouncement: Announcement = new Announcement(1,"Announcement 4",this.content, this.todayDate);
+
+  getAnnouncement(){
+    this._service.getAll().snapshotChanges().pipe(
+      map(changes=> changes.map(c=>
+        ({id: c.payload.doc.id, 
+          title: c.payload.doc.data().title,
+          content: c.payload.doc.data().content, 
+          date: c.payload.doc.data().date, 
+        })
+        
+        )
+      )
+    ).subscribe(data => { 
+      data.forEach(el=> {
+        if (el.id == this.data.announcementId) {
+          this.currentAnnouncement.set(el.id, new Announcement(el.title, el.content, el.date));
+          console.log(this.currentAnnouncement.get(this.data.announcementId)?.title);
+        }
+        }
+      );
+    });
+  }
 }
 

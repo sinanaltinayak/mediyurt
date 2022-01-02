@@ -4,6 +4,7 @@
 }
 
 .content {
+    width: 100%;
     padding: 50px;
     background-color: #BAB2B5!important;
 }
