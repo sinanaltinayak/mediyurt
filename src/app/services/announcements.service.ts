@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { docData } from 'rxfire/firestore';
 import { Announcement } from '../models/announcement';
 
 @Injectable({

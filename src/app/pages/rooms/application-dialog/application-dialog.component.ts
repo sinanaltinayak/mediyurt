@@ -17,6 +17,6 @@ export class ApplicationDialogComponent implements OnInit {
   }
 
   currentStudent: Student = new Student("Sinan Altınayak",64170004,"2","sinoş","123");
-  currentRoom: Room = new Room(1,"Room 4","./../assets/photos/rooms/4.jpg",3,"güzel oda",25000,1);
+  currentRoom: Room = new Room("Room 4","./../assets/photos/rooms/4.jpg",3,"güzel oda",25000,true, 0);
 
 }

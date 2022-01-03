@@ -13,3 +13,7 @@
     margin-left: 50px;
     flex-basis: 250px;
 }
+
+p {
+    width: 40em;
+}

@@ -1,17 +1,18 @@
-<h1 mat-dialog-title>Edit Room Information</h1>
+<h1 mat-dialog-title>Add Room</h1>
 
 <mat-dialog-content class="container">
     <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
-        <input matInput ngModel="{{currentRoom.get(this.data.roomId)?.name}}">
+        <input matInput type="text" [(ngModel)]="name" required>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
-        <textarea matInput ngModel="{{currentRoom.get(this.data.roomId)?.description}}"></textarea>
+        <textarea matInput rows="10" [(ngModel)]="description" required></textarea>
     </mat-form-field>
+
     <mat-form-field appearance="fill">
         <mat-label>Capacity</mat-label>
-        <mat-select ngModel="{{currentRoom.get(this.data.roomId)?.maxCapacity}}">
+        <mat-select [(ngModel)]="maxCapacity" required>
             <mat-option value="1">1</mat-option>
             <mat-option value="2">2</mat-option>
             <mat-option value="3">3</mat-option>
@@ -19,13 +20,21 @@
             <mat-option value="5">5</mat-option>
         </mat-select>
     </mat-form-field>
+
     <mat-form-field appearance="fill" floatLabel="always">
         <mat-label>Price</mat-label>
-        <input matInput type="number" ngModel="{{currentRoom.get(this.data.roomId)?.price}}" class="left-align">
+        <input matInput type="number" [(ngModel)]="price" class="left-align">
         <span matSuffix>.00 TL</span>
     </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Image</mat-label>
+        <textarea matInput [(ngModel)]="imagePath" required></textarea>
+    </mat-form-field>
+
 </mat-dialog-content>
+
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="save()">Save</button>
+    <button mat-button [mat-dialog-close] [disabled]="!name || !description || !maxCapacity || !price || !imagePath" cdkFocusInitial (click)="addRoom()">Post</button>
 </mat-dialog-actions>

@@ -18,6 +18,7 @@ import { MatMenuModule} from '@angular/material/menu';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule} from '@angular/material/select';
 import { ApplicationDialogComponent } from './application-dialog/application-dialog.component';
+import { AddRoomComponent } from './add-room/add-room.component';
 
 
 
@@ -37,7 +38,7 @@ import { ApplicationDialogComponent } from './application-dialog/application-dia
     MatFormFieldModule,
     MatSelectModule,
   ],
-  declarations: [RoomsComponent, ExamineRoomDialogComponent, EditRoomDialogComponent, ApplicationDialogComponent]
+  declarations: [RoomsComponent, ExamineRoomDialogComponent, EditRoomDialogComponent, ApplicationDialogComponent, AddRoomComponent]
 })
 export class RoomsModule { }
 

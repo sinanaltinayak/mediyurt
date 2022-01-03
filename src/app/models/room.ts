@@ -1,19 +1,19 @@
 export class Room{
-    id!: number;
     name!: string;
     imagePath!: string;
-    capacity!: number;
+    maxCapacity!: number;
     description!: string;
     price!: number;
-    status!: number;
+    status!: boolean;
+    currentCapacity!: number;
 
-    constructor(id: number, name: string, imagePath: string, capacity: number, description: string, price: number, status: number) {
-        this.id = id;
+    constructor(name: string, imagePath: string, maxCapacity: number, description: string, price: number, status: boolean, currentCapacity: number) {
         this.name = name;
         this.imagePath = imagePath;
-        this.capacity = capacity;
+        this.maxCapacity = maxCapacity;
         this.description = description;
         this.price = price;
         this.status = status;
+        this.currentCapacity = currentCapacity;
     }
 }
