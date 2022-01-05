@@ -27,14 +27,18 @@
         <span matSuffix>.00 TL</span>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+    <mat-form-field>
         <mat-label>Image</mat-label>
-        <textarea matInput [(ngModel)]="imagePath" required></textarea>
+        <ngx-mat-file-input [accept]="acceptedImageFileTypes" (change)="onFileSelected($event)">
+        </ngx-mat-file-input>
+        <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+        <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
     </mat-form-field>
 
+    <img src="{{selectedImage}}">
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close] [disabled]="!name || !description || !maxCapacity || !price || !imagePath" cdkFocusInitial (click)="addRoom()">Post</button>
+    <button mat-button [mat-dialog-close] [disabled]="!name || !description || !maxCapacity || !price" cdkFocusInitial (click)="addRoom()">Post</button>
 </mat-dialog-actions>

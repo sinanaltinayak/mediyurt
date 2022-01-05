@@ -15,7 +15,7 @@
                     <img mat-card-image src="./../assets/photos/announcements/announcement.jpg ">
                     <mat-card-content>
                         <p>
-                            {{num.value.content.substring(0,255)}}...
+                            {{num.value.content.substring(0,255)}}<span *ngIf="num.value.content.length > 254">...</span>
                         </p>
                         <p>
                             <strong>Date:</strong> {{num.value.date | date:'dd/MM/yyyy'}}

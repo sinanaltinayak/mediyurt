@@ -5,11 +5,11 @@
     <mat-dialog-content class="container">
         <mat-form-field appearance="fill">
             <mat-label>Student Name</mat-label>
-            <input matInput readonly ngModel="{{currentStudent.fullname}}">
+            <input matInput readonly ngModel="{{currentStudent.get(this.data.studentId)?.fullname}}">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Wanted Room</mat-label>
-            <input matInput readonly ngModel="{{currentRoom.name}}">
+            <input matInput readonly ngModel="{{currentRoom.get(this.data.roomId)?.name}}">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Notes</mat-label>
@@ -21,23 +21,23 @@
     <mat-dialog-content class="container">
         <mat-form-field appearance="fill">
             <mat-label>Student Name</mat-label>
-            <input matInput readonly ngModel="{{currentStudent.fullname}}">
+            <input matInput readonly ngModel="{{currentStudent.get(this.data.studentId)?.fullname}}">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Current Room</mat-label>
-            <input matInput readonly ngModel="Room {{currentStudent.currentRoomID}}">
+            <input matInput readonly ngModel="{{currentStudentCurrentRoomName}}">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Wanted Room</mat-label>
-            <input matInput readonly ngModel="{{currentRoom.name}}">
+            <input matInput readonly ngModel="{{currentRoom.get(this.data.roomId)?.name}}">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Notes</mat-label>
-            <textarea matInput></textarea>
+            <textarea matInput ngModel="{{note}}"></textarea>
         </mat-form-field>
     </mat-dialog-content>
 </ng-template>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Apply</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="handleApply()">Apply</button>
 </mat-dialog-actions>

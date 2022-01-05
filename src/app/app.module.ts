@@ -33,6 +33,10 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { Student } from './models/student';
+import { Manager } from './models/manager';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -77,6 +81,8 @@ const routes: Routes = [
     provideStorage(() => getStorage()),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireDatabaseModule,
+    MatSnackBarModule
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
@@ -87,6 +93,7 @@ const routes: Routes = [
 })
 export class AppModule { 
 
-  static globalUserID: string = "";
-
+  static userType: string = "default";
+  static userStudent = new Map<string, Student>();
+  static userManager = new Map<string, Manager>();
 }

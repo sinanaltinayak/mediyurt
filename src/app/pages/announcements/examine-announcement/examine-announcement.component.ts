@@ -17,6 +17,7 @@ export class ExamineAnnouncementComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAnnouncement();
+    console.log(this.currentAnnouncement)
   }
 
   getAnnouncement(){

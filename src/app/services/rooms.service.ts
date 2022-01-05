@@ -19,6 +19,10 @@ export class RoomsService {
     return this.roomsRef;
   }
 
+  getRoomIDByRoomName(roomName: string): AngularFirestoreCollection<Room> {
+    return this.db.collection("rooms", ref=>ref.where("name","==",roomName));
+  }
+
   delete(id: string): Promise<void> {
     return this.roomsRef.doc(id).delete();
   }

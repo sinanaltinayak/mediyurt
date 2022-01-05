@@ -1,6 +1,7 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { AngularFirestore} from '@angular/fire/compat/firestore';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { collection, query, doc, deleteDoc } from 'firebase/firestore';
 import { flatMap, map, Observable } from 'rxjs';
 import { Student } from './models/student';
@@ -13,41 +14,15 @@ import { Student } from './models/student';
 export class AppComponent {
   title = 'mediyurt';
 
-  currentUser!:Student;
-  studentList!: Student[];
 
-  constructor (private store: AngularFirestore) { 
-    
-   }
+  constructor (private store: AngularFirestore, private _snackBar: MatSnackBar) { }
 
-  getAll(){    
-    // this.store.collection('students').get().subscribe((querySnapshot) =>
-    // console.log(querySnapshot.query.where("username","==","sinoş")));
-
-    this.store.collection('students').get().subscribe((querySnapshot) => { 
-    querySnapshot.forEach((doc) => {
-         console.log(doc.id, "=>", doc.data());  
-       })
+  openSnackBar(title: string, action: string) {
+    this._snackBar.open(title, action, {
+      horizontalPosition: "right",
+      verticalPosition: "bottom",
+      duration: 5000,
     });
-  }
-
-  get() {
-    this.store.collection('student', ref=>ref.where("fullname","==","sinan")).get().subscribe(data=>
-      data.forEach(el=>
-        console.log(el.data())
-        ));
-  }
-  save(){
-
-    this.currentUser = {
-      fullname: "sinan",
-      number: 64170000,
-      currentRoomID: "2",
-      username: "sinoş",
-      password: "123"
-    }
-
-    this.store.collection('students').add(this.currentUser);
   }
 
   delete() {

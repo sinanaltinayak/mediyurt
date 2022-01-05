@@ -17,6 +17,6 @@ export class PaymentDialogComponent implements OnInit {
   }
 
   currentStudent: Student = new Student("Sinan Altınayak",64170004,"2","sinoş","123");
-  currentRoom: Room = new Room("Room 4","./../assets/photos/rooms/4.jpg",3,"güzel oda",25000,true, 0);
+  currentRoom: Room = new Room("Room 4",3,"güzel oda",25000,true, 0);
 
 }

@@ -1,7 +1,9 @@
-<body>
-    <div class="main">
-        <h2>Profile</h2>
-        <div class="card">
+<div class="canvas">
+    <div class="content">
+        <mat-toolbar>
+            <span>Profile</span>
+        </mat-toolbar>
+        <mat-card class="card">
             <div class="card-body">
                 <i class="fa fa-pen fa-xs edit"></i>
                 <table>
@@ -9,27 +11,29 @@
                         <tr>
                             <td>Student ID</td>
                             <td>:</td>
-                            <td>64170000</td>
+                            <td>{{currentStudentNumber}}</td>
                         </tr>
                         <tr>
                             <td>Full Name</td>
                             <td>:</td>
-                            <td>Lorem Ipsum</td>
+                            <td>{{currentStudentFullName}}</td>
                         </tr>
                         <tr>
                             <td>Username</td>
                             <td>:</td>
-                            <td>lorem</td>
+                            <td>{{currentStudentUserName}}</td>
                         </tr>
                         <tr>
                             <td>Current Room</td>
                             <td>:</td>
-                            <td>Room1</td>
+                            <td>{{currentStudentCurrentRoomName}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
+
+        </mat-card>
+        <button matBadge="{{number}}" [matBadgeHidden]="number==0" (click)="toggleBadgeVisibility()" matBadgeColor="warn" mat-raised-button style="font-size: 18px;"><img src="../../../assets/photos/profile/payment-history.png"> <br>Payments On Wait</button>
     </div>
-    <button matBadge="{{number}}" [matBadgeHidden]="number==0" (click)="toggleBadgeVisibility()" matBadgeColor="warn" mat-raised-button style="font-size: 18px;"><img src="../../../assets/photos/profile/payment-history.png"> <br>Payments On Wait</button>
-</body>
+
+</div>

@@ -8,6 +8,12 @@ import { Room } from 'src/app/models/room';
 import { RoomsService } from 'src/app/services/rooms.service';
 import { map } from 'rxjs';
 import { AddRoomComponent } from './add-room/add-room.component';
+import { AppModule } from 'src/app/app.module';
+import { Student } from 'src/app/models/student';
+import { Manager } from 'src/app/models/manager';
+import { StudentsService } from 'src/app/services/students.service';
+import { AppComponent } from 'src/app/app.component';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-room',
@@ -19,27 +25,37 @@ export class RoomsComponent {
   currentRoom = new Map<string, Room>();
   allRooms = new Map<string, Room>();
 
-  constructor(private dialog: MatDialog, public _service: RoomsService) {}
-
-  ngOnInit(): void {
-    this.getAll();
-  }
-
-  title = 'Rooms';
+  currentStudent = AppModule.userStudent;
+  currentManager = AppModule.userManager;
+  studentRoomID = "";
 
   gridColumns = 3;
-
   length = 0;
   pageSize = 9;
   pageIndex = 0;
   pageSizeOptions = [3, 9, 18];
   showFirstLastButtons = true;
 
-  userType:string = "management";
-  haveRoom:number = 0;
+  userType:string = AppModule.userType;
 
-  getAll(){
-    this._service.getAll().snapshotChanges().pipe(
+  title = 'Rooms';
+
+  constructor(private dialog: MatDialog, public myapp: AppComponent, public _roomService: RoomsService, public _studentService: StudentsService, private storage: AngularFireStorage) {}
+
+  ngOnInit(): void {
+    if(this.currentStudent.size != 0){
+      this.studentRoomID = Array.from(this.currentStudent.values())[0].currentRoomID;
+    }
+    this.getAllRooms();
+  }
+
+  getDownloadURL(roomName: string){
+    const ref = this.storage.ref("Rooms Images/"+roomName+".jpg");
+    return "Rooms Images/"+roomName+".jpg";
+  }
+
+  getAllRooms(){
+    this._roomService.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
         ({id: c.payload.doc.id, 
           currentCapacity: c.payload.doc.data().currentCapacity,
@@ -48,7 +64,6 @@ export class RoomsComponent {
           name: c.payload.doc.data().name, 
           price: c.payload.doc.data().price, 
           status: c.payload.doc.data().status, 
-          imagePath: c.payload.doc.data().imagePath, 
         })
         
         )
@@ -56,7 +71,7 @@ export class RoomsComponent {
     ).subscribe(data => { 
       data.forEach(el=> {
         this.length++;
-        this.allRooms.set(el.id, new Room(el.name, el.imagePath, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity))}
+        this.allRooms.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity))}
       ); 
     }); 
   }
@@ -80,26 +95,41 @@ export class RoomsComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      if(result == true){
+        this.myapp.openSnackBar("Room information was updated.", "Close");
+      }
     });
   }
   
-  openApplicationDialog(appType: string) {
-    const dialogRef = this.dialog.open(ApplicationDialogComponent, {
-      width: "50%",
-      data: { applicationType: appType },
-      disableClose: true,
-      hasBackdrop: false,
-      autoFocus: false
-    });
-
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+  openApplicationDialog(appType: string, id: string) {
+    if(id == Array.from(this.currentStudent.values())[0].currentRoomID){
+      this.myapp.openSnackBar("You cannot apply to your own room.", "Close");
+    }
+    else{
+      const dialogRef = this.dialog.open(ApplicationDialogComponent, {
+        width: "50%",
+        data: { applicationType: appType,
+                roomId: id,
+                studentId: Array.from(this.currentStudent.keys())[0],
+                 },
+        disableClose: true,
+        hasBackdrop: false,
+        autoFocus: false
+      });
+  
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+        if(result == true){
+          this.myapp.openSnackBar("Your application was sent.", "Close");
+        }
+      });
+    }
+    
   }
 
   remove(id: string){
-    this._service.delete(id);
+    this._roomService.delete(id);
   }
 
   openAddRoomDialog(): void {
@@ -107,7 +137,9 @@ export class RoomsComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      if(result == true){
+        this.myapp.openSnackBar("New room was added.", "Close");
+      }
     });
   }
-
 }

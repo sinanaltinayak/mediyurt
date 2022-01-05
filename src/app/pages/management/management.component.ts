@@ -17,13 +17,15 @@ export class ManagementComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  date: string = new Date().toString();
+
   constructor() { 
 
     const paymentList = [
-      new Application(1,"Room Change","Sinan Altınayak", "Room 4","Room 3", new Date(), "nolur"),
-      new Application(2,"Room Application","Tuğçe Yenisey Erkan", "","Room 12",  new Date(), "çok kötü her şey"),
-      new Application(3,"Room Application","Kerem Kepenek", "", "Room 3", new Date(), "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi quod voluptatum accusantium impedit labore, sit tenetur fuga iste facilis eius. Error culpa eligendi mollitia voluptates autem non, cum quis nisi! Loremipsum dolor sit amet, consectetur adipisicing elit. Quis incidunt ad hic ullam commodi sunt, velit ex ipsa laudantium expedita voluptatibus, eveniet optio excepturi ab perspiciatis iure eius asperiores fugiat."),
-      new Application(4,"Room Change","Derya Nur Çaman", "Room 4", "Room 15", new Date(), "arakadaşım sigara içyior"),
+      new Application("Room Change","Sinan Altınayak", "Room 4","Room 3", this.date, "nolur"),
+      new Application("Room Application","Tuğçe Yenisey Erkan", "","Room 12",  this.date, "çok kötü her şey"),
+      new Application("Room Application","Kerem Kepenek", "", "Room 3", this.date, "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nisi quod voluptatum accusantium impedit labore, sit tenetur fuga iste facilis eius. Error culpa eligendi mollitia voluptates autem non, cum quis nisi! Loremipsum dolor sit amet, consectetur adipisicing elit. Quis incidunt ad hic ullam commodi sunt, velit ex ipsa laudantium expedita voluptatibus, eveniet optio excepturi ab perspiciatis iure eius asperiores fugiat."),
+      new Application("Room Change","Derya Nur Çaman", "Room 4", "Room 15", this.date, "arakadaşım sigara içyior"),
     ];
 
     this.dataSource = new MatTableDataSource(paymentList);

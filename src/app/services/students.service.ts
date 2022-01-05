@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { Manager } from '../models/manager';
 import { Student } from '../models/student';
 
 @Injectable({
@@ -14,10 +15,13 @@ export class StudentsService {
     this.studentsRef = db.collection(this.dbPath);
   }
 
-  login(username: string, password: string): AngularFirestoreCollection<Student>{
-
+  loginStudent(username: string, password: string): AngularFirestoreCollection<Student>{
     return this.db.collection("students", ref=>ref.where("username","==",username).where("password","==",password));
-   }
+   }  
+   
+  loginManager(username: string, password: string): AngularFirestoreCollection<Manager>{
+    return this.db.collection("managers", ref=>ref.where("username","==",username).where("password","==",password));
+  }
 
   getAll(): AngularFirestoreCollection<Student> {
     return this.studentsRef;

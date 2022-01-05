@@ -17,13 +17,15 @@ export class PaymentsComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  date: string = new Date().toString();
+
   constructor() {
     
     const paymentList = [
-      new Payment(1,"Sinan Altınayak", "Room 3", 2500, new Date(), true),
-      new Payment(2,"Tuğçe Yenisey Erkan", "Room 12", 1200, new Date(), true),
-      new Payment(3,"Kerem Kepenek", "Room 3", 3000, new Date(), false),
-      new Payment(4,"Derya Nur Çaman", "Room 15", 4500, new Date(), false),
+      new Payment("Sinan Altınayak", "Room 3", 2500, this.date, true),
+      new Payment("Tuğçe Yenisey Erkan", "Room 12", 1200, this.date, true),
+      new Payment("Kerem Kepenek", "Room 3", 3000, this.date, false),
+      new Payment("Derya Nur Çaman", "Room 15", 4500, this.date, false),
     ];
 
     this.dataSource = new MatTableDataSource(paymentList);

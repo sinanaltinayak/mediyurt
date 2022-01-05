@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { RoomsRoutingModule } from './rooms-routing.module';
 import { RoomsComponent } from './rooms.component';
@@ -19,6 +19,10 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule} from '@angular/material/select';
 import { ApplicationDialogComponent } from './application-dialog/application-dialog.component';
 import { AddRoomComponent } from './add-room/add-room.component';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { MatIconModule } from '@angular/material/icon';
+
+
 
 
 
@@ -37,6 +41,10 @@ import { AddRoomComponent } from './add-room/add-room.component';
     MatMenuModule,
     MatFormFieldModule,
     MatSelectModule,
+    NgxMatFileInputModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatInputModule,
   ],
   declarations: [RoomsComponent, ExamineRoomDialogComponent, EditRoomDialogComponent, ApplicationDialogComponent, AddRoomComponent]
 })

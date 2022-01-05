@@ -1,18 +1,17 @@
 export class Application{
-    id!: number;
     type!: string;
-    studentName!: string;
-    currentRoom!: string;
-    appliedRoom!: string;
-    date!: Date;
+    studentID!: string;
+    currentRoomID!: string;
+    appliedRoomID!: string;
+    date!: string;
     note!: string;
 
-    constructor(id: number, type: string, studentName: string, currentRoom: string, appliedRoom: string, date: Date, note: string) {
-        this.id = id;
+    constructor(type: string, studentID: string, currentRoomID: string, appliedRoomID: string, date: string, note: string) {
+
         this.type = type;
-        this.studentName = studentName;
-        this.currentRoom = currentRoom;
-        this.appliedRoom = appliedRoom;
+        this.studentID = studentID;
+        this.currentRoomID = currentRoomID;
+        this.appliedRoomID = appliedRoomID;
         this.date = date;
         this.note = note;
     }

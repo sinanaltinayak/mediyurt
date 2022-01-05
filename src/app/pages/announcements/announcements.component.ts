@@ -6,6 +6,7 @@ import { AddAnnouncementComponent } from './add-announcement/add-announcement.co
 import { AnnouncementsService } from 'src/app/services/announcements.service';
 import { map } from 'rxjs';
 import { Announcement } from 'src/app/models/announcement';
+import { AppModule } from 'src/app/app.module';
 
 
 @Component({
@@ -18,15 +19,22 @@ export class AnnouncementsComponent implements OnInit {
   currentAnnouncement = new Map<string, Announcement>();
   allAnnouncements = new Map<string, Announcement>();
   
+  gridColumns = 3;
   length = 0;
   pageSize = 6;
   pageIndex = 0;
   pageSizeOptions = [3, 6, 9, 18];
   showFirstLastButtons = true;
 
+  userType:string = AppModule.userType;
+
   title = 'Announcements';
 
   constructor(public dialog: MatDialog, public _service: AnnouncementsService) { }
+
+  ngOnInit(): void {
+    this.getAll();
+  }
 
   getAll(){
     this._service.getAll().snapshotChanges().pipe(
@@ -36,7 +44,6 @@ export class AnnouncementsComponent implements OnInit {
           content: c.payload.doc.data().content, 
           date: c.payload.doc.data().date, 
         })
-        
         )
       )
     ).subscribe(data => { 
@@ -46,14 +53,6 @@ export class AnnouncementsComponent implements OnInit {
       ); 
     }); 
   }
-
-  ngOnInit(): void {
-    this.getAll();
-  }
-
-  gridColumns = 3;
-
-  userType:string = "management";
 
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
