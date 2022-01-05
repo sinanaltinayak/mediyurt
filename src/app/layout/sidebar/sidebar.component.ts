@@ -134,6 +134,25 @@ export class SidebarComponent implements OnInit {
     if(this.usernameErrorMessage == "" && this.studentNumberErrorMessage == "" && this.passwordErrorMessage == ""){
       let registerStudent = new Student(this.fullname, this.studentNumber, "", this.username, this.password);
       this._service.create(registerStudent);
+      this._service.loginStudent(this.username, this.password).snapshotChanges().pipe(map(changes=> changes.map(c=>
+        ({id: c.payload.doc.id, 
+          fullname: c.payload.doc.data().fullname, 
+          number: c.payload.doc.data().number, 
+          username: c.payload.doc.data().username, 
+          password: c.payload.doc.data().password, 
+          currentRoomID: c.payload.doc.data().currentRoomID  })
+        
+        )
+      )
+    ).subscribe(data => {
+      if(data.length != 0){
+        this.currentStudent.set(data[0].id, new Student(data[0].fullname, data[0].number, data[0].currentRoomID, data[0].username, data[0].password));
+        this.userType = "student";
+        AppModule.userStudent = this.currentStudent;
+        AppModule.userType = this.userType;
+        this.myapp.openSnackBar("Welcome "+data[0].fullname, "Continue");
+      }
+    });
     }
   }
 

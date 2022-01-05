@@ -24,13 +24,14 @@ export class RoomsComponent {
 
   currentRoom = new Map<string, Room>();
   allRooms = new Map<string, Room>();
+  roomImages = new Map<string, string>();
 
   currentStudent = AppModule.userStudent;
   currentManager = AppModule.userManager;
   studentRoomID = "";
 
   gridColumns = 3;
-  length = 0;
+  length = this.allRooms.size;
   pageSize = 9;
   pageIndex = 0;
   pageSizeOptions = [3, 9, 18];
@@ -47,12 +48,13 @@ export class RoomsComponent {
       this.studentRoomID = Array.from(this.currentStudent.values())[0].currentRoomID;
     }
     this.getAllRooms();
+
   }
 
   getDownloadURL(roomName: string){
-    const ref = this.storage.ref("Rooms Images/"+roomName+".jpg");
-    return "Rooms Images/"+roomName+".jpg";
+    return this.roomImages.get(roomName);
   }
+
 
   getAllRooms(){
     this._roomService.getAll().snapshotChanges().pipe(
@@ -70,8 +72,14 @@ export class RoomsComponent {
       )
     ).subscribe(data => { 
       data.forEach(el=> {
-        this.length++;
-        this.allRooms.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity))}
+        this.allRooms.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity))
+        this.storage.storage.ref("Rooms Images/"+el.name+".jpg").getDownloadURL().then(
+          (url: string) => {
+            this.roomImages.set(el.name, url);
+          }
+        );
+        this.length = this.allRooms.size;
+      }
       ); 
     }); 
   }
@@ -139,6 +147,7 @@ export class RoomsComponent {
       console.log(`Dialog result: ${result}`);
       if(result == true){
         this.myapp.openSnackBar("New room was added.", "Close");
+        this.ngOnInit();
       }
     });
   }

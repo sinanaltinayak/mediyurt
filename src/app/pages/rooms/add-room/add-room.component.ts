@@ -8,6 +8,7 @@ import { Room } from 'src/app/models/room';
 import { RoomsService } from 'src/app/services/rooms.service';
 import { AngularFireStorage } from "@angular/fire/compat/storage";
 import { FileUpload } from '../../../models/file-upload';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
 
 @Component({
   selector: 'app-add-room',
@@ -30,50 +31,53 @@ export class AddRoomComponent implements OnInit {
   downloadURL!: Observable<string>;
   url!: Observable<string | null>;
 
-  selectedFiles?: FileList;
-  currentFileUpload?: FileUpload;
-  percentage = 0;
+  allRoomNames: string[] = [];
+  roomNameErrorMessage: string = "";
 
-  constructor(public dialog: MatDialog, public _roomService: RoomsService, private storage: AngularFireStorage) {}
+  constructor(public dialog: MatDialog, public _roomService: RoomsService, private storage: AngularFireStorage, private db: AngularFireDatabase) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    this.getAllRooms();
+  }
+
+  getAllRooms(){
+    this._roomService.getAll().snapshotChanges().pipe(
+      map(changes=> changes.map(c=>({name: c.payload.doc.data().name}))))
+      .subscribe(data => { data.forEach(el=> {this.allRoomNames.push(el.name);}); }); 
+  }
 
   addRoom(){
-    let room = new Room(this.name, this.maxCapacity, this.description, this.price, this.status, this.currentCapacity);
-    this._roomService.create(room);
-
+    if (this.roomNameErrorMessage != ""){
+      let room = new Room(this.name, this.maxCapacity, this.description, this.price, this.status, this.currentCapacity);
+      this._roomService.create(room);
+  
+      const metaData = {"contentType": this.selectedImage.type};
+      const storageRef = this.storage.storage.ref('Rooms Images/${this.name}.jpg');
+      storageRef.put(this.selectedImage, metaData);
+      console.log("Uploading: ", this.selectedImage.name);
+  
+      
+      const file = this.selectedImage;
+      const name = this.name;
+      const task = this.storage.upload('Rooms Images/'+name+'.jpg', file);
+    }
   }
   
   onFileSelected(event: any) {
 
     this.selectedImage = event.target.files[0];
 
+  }
 
-    
-    const n = this.name;
-    const file = event.target.files[0];
-    const filePath = 'Rooms Images/${n}';
-
-    const fileRef = this.storage.ref(filePath);
-    const task = this.storage.upload(`Rooms Images/${n}`, file);
-    task
-      .snapshotChanges()
-      .pipe(
-        finalize(() => {
-          this.downloadURL = fileRef.getDownloadURL();
-          this.downloadURL.subscribe(url => {
-            if (url) {
-              this.fb = url;
-            }
-            console.log(this.fb);
-          });
-        })
-      )
-      .subscribe(url => {
-        if (url) {
-          console.log(url);
-        }
-      });
+  checkRoomName(){
+    // const len = this.allRoomNames.find(element => element = this.name);
+    // console.log(len);
+    // if(len!.length > 0){
+    //   this.roomNameErrorMessage = "There is already a room with this name.";
+    // }
+    // else{
+    //   this.roomNameErrorMessage = "";
+    // }
   }
 
   getRoomID(roomName: string){
