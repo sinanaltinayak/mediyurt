@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Room } from '../models/room';
+import { Student } from '../models/student';
 
 @Injectable({
   providedIn: 'root'
@@ -27,12 +28,16 @@ export class RoomsService {
     return this.roomsRef.doc(id).delete();
   }
 
-  update(id: string, data: any): Promise<void> {
-    return this.roomsRef.doc(id).update(data);
-  }
-
   create(room: Room): any {
     return this.roomsRef.add({ ...room });
+  }
+
+  getRoom(roomId: string): AngularFirestoreDocument<Room> {
+    return this.db.collection("rooms").doc(roomId);
+  }
+
+  getStudent(studentId: string): AngularFirestoreDocument<Student> {
+    return this.db.collection("students").doc(studentId);
   }
 
 }

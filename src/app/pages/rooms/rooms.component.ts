@@ -84,6 +84,25 @@ export class RoomsComponent {
     }); 
   }
 
+  getRoomStatus(roomId: string){
+    this._roomService.getRoom(roomId).ref.get().then((doc) => {
+      return doc.data()!.status;
+      });
+  }
+
+  getCurrentCapacity(roomId: string){
+    this._roomService.getRoom(roomId).ref.get().then((doc) => {
+      return doc.data()!.currentCapacity;
+      });
+  }
+
+  getRoomId(roomName: string) {
+    // this._roomService.getRoomIDByRoomName(roomName).get().subscribe((ss) =>{
+    //   ss.
+    // });
+    //return "3VlWhAwLk1upvsuKE8tE";
+  }
+
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
     this.pageSize = event.pageSize;
