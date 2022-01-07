@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { Room } from 'src/app/models/room';
-import { Student } from 'src/app/models/student';
 import { MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { RoomsService } from 'src/app/services/rooms.service';
 import { map } from 'rxjs';

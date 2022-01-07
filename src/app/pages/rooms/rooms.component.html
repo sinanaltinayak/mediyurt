@@ -24,12 +24,12 @@
                         <div *ngIf="userType == 'student'; then studentButtons; else managementButtons"></div>
                         <ng-template #studentButtons>
                             <div *ngIf="studentRoomID == ''; then apply; else requestChange"></div>
-                            <ng-template #apply><button mat-button (click)="openApplicationDialog('Room Application', num.key)">Apply</button></ng-template>
-                            <ng-template #requestChange><button mat-button (click)="openApplicationDialog('Room Change Request', num.key)">Request a Room Change</button></ng-template>
+                            <ng-template #apply><button mat-button *ngIf="studentRoomID == '' && num.value.currentCapacity != num.value.maxCapacity" (click)="openApplicationDialog('Room Application', num.key)">Apply</button></ng-template>
+                            <ng-template #requestChange><button mat-button *ngIf="studentRoomID != '' && num.value.currentCapacity != num.value.maxCapacity" (click)="openApplicationDialog('Room Change Request', num.key)">Request a Room Change</button></ng-template>
                         </ng-template>
                         <ng-template #managementButtons>
-                            <button mat-button (click)="openEditRoomDialog(num.key)">Edit</button>
-                            <button mat-button (click)="remove(num.key)">Remove</button>
+                            <button mat-button *ngIf="num.value.currentCapacity == 0" (click)="openEditRoomDialog(num.key)">Edit</button>
+                            <button mat-button *ngIf="num.value.currentCapacity == 0" (click)="remove(num.key)">Remove</button>
                         </ng-template>
                     </mat-card-actions>
                 </mat-card>

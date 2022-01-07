@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { doc } from 'firebase/firestore';
 import { map } from 'rxjs';
 import { Room } from 'src/app/models/room';
 import { RoomsService } from 'src/app/services/rooms.service';

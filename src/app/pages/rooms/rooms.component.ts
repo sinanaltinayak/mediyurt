@@ -9,8 +9,6 @@ import { RoomsService } from 'src/app/services/rooms.service';
 import { map } from 'rxjs';
 import { AddRoomComponent } from './add-room/add-room.component';
 import { AppModule } from 'src/app/app.module';
-import { Student } from 'src/app/models/student';
-import { Manager } from 'src/app/models/manager';
 import { StudentsService } from 'src/app/services/students.service';
 import { AppComponent } from 'src/app/app.component';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
