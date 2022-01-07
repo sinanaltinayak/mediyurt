@@ -39,8 +39,6 @@ export class ProfileComponent implements OnInit {
     this.number = 0;
     const dialogRef = this.dialog.open(PaymentDialogComponent, {
       width: "50%",
-      data: { payment: this.currentStudentPayments,
-      },
       disableClose: true,
       hasBackdrop: false,
       autoFocus: false

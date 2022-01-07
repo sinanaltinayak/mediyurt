@@ -3,18 +3,18 @@
 <mat-dialog-content class="container">
     <mat-form-field appearance="fill">
         <mat-label>Student</mat-label>
-        <input matInput readonly ngModel="{{currentStudent.fullname}}">
+        <input matInput readonly ngModel="{{currentStudentFullName}}">
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Room</mat-label>
-        <input matInput readonly ngModel="{{currentRoom.name}}">
+        <input matInput readonly ngModel="{{currentStudentCurrentRoomName}}">
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Price</mat-label>
-        <input matInput readonly ngModel="{{currentRoom.price}} TL">
+        <input matInput readonly ngModel="{{currentStudentCurrentRoomPrice}} TL">
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Pay</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="onPay()">Pay</button>
 </mat-dialog-actions>
