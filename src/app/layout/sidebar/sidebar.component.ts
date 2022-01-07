@@ -9,6 +9,10 @@ import { Manager } from 'src/app/models/manager';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {AppComponent} from '../../app.component';
+import { ApplicationsService } from 'src/app/services/applications.service';
+import { Application } from 'src/app/models/application';
+import { RoomsService } from 'src/app/services/rooms.service';
+import { Room } from 'src/app/models/room';
 
 @Component({
   selector: 'app-sidebar',
@@ -35,10 +39,10 @@ export class SidebarComponent implements OnInit {
   currentStudent = new Map<string, Student>();
   allStudents = new Map<string, Student>();
 
-  constructor(public _service: StudentsService, public myapp: AppComponent, private _router: Router) { }
+  constructor(public _service: StudentsService, public _appService: ApplicationsService, public _roomService: RoomsService, public myapp: AppComponent, private _router: Router) { }
 
   ngOnInit(): void {
-    this.getAll();
+    this.getAllStudents();
   }
 
   loginUser(){
@@ -74,6 +78,8 @@ export class SidebarComponent implements OnInit {
           this.userType = "management";
           AppModule.userManager = this.currentManager;
           AppModule.userType = this.userType;
+          this.getAllApplications();
+          this.getAllRooms();
           this.myapp.openSnackBar("Welcome "+data[0].fullname, "Continue");
         }
         else{
@@ -156,7 +162,7 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  getAll(){
+  getAllStudents(){
     this._service.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
         ({id: c.payload.doc.id, 
@@ -169,14 +175,61 @@ export class SidebarComponent implements OnInit {
         )
       )
     ).subscribe(data => { 
-      data.forEach(el=> 
-        this.allStudents.set(el.id, new Student(el.fullname, el.number, el.currentRoomID, el.username, el.password))
+      AppModule.allStudents.clear();
+      data.forEach(el=> {
+        this.allStudents.set(el.id, new Student(el.fullname, el.number, el.currentRoomID, el.username, el.password));
+        AppModule.allStudents.set(el.id, new Student(el.fullname, el.number, el.currentRoomID, el.username, el.password));
+      }
       );
-      
-    
     });
+  }
 
-    
+  getAllApplications(){
+
+    let result: Application[] =[];
+
+    this._appService.getAll().snapshotChanges().pipe(
+      map(changes=> changes.map(c=>
+        ({id: c.payload.doc.id, 
+          appliedRoomID: c.payload.doc.data().appliedRoomID,
+          currentRoomID: c.payload.doc.data().currentRoomID, 
+          date: c.payload.doc.data().date, 
+          note: c.payload.doc.data().note,
+          studentID: c.payload.doc.data().studentID, 
+          type: c.payload.doc.data().type, 
+        })
+        )
+      )
+    ).subscribe(data => { 
+      data.forEach(el=> {
+        let row = new Application(el.type, el.studentID, el.currentRoomID, el.appliedRoomID, el.date, el.note);
+        result.push(row);
+        AppModule.allApplications.set(el.id, row);
+        });
+      AppModule.applicationsInfo = result; 
+    }); 
+
+  }
+  
+  getAllRooms(){
+    this._roomService.getAll().snapshotChanges().pipe(
+      map(changes=> changes.map(c=>
+        ({id: c.payload.doc.id, 
+          currentCapacity: c.payload.doc.data().currentCapacity,
+          description: c.payload.doc.data().description, 
+          maxCapacity: c.payload.doc.data().maxCapacity, 
+          name: c.payload.doc.data().name, 
+          price: c.payload.doc.data().price, 
+          status: c.payload.doc.data().status,  
+        })
+        )
+      )
+    ).subscribe(data => { 
+      data.forEach(el=> {
+        AppModule.allRooms.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity))
+      }
+      );
+    });
   }
 
 }

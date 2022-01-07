@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -37,6 +36,8 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { Student } from './models/student';
 import { Manager } from './models/manager';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { Application } from './models/application';
+import { Room } from './models/room';
 
 
 
@@ -82,7 +83,7 @@ const routes: Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireDatabaseModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
@@ -96,4 +97,10 @@ export class AppModule {
   static userType: string = "default";
   static userStudent = new Map<string, Student>();
   static userManager = new Map<string, Manager>();
+
+  static allApplications = new Map<string, Application>();
+  static applicationsInfo: Application[] = [];
+
+  static allStudents = new Map<string, Student>();
+  static allRooms = new Map<string, Room>();
 }

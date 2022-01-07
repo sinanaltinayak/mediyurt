@@ -10,6 +10,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -24,7 +26,10 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatTableModule,
     MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatProgressSpinnerModule,
   ],
-  declarations: [ManagementComponent]
+  declarations: [ManagementComponent],
 })
 export class ManagementModule { }

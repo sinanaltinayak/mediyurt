@@ -50,3 +50,10 @@ button {
 .decision {
     width: 14%;
 }
+
+.spinner-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px;
+}

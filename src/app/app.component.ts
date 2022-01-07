@@ -1,10 +1,13 @@
 import { ThrowStmt } from '@angular/compiler';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore} from '@angular/fire/compat/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { collection, query, doc, deleteDoc } from 'firebase/firestore';
 import { flatMap, map, Observable } from 'rxjs';
+import { AppModule } from './app.module';
+import { Application } from './models/application';
 import { Student } from './models/student';
+import { ApplicationsService } from './services/applications.service';
 
 @Component({
   selector: 'app-root',
