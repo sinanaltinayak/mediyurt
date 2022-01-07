@@ -1,15 +1,15 @@
 export class Payment{
-    studentName!: string;
-    currentRoom!: string;
+    studentID!: string;
+    roomID!: string;
     price!: number;
     date!: string;
-    isPaid!: boolean;
+    status!: string;
 
-    constructor(studentName: string, currentRoom: string,  price: number, date: string, isPaid: boolean) {
-        this.studentName = studentName;
-        this.currentRoom = currentRoom;
+    constructor(studentID: string, roomID: string,  price: number, date: string, status: string) {
+        this.studentID = studentID;
+        this.roomID = roomID;
         this.price = price;
         this.date = date;
-        this.isPaid = isPaid;
+        this.status = status;
     }
 }

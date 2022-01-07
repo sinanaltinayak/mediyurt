@@ -65,11 +65,11 @@ export class PaymentDialogComponent implements OnInit {
     this._paymentService.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
         ({id: c.payload.doc.id,
-          studentID: c.payload.doc.data().studentName,
-          roomID: c.payload.doc.data().currentRoom,
+          studentID: c.payload.doc.data().studentID,
+          roomID: c.payload.doc.data().roomID,
           price: c.payload.doc.data().price,
           date: c.payload.doc.data().date,
-          status: c.payload.doc.data().isPaid,
+          status: c.payload.doc.data().status,
         })
 
         )

@@ -8,11 +8,15 @@
 
             <mat-form-field appearance="standard">
                 <mat-label> Filter</mat-label>
-                <input matInput placeholder="Ex. Student Name" #input (keyup)="applyFilter($event)">
+                <input matInput placeholder="Ex. Student Name" (keyup)="applyFilter($event)" #input>
             </mat-form-field>
 
 
             <table #table mat-table matSort class="mat-elevation-z8" [dataSource]="dataSource">
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                    <td mat-cell *matCellDef="let row"> {{row.date | date:'shortDate'}} </td>
+                </ng-container>
 
                 <ng-container matColumnDef="type">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
@@ -37,11 +41,6 @@
                     <td mat-cell *matCellDef="let row"> {{getRoomName(row.appliedRoomID)}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="date">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-                    <td mat-cell *matCellDef="let row"> {{row.date | date:'shortDate'}} </td>
-                </ng-container>
-
                 <ng-container matColumnDef="note">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header class="lastItem">Note</th>
                     <td mat-cell *matCellDef="let row" class="lastItem">
@@ -59,11 +58,11 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
                 <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="4">No application data..</td>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
                 </tr>
             </table>
 
-            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select Page of Applications"></mat-paginator>
 
         </div>
     </div>

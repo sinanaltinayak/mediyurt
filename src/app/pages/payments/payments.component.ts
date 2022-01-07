@@ -2,7 +2,11 @@ import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import { AppModule } from 'src/app/app.module';
 import { Payment } from 'src/app/models/payment';
+import { Room } from 'src/app/models/room';
+import { Student } from 'src/app/models/student';
+import { PaymentService } from 'src/app/services/payment.service';
 
 @Component({
   selector: 'app-payments',
@@ -11,29 +15,40 @@ import { Payment } from 'src/app/models/payment';
 })
 export class PaymentsComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'studentName', 'currentRoom', 'price', 'date', 'isPaid'];
-  dataSource: MatTableDataSource<Payment>;
+  allPayments = new Map<string, Payment>();
+  allStudents = new Map<string, Student>();
+  allRooms = new Map<string, Room>();
+
+  date: string = new Date().toString();
+
+  displayedColumns: string[] = [ 'date', 'studentName', 'roomName', 'price', 'status'];
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  date: string = new Date().toString();
 
-  constructor() {
-    
-    const paymentList = [
-      new Payment("Sinan Altınayak", "Room 3", 2500, this.date, true),
-      new Payment("Tuğçe Yenisey Erkan", "Room 12", 1200, this.date, true),
-      new Payment("Kerem Kepenek", "Room 3", 3000, this.date, false),
-      new Payment("Derya Nur Çaman", "Room 15", 4500, this.date, false),
-    ];
+  public dataSource: MatTableDataSource<Payment>;
 
-    this.dataSource = new MatTableDataSource(paymentList);
+  constructor(public _service: PaymentService) { 
+    this.dataSource = new MatTableDataSource(AppModule.paymentsInfo);
+    this.allPayments = AppModule.allPayments;
+    this.allStudents = AppModule.allStudents;
+    this.allRooms = AppModule.allRooms;
+
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  getStudentName(studentId: string){
+    return this.allStudents.get(studentId).fullname;
+  }
+
+  getRoomName(roomId: string){
+    return this.allRooms.get(roomId).name;
   }
 
   applyFilter(event: Event) {

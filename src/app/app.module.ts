@@ -38,6 +38,7 @@ import { Manager } from './models/manager';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { Application } from './models/application';
 import { Room } from './models/room';
+import { Payment } from './models/payment';
 
 
 
@@ -100,6 +101,9 @@ export class AppModule {
 
   static allApplications = new Map<string, Application>();
   static applicationsInfo: Application[] = [];
+
+  static allPayments = new Map<string, Payment>();
+  static paymentsInfo: Payment[] = [];
 
   static allStudents = new Map<string, Student>();
   static allRooms = new Map<string, Room>();
