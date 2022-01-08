@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit {
     const dialogRef = this.dialog.open(PaymentDialogComponent, {
       width: "50%",
       disableClose: true,
-      hasBackdrop: false,
+      hasBackdrop: true,
       autoFocus: false
     });
 

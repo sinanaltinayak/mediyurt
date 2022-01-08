@@ -61,7 +61,11 @@ export class AnnouncementsComponent implements OnInit {
   }
 
   openExamineAnnouncementDialog(id: string) {
-    const dialogRef = this.dialog.open(ExamineAnnouncementComponent, {width: "50%", data: {announcementId: id}});
+    const dialogRef = this.dialog.open(ExamineAnnouncementComponent, {
+      width: "50%", 
+      data: {announcementId: id},
+      hasBackdrop: true,
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -69,7 +73,10 @@ export class AnnouncementsComponent implements OnInit {
   }
 
   openAddAnnouncementDialog(): void {
-    const dialogRef = this.dialog.open(AddAnnouncementComponent, {width: "50%"});
+    const dialogRef = this.dialog.open(AddAnnouncementComponent, {
+      width: "50%",
+      hasBackdrop: true,
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{currentRoom.get(this.data.roomId)?.name}}</h1>
 
-<div class="container">
+<mat-dialog-content class="container mat-typography">
     <div class="mat-typography container-image">
         <img mat-card-image [src]="getDownloadURL(currentRoom.get(this.data.roomId)?.name)">
     </div>
@@ -14,7 +14,7 @@
         <h3>Price</h3>
         <p>{{currentRoom.get(this.data.roomId)?.price}} TL</p>
     </div>
-</div>
+</mat-dialog-content>
 
 <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Cancel</button>

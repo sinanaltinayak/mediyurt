@@ -112,7 +112,10 @@ export class RoomsComponent {
   }
 
   openExamineRoomDialog(id: string) {
-    const dialogRef = this.dialog.open(ExamineRoomDialogComponent, {data: {roomId: id}});
+    const dialogRef = this.dialog.open(ExamineRoomDialogComponent, {
+      data: {roomId: id},
+      hasBackdrop: true,
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -120,7 +123,13 @@ export class RoomsComponent {
   }
 
   openEditRoomDialog(id: string) {
-    const dialogRef = this.dialog.open(EditRoomDialogComponent, {width: "50%", data: {roomId: id}});
+    const dialogRef = this.dialog.open(EditRoomDialogComponent, {
+      width: "50%", 
+      data: {
+        roomId: id,
+      },
+      hasBackdrop: true,
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -142,7 +151,7 @@ export class RoomsComponent {
                 studentId: Array.from(this.currentStudent.keys())[0],
                  },
         disableClose: true,
-        hasBackdrop: false,
+        hasBackdrop: true,
         autoFocus: false
       });
   
@@ -162,7 +171,10 @@ export class RoomsComponent {
   }
 
   openAddRoomDialog(): void {
-    const dialogRef = this.dialog.open(AddRoomComponent, {width: "50%"});
+    const dialogRef = this.dialog.open(AddRoomComponent, {
+      width: "50%",
+      hasBackdrop: true,
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
