@@ -24,8 +24,8 @@ export class PaymentsComponent implements AfterViewInit {
   displayedColumns: string[] = [ 'date', 'studentName', 'roomName', 'price', 'status'];
 
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
 
   public dataSource: MatTableDataSource<Payment>;

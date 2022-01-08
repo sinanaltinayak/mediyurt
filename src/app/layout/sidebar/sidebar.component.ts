@@ -81,6 +81,7 @@ export class SidebarComponent implements OnInit {
           AppModule.userManager = this.currentManager;
           AppModule.userType = this.userType;
           this.getAllApplications();
+          this.getAllPayments();
           this.getAllRooms();
           this.myapp.openSnackBar("Welcome "+data[0].fullname, "Continue");
         }
