@@ -10,6 +10,8 @@ import { AppModule } from 'src/app/app.module';
 import { Student } from 'src/app/models/student';
 import { Room } from 'src/app/models/room';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { PaymentService } from 'src/app/services/payment.service';
+import { Payment } from 'src/app/models/payment';
 
 
 @Component({
@@ -35,7 +37,7 @@ export class ManagementComponent implements AfterViewInit{
 
   public dataSource: MatTableDataSource<Application>;
 
-  constructor(public _service: ApplicationsService, private db: AngularFirestore) { 
+  constructor(public _applicationService: ApplicationsService, public _paymentService: PaymentService, private db: AngularFirestore) { 
     this.dataSource = new MatTableDataSource(AppModule.applicationsInfo);
     this.allApplications = AppModule.allApplications;
     this.allStudents = AppModule.allStudents;
@@ -59,6 +61,10 @@ export class ManagementComponent implements AfterViewInit{
     return this.allRooms.get(roomId).name;
   }
 
+  getRoomPrice(roomId: string) {
+    return this.allRooms.get(roomId).price;
+  }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -69,14 +75,6 @@ export class ManagementComponent implements AfterViewInit{
     }
   }
 
-  // handleApproveReject(id: string, choice: string){
-  
-  //   let app = Array.from(this.allApplications.values()).find(el => el.studentID == id)
-  //   this._service.updateApplicationStatus(app.studentID, new Application(app.type, app.studentID, app.currentRoomID, app.appliedRoomID, app.dateSent, app.dateReturned, app.note, choice));
-        
-   
-  // }
-
   handleApproveReject(application: Application, choice: string){
 
     this.allApplications.forEach((app, key) => {
@@ -85,9 +83,15 @@ export class ManagementComponent implements AfterViewInit{
       }
     });
     
-    this._service.applicationsRef.doc(this.applicationID).update({
+    this._applicationService.applicationsRef.doc(this.applicationID).update({
       status:choice, 
     });
+
+    if(choice == 'Approved') {
+      const price = this.getRoomPrice(application.appliedRoomID);
+      const payment = new Payment(application.studentID, application.appliedRoomID, price, this.date, "Pending");
+      this._paymentService.create(payment);
+    }
  
   }
 
