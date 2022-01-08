@@ -37,10 +37,10 @@
                             </ng-template>
                         </ng-template>
                         <ng-template #managementButtons>
-                            <div [matTooltip]="num.value.currentCapacity>0 ? 'Non-full rooms cannot be edited' : null" [matTooltipPosition]="left">
+                            <div [matTooltip]="num.value.currentCapacity>0 ? 'Only empty rooms can be edited' : null" [matTooltipPosition]="left">
                                 <button mat-button [disabled]="num.value.currentCapacity>0 " (click)="openEditRoomDialog(num.key) ">Edit</button>
                             </div>
-                            <div [matTooltip]="num.value.currentCapacity>0 ? 'Non-full rooms cannot be edited' : null" [matTooltipPosition]="left">
+                            <div [matTooltip]="num.value.currentCapacity>0 ? 'Only empty rooms can be removed' : null" [matTooltipPosition]="left">
                                 <button mat-button [disabled]="num.value.currentCapacity>0 " (click)="remove(num.key) ">Remove</button>
                             </div>
                         </ng-template>

@@ -67,8 +67,7 @@ export class EditRoomDialogComponent implements OnInit {
       _description = this.currentRoom.get(this.data.roomId)?.description;
     }
 
-    const tutorialsRef = this.db.collection('rooms', ref => ref.where('id', '==', this.data.roomId));
-    tutorialsRef.doc(this.data.roomId).update({name:_name, description: _description, maxCapacity: _maxCapacity, price: _price });
+    this._service.roomsRef.doc(this.data.roomId).update({name:_name, description: _description, maxCapacity: _maxCapacity, price: _price });
  
    }
 }

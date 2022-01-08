@@ -43,6 +43,8 @@ export class ManagementComponent implements AfterViewInit{
 
   }
 
+  applicationID: string = "";
+
   ngAfterViewInit() {
   
     this.dataSource.paginator = this.paginator;
@@ -75,10 +77,15 @@ export class ManagementComponent implements AfterViewInit{
    
   // }
 
-  handleApproveReject(id: string, choice: string){
+  handleApproveReject(application: Application, choice: string){
+
+    this.allApplications.forEach((app, key) => {
+      if(app == application){
+        this.applicationID = key;
+      }
+    });
     
-    const tutorialsRef = this.db.collection('applications', ref => ref.where('studentID', '==', id));
-    tutorialsRef.doc().update({
+    this._service.applicationsRef.doc(this.applicationID).update({
       status:choice, 
     });
  
