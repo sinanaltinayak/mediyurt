@@ -48,8 +48,9 @@ export class AnnouncementsComponent implements OnInit {
       )
     ).subscribe(data => { 
       data.forEach(el=> {
-        this.length++;
-        this.allAnnouncements.set(el.id, new Announcement(el.title, el.content, el.date))}
+        this.allAnnouncements.set(el.id, new Announcement(el.title, el.content, el.date))
+        this.length = this.allAnnouncements.size;
+      }
       ); 
     }); 
   }
@@ -80,6 +81,20 @@ export class AnnouncementsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  sortByDate(){
+    let ary = [];
+    this.allAnnouncements.forEach((el, key) => ary.push({
+      id: key,
+      title: el.title,
+      content: el.content,
+      date: el.date,
+    }));
+
+    return ary.sort((a, b) => {
+      return <any>new Date(b.date) - <any>new Date(a.date);
     });
   }
 

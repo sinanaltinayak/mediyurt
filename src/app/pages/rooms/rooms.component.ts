@@ -184,4 +184,23 @@ export class RoomsComponent {
       }
     });
   }
+
+  
+  sortByRoomName(){
+    let ary = [];
+    this.allRooms.forEach((el, key) => ary.push({
+      id: key,
+      name: el.name,
+      currentCapacity: el.currentCapacity,
+      description: el.description,
+      isFull: el.isFull,
+      maxCapacity: el.maxCapacity,
+      price: el.price,
+      status: el.status,
+    }));
+
+    return ary.sort((a, b) => {
+      return <any>new Date(a.name) - <any>new Date(b.name);
+    });
+  }
 }

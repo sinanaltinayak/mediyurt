@@ -8,7 +8,7 @@
         </mat-toolbar>
 
         <div fxLayout="row wrap" fxLayoutGap="16px grid">
-            <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let num of allRooms | keyvalue | slice:pageIndex*pageSize:pageIndex*pageSize + pageSize">
+            <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let num of sortByRoomName() | keyvalue | slice:pageIndex*pageSize:pageIndex*pageSize + pageSize">
                 <mat-card class="mat-elevation-z4">
                     <mat-card-header>
                         <mat-card-title>{{num.value.name}}</mat-card-title>
@@ -27,7 +27,7 @@
                             <div *ngIf="studentRoomID == ''; then apply; else requestChange"></div>
                             <ng-template #apply>
                                 <div [matTooltip]="num.value.isFull ? 'Room is full' : null" [matTooltipPosition]="left">
-                                    <button mat-button disabled="num.value.currentCapacity == num.value.maxCapacity" (click)="openApplicationDialog('Room Application', num.key)">Apply {{num.value.currentCapacity}} / {{num.value.maxCapacity}} </button>
+                                    <button mat-button [disabled]="num.value.isFull" (click)="openApplicationDialog('Room Application', num.key)">Apply {{num.value.currentCapacity}} / {{num.value.maxCapacity}} </button>
                                 </div>
                             </ng-template>
                             <ng-template #requestChange>
