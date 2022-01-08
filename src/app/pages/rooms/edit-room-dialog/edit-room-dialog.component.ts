@@ -71,10 +71,6 @@ export class EditRoomDialogComponent implements OnInit {
       _description = this.currentRoom.get(this.data.roomId)?.description;
     }
 
-    const metaData = {"contentType": this.selectedImage.type};
-    const storageRef = this.storage.storage.ref('Rooms Images/${this.name}.jpg');
-    storageRef.put(this.selectedImage, metaData);
-    console.log("Uploading: ", this.selectedImage.name);
 
     
     const file = this.selectedImage;

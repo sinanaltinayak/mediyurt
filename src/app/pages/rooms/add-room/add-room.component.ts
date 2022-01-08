@@ -50,11 +50,6 @@ export class AddRoomComponent implements OnInit {
       let room = new Room(this.name, this.maxCapacity, this.description, this.price, this.status, this.currentCapacity, false);
       this._roomService.create(room);
   
-      const metaData = {"contentType": this.selectedImage.type};
-      const storageRef = this.storage.storage.ref('Rooms Images/${this.name}.jpg');
-      storageRef.put(this.selectedImage, metaData);
-      console.log("Uploading: ", this.selectedImage.name);
-  
       
       const file = this.selectedImage;
       const name = this.name;
