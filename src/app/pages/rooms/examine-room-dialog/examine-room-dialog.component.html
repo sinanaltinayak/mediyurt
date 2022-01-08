@@ -2,7 +2,7 @@
 
 <div class="container">
     <div class="mat-typography container-image">
-        <img mat-card-image src="">
+        <img mat-card-image [src]="getDownloadURL(currentRoom.get(this.data.roomId)?.name)">
     </div>
     <div class="container-info">
         <h3>Description</h3>

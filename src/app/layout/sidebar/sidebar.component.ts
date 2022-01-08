@@ -195,16 +195,18 @@ export class SidebarComponent implements OnInit {
         ({id: c.payload.doc.id, 
           appliedRoomID: c.payload.doc.data().appliedRoomID,
           currentRoomID: c.payload.doc.data().currentRoomID, 
-          date: c.payload.doc.data().date, 
+          dateSent: c.payload.doc.data().dateSent, 
+          dateReturned: c.payload.doc.data().dateReturned, 
           note: c.payload.doc.data().note,
           studentID: c.payload.doc.data().studentID, 
           type: c.payload.doc.data().type, 
+          status: c.payload.doc.data().status, 
         })
         )
       )
     ).subscribe(data => { 
       data.forEach(el=> {
-        let row = new Application(el.type, el.studentID, el.currentRoomID, el.appliedRoomID, el.date, el.note);
+        let row = new Application(el.type, el.studentID, el.currentRoomID, el.appliedRoomID, el.dateSent, el.dateReturned, el.note, el.status);
         result.push(row);
         AppModule.allApplications.set(el.id, row);
         });
@@ -250,12 +252,13 @@ export class SidebarComponent implements OnInit {
           name: c.payload.doc.data().name, 
           price: c.payload.doc.data().price, 
           status: c.payload.doc.data().status,  
+          isFull: c.payload.doc.data().isFull,  
         })
         )
       )
     ).subscribe(data => { 
       data.forEach(el=> {
-        AppModule.allRooms.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity))
+        AppModule.allRooms.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity, el.isFull))
       }
       );
     });

@@ -41,6 +41,7 @@ export class ApplicationDialogComponent implements OnInit {
           name: c.payload.doc.data().name, 
           price: c.payload.doc.data().price, 
           status: c.payload.doc.data().status,  
+          isFull: c.payload.doc.data().isFull,  
         })
         
         )
@@ -50,7 +51,7 @@ export class ApplicationDialogComponent implements OnInit {
         console.log(el.id);
         console.log(this.currentStudentCurrentRoomID);
         if (el.id == this.data.roomId) {
-          this.currentRoom.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity));
+          this.currentRoom.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity, el.isFull));
         }
         if(el.id == this.currentStudentCurrentRoomID){
           this.currentStudentCurrentRoomName = el.name;
@@ -61,7 +62,7 @@ export class ApplicationDialogComponent implements OnInit {
   }
 
   handleApply(){
-    let application = new Application(this.data.applicationType, Array.from(this.currentStudent.keys())[0], this.currentStudentCurrentRoomID, Array.from(this.currentRoom.keys())[0], this.date, this.note);
+    let application = new Application(this.data.applicationType, Array.from(this.currentStudent.keys())[0], this.currentStudentCurrentRoomID, Array.from(this.currentRoom.keys())[0], this.date, "", this.note, "Pending");
     this._applicationService.create(application);
   }
 

@@ -12,6 +12,7 @@ import { AppModule } from 'src/app/app.module';
 import { StudentsService } from 'src/app/services/students.service';
 import { AppComponent } from 'src/app/app.component';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { TooltipPosition } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-room',
@@ -34,6 +35,8 @@ export class RoomsComponent {
   pageIndex = 0;
   pageSizeOptions = [3, 9, 18];
   showFirstLastButtons = true;
+
+  left: TooltipPosition = 'left';
 
   userType:string = AppModule.userType;
 
@@ -64,13 +67,14 @@ export class RoomsComponent {
           name: c.payload.doc.data().name, 
           price: c.payload.doc.data().price, 
           status: c.payload.doc.data().status, 
+          isFull: c.payload.doc.data().isFull, 
         })
         
         )
       )
     ).subscribe(data => { 
       data.forEach(el=> {
-        this.allRooms.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity))
+        this.allRooms.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity, el.isFull))
         this.storage.storage.ref("Rooms Images/"+el.name+".jpg").getDownloadURL().then(
           (url: string) => {
             this.roomImages.set(el.name, url);

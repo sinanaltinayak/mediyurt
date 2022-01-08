@@ -43,6 +43,7 @@ export class PaymentDialogComponent implements OnInit {
           name: c.payload.doc.data().name,
           price: c.payload.doc.data().price,
           status: c.payload.doc.data().status,
+          isFull: c.payload.doc.data().isFull,
         })
 
         )
@@ -50,7 +51,7 @@ export class PaymentDialogComponent implements OnInit {
     ).subscribe(data => {
       data.forEach(el=> {
         if (el.id == this.currentStudentCurrentRoomID) {
-          this.currentRoom.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity));
+          this.currentRoom.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity, el.isFull));
         }
         if(el.id == this.currentStudentCurrentRoomID){
           this.currentStudentCurrentRoomName = el.name;

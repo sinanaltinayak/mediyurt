@@ -21,23 +21,37 @@
                     </mat-card-content>
                     <mat-card-actions>
                         <button mat-button (click)="openExamineRoomDialog(num.key)">Examine</button>
+
                         <div *ngIf="userType == 'student'; then studentButtons; else managementButtons"></div>
                         <ng-template #studentButtons>
                             <div *ngIf="studentRoomID == ''; then apply; else requestChange"></div>
-                            <ng-template #apply><button mat-button *ngIf="studentRoomID == '' && num.value.currentCapacity != num.value.maxCapacity" (click)="openApplicationDialog('Room Application', num.key)">Apply</button></ng-template>
-                            <ng-template #requestChange><button mat-button *ngIf="studentRoomID != '' && num.value.currentCapacity != num.value.maxCapacity" (click)="openApplicationDialog('Room Change Request', num.key)">Request a Room Change</button></ng-template>
+                            <ng-template #apply>
+                                <div [matTooltip]="num.value.isFull ? 'Room is full' : null" [matTooltipPosition]="left">
+                                    <button mat-button disabled="num.value.currentCapacity == num.value.maxCapacity" (click)="openApplicationDialog('Room Application', num.key)">Apply {{num.value.currentCapacity}} / {{num.value.maxCapacity}} </button>
+                                </div>
+                            </ng-template>
+                            <ng-template #requestChange>
+                                <div [matTooltip]="num.value.isFull ? 'Room is full' : null" [matTooltipPosition]="left">
+                                    <button mat-button [disabled]="num.value.isFull" (click)=" openApplicationDialog( 'Room Change Request', num.key) ">Request a Room Change {{num.value.currentCapacity}} / {{num.value.maxCapacity}} </button>
+                                </div>
+                            </ng-template>
                         </ng-template>
                         <ng-template #managementButtons>
-                            <button mat-button *ngIf="num.value.currentCapacity == 0" (click)="openEditRoomDialog(num.key)">Edit</button>
-                            <button mat-button *ngIf="num.value.currentCapacity == 0" (click)="remove(num.key)">Remove</button>
+                            <div [matTooltip]="num.value.currentCapacity>0 ? 'Non-full rooms cannot be edited' : null" [matTooltipPosition]="left">
+                                <button mat-button [disabled]="num.value.currentCapacity>0 " (click)="openEditRoomDialog(num.key) ">Edit</button>
+                            </div>
+                            <div [matTooltip]="num.value.currentCapacity>0 ? 'Non-full rooms cannot be edited' : null" [matTooltipPosition]="left">
+                                <button mat-button [disabled]="num.value.currentCapacity>0 " (click)="remove(num.key) ">Remove</button>
+                            </div>
                         </ng-template>
+
                     </mat-card-actions>
                 </mat-card>
             </div>
         </div>
 
-        <div class="paginator">
-            <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize" [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="pageSizeOptions" [pageIndex]="pageIndex" aria-label="Select page">>
+        <div class="paginator ">
+            <mat-paginator (page)="handlePageEvent($event) " [length]="length " [pageSize]="pageSize " [showFirstLastButtons]="showFirstLastButtons " [pageSizeOptions]="pageSizeOptions " [pageIndex]="pageIndex " aria-label="Select page ">>
             </mat-paginator>
         </div>
     </div>

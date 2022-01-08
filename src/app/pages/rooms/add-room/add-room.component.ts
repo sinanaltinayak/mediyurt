@@ -48,7 +48,7 @@ export class AddRoomComponent implements OnInit {
 
   addRoom(){
     if (this.roomNameErrorMessage != ""){
-      let room = new Room(this.name, this.maxCapacity, this.description, this.price, this.status, this.currentCapacity);
+      let room = new Room(this.name, this.maxCapacity, this.description, this.price, this.status, this.currentCapacity, false);
       this._roomService.create(room);
   
       const metaData = {"contentType": this.selectedImage.type};

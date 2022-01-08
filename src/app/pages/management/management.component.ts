@@ -9,6 +9,7 @@ import { ApplicationsService } from 'src/app/services/applications.service';
 import { AppModule } from 'src/app/app.module';
 import { Student } from 'src/app/models/student';
 import { Room } from 'src/app/models/room';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class ManagementComponent implements AfterViewInit{
 
   date: string = new Date().toString();
 
-  displayedColumns: string[] = [ 'date', 'type', 'studentName', 'currentRoom', 'appliedRoom', 'note', 'status'];
+  displayedColumns: string[] = [ 'dateSent', 'type', 'studentName', 'currentRoom', 'appliedRoom', 'note', 'status'];
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -34,7 +35,7 @@ export class ManagementComponent implements AfterViewInit{
 
   public dataSource: MatTableDataSource<Application>;
 
-  constructor(public _service: ApplicationsService) { 
+  constructor(public _service: ApplicationsService, private db: AngularFirestore) { 
     this.dataSource = new MatTableDataSource(AppModule.applicationsInfo);
     this.allApplications = AppModule.allApplications;
     this.allStudents = AppModule.allStudents;
@@ -65,4 +66,22 @@ export class ManagementComponent implements AfterViewInit{
       this.dataSource.paginator.firstPage();
     }
   }
+
+  // handleApproveReject(id: string, choice: string){
+  
+  //   let app = Array.from(this.allApplications.values()).find(el => el.studentID == id)
+  //   this._service.updateApplicationStatus(app.studentID, new Application(app.type, app.studentID, app.currentRoomID, app.appliedRoomID, app.dateSent, app.dateReturned, app.note, choice));
+        
+   
+  // }
+
+  handleApproveReject(id: string, choice: string){
+    
+    const tutorialsRef = this.db.collection('applications', ref => ref.where('studentID', '==', id));
+    tutorialsRef.doc().update({
+      status:choice, 
+    });
+ 
+  }
+
 }

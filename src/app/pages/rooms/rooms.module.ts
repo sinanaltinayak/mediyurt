@@ -21,6 +21,7 @@ import { ApplicationDialogComponent } from './application-dialog/application-dia
 import { AddRoomComponent } from './add-room/add-room.component';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -45,6 +46,7 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatIconModule,
     MatInputModule,
+    MatTooltipModule,
   ],
   declarations: [RoomsComponent, ExamineRoomDialogComponent, EditRoomDialogComponent, ApplicationDialogComponent, AddRoomComponent]
 })

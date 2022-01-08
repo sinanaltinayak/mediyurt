@@ -22,12 +22,20 @@ export class ApplicationsService {
     return this.applicationsRef;
   }
 
+  getApplicationByStudentID(id: string): AngularFirestoreCollection<Application>{
+    return this.db.collection('rooms', ref => ref.where('studentID','==',id).where('status','==','Pending'));
+  }
+
   delete(id: string): Promise<void> {
     return this.applicationsRef.doc(id).delete();
   }
 
   update(id: string, data: any): Promise<void> {
     return this.applicationsRef.doc(id).update(data);
+  }
+
+  updateApplicationStatus(id: string, data: any): Promise<void> {
+    return this.db.collection('rooms', ref => ref.where('studentID','==',id).where('status','==','Pending')).doc().update(data);
   }
 
   create(room: Application): any {
@@ -41,5 +49,6 @@ export class ApplicationsService {
   getStudent(studentId: string): AngularFirestoreDocument<Student> {
     return this.db.collection("students").doc(studentId);
   }
+
 
 }
