@@ -6,6 +6,7 @@
         <input matInput type="text" [(ngModel)]="name" (change)="checkRoomName()" required>
         <mat-hint>{{roomNameErrorMessage}}</mat-hint>
     </mat-form-field>
+
     <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
         <textarea matInput rows="10" [(ngModel)]="description" required></textarea>

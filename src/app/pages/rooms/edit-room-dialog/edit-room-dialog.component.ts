@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map } from 'rxjs';
 import { Room } from 'src/app/models/room';
@@ -19,7 +20,10 @@ export class EditRoomDialogComponent implements OnInit {
   maxCapacity: number = 0;
   price: number = 0;
 
-  constructor(private db: AngularFirestore, public dialog: MatDialogModule, public _service: RoomsService, @Inject(MAT_DIALOG_DATA) public data: {roomId: string}) {}
+  acceptedImageFileTypes:string = ".png,.jpg";
+  selectedImage!: any;
+
+  constructor(private db: AngularFirestore, private storage: AngularFireStorage, public dialog: MatDialogModule, public _service: RoomsService, @Inject(MAT_DIALOG_DATA) public data: {roomId: string}) {}
 
   ngOnInit(): void {
     this.getRoom();
@@ -67,7 +71,21 @@ export class EditRoomDialogComponent implements OnInit {
       _description = this.currentRoom.get(this.data.roomId)?.description;
     }
 
+    const metaData = {"contentType": this.selectedImage.type};
+    const storageRef = this.storage.storage.ref('Rooms Images/${this.name}.jpg');
+    storageRef.put(this.selectedImage, metaData);
+    console.log("Uploading: ", this.selectedImage.name);
+
+    
+    const file = this.selectedImage;
+    this.storage.upload('Rooms Images/'+_name+'.jpg', file);
+
     this._service.roomsRef.doc(this.data.roomId).update({name:_name, description: _description, maxCapacity: _maxCapacity, price: _price });
- 
    }
+   
+  onFileSelected(event: any) {
+
+    this.selectedImage = event.target.files[0];
+
+  }
 }

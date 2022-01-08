@@ -29,12 +29,11 @@ export class AddRoomComponent implements OnInit {
   fb!: string;
   imageName = "";
   downloadURL!: Observable<string>;
-  url!: Observable<string | null>;
 
   allRoomNames: string[] = [];
   roomNameErrorMessage: string = "";
 
-  constructor(public dialog: MatDialog, public _roomService: RoomsService, private storage: AngularFireStorage, private db: AngularFireDatabase) {}
+  constructor(public dialog: MatDialog, public _roomService: RoomsService, private storage: AngularFireStorage) {}
 
   ngOnInit(): void { 
     this.getAllRooms();
@@ -59,7 +58,7 @@ export class AddRoomComponent implements OnInit {
       
       const file = this.selectedImage;
       const name = this.name;
-      const task = this.storage.upload('Rooms Images/'+name+'.jpg', file);
+      this.storage.upload('Rooms Images/'+name+'.jpg', file);
     }
   }
   
