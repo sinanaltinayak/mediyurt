@@ -12,6 +12,8 @@ import { Room } from 'src/app/models/room';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { PaymentService } from 'src/app/services/payment.service';
 import { Payment } from 'src/app/models/payment';
+import { StudentsService } from 'src/app/services/students.service';
+import { RoomsService } from 'src/app/services/rooms.service';
 
 
 @Component({
@@ -37,7 +39,7 @@ export class ManagementComponent implements AfterViewInit{
 
   public dataSource: MatTableDataSource<Application>;
 
-  constructor(public _applicationService: ApplicationsService, public _paymentService: PaymentService, private db: AngularFirestore) { 
+  constructor(public _applicationService: ApplicationsService, public _paymentService: PaymentService, public _studentService: StudentsService, public _roomService: RoomsService, private db: AngularFirestore) { 
     this.dataSource = new MatTableDataSource(AppModule.applicationsInfo);
     this.allApplications = AppModule.allApplications;
     this.allStudents = AppModule.allStudents;
@@ -46,6 +48,7 @@ export class ManagementComponent implements AfterViewInit{
   }
 
   applicationID: string = "";
+  roomIDList= [];
 
   ngAfterViewInit() {
   
@@ -65,6 +68,14 @@ export class ManagementComponent implements AfterViewInit{
     return this.allRooms.get(roomId).price;
   }
 
+  getRoomCurrentCapacity(roomId: string) {
+    return this.allRooms.get(roomId).currentCapacity;
+  }
+
+  getRoomMaxCapacity(roomId: string) {
+    return this.allRooms.get(roomId).maxCapacity;
+  }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -75,7 +86,7 @@ export class ManagementComponent implements AfterViewInit{
     }
   }
 
-  handleApproveReject(application: Application, choice: string){
+  async handleApproveReject(application: Application, choice: string){
 
     this.allApplications.forEach((app, key) => {
       if(app == application){
@@ -83,14 +94,50 @@ export class ManagementComponent implements AfterViewInit{
       }
     });
     
-    this._applicationService.applicationsRef.doc(this.applicationID).update({
-      status:choice, 
+    await this._applicationService.applicationsRef.doc(this.applicationID).update({
+      status: choice, 
     });
 
     if(choice == 'Approved') {
       const price = this.getRoomPrice(application.appliedRoomID);
       const payment = new Payment(application.studentID, application.appliedRoomID, price, this.date, "Pending");
-      this._paymentService.create(payment);
+      await this._paymentService.create(payment);
+
+      await this._studentService.studentsRef.doc(application.studentID).update({
+        currentRoomID: application.appliedRoomID, 
+      });
+
+      const roomMaxCapacity = this.getRoomMaxCapacity(application.appliedRoomID);
+      let roomCurrentCapacity = this.getRoomCurrentCapacity(application.appliedRoomID);
+      
+      await this._roomService.roomsRef.doc(application.appliedRoomID).update({
+        currentCapacity: roomCurrentCapacity + 1, 
+      });
+
+      roomCurrentCapacity = this.getRoomCurrentCapacity(application.appliedRoomID);;
+console.log(roomMaxCapacity);
+console.log(roomCurrentCapacity);
+
+      if (roomMaxCapacity == roomCurrentCapacity) {
+
+        console.log("HADİ");
+        await this._roomService.roomsRef.doc(application.appliedRoomID).update({
+          isFull: true, 
+        });
+        
+        this.allApplications.forEach((app, key) => {
+          if(app.appliedRoomID == application.appliedRoomID){
+            this.roomIDList.push(key);
+          }
+        });
+        this.roomIDList.forEach(async (appID) => {
+          if (appID != this.applicationID) {
+            await this.db.collection('applications').doc(appID).update({
+              status: 'Rejected', 
+            });
+          }
+        })
+      }
     }
  
   }

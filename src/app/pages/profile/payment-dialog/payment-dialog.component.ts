@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { map } from 'rxjs';
@@ -24,7 +25,7 @@ export class PaymentDialogComponent implements OnInit {
 
   paymentID = "";
 
-  constructor(public dialog: MatDialogModule, @Inject(MAT_DIALOG_DATA) public data: {applicationType: string},  public _paymentService: PaymentService, public _roomService: RoomsService) { }
+  constructor(public dialog: MatDialogModule, @Inject(MAT_DIALOG_DATA) public data: {applicationType: string},  public _paymentService: PaymentService, public _roomService: RoomsService,  private db: AngularFirestore) { }
 
   ngOnInit(): void {
     this.getRoom();
@@ -78,27 +79,21 @@ export class PaymentDialogComponent implements OnInit {
     ).subscribe(data => {
       console.log("DENEME");
       data.forEach(el=> {
-        // console.log("önce");
-        // console.log(el.id);
-        // console.log("sonra");
-        this.paymentID = el.id;
-
-        // if (el.roomID == this.currentStudentCurrentRoomID && el.studentID==this.currentStudent.) {
-        //   this.paymentID = el.id;
-        // }
-
-
+        if(this.currentStudentCurrentRoomID == el.roomID) {
+          this.currentStudent.forEach((student, key) => {
+            if (key == el.studentID) {
+              this.paymentID = el.id;
+            }
+          });
+        }
       })
     });
 
   }
 
   onPay(){
-    console.log("1");
-    console.log(this.paymentID);
-    console.log("2");
-    //console.log(this.data.payment);
-    console.log("3");
-   // this._paymentService.delete(this.data.payment);
+    this.db.collection('payments').doc(this.paymentID).update({
+      status: 'Paid', 
+    });
   }
 }
