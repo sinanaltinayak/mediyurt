@@ -71,10 +71,11 @@ export class EditRoomDialogComponent implements OnInit {
       _description = this.currentRoom.get(this.data.roomId)?.description;
     }
 
-
+    if(this.selectedImage){
+      const file = this.selectedImage;
+      this.storage.upload('Rooms Images/'+_name+'.jpg', file);
+    }
     
-    const file = this.selectedImage;
-    this.storage.upload('Rooms Images/'+_name+'.jpg', file);
 
     this._service.roomsRef.doc(this.data.roomId).update({name:_name, description: _description, maxCapacity: _maxCapacity, price: _price });
    }

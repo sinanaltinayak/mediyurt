@@ -46,7 +46,7 @@ export class AddRoomComponent implements OnInit {
   }
 
   addRoom(){
-    if (this.roomNameErrorMessage != ""){
+    if (this.roomNameErrorMessage == ""){
       let room = new Room(this.name, this.maxCapacity, this.description, this.price, this.status, this.currentCapacity, false);
       this._roomService.create(room);
   
@@ -64,14 +64,14 @@ export class AddRoomComponent implements OnInit {
   }
 
   checkRoomName(){
-    // const len = this.allRoomNames.find(element => element = this.name);
-    // console.log(len);
-    // if(len!.length > 0){
-    //   this.roomNameErrorMessage = "There is already a room with this name.";
-    // }
-    // else{
-    //   this.roomNameErrorMessage = "";
-    // }
+    const len = this.allRoomNames.includes(this.name);
+    console.log(len);
+    if(len){
+      this.roomNameErrorMessage = "There is already a room with this name.";
+    }
+    else{
+      this.roomNameErrorMessage = "";
+    }
   }
 
   getRoomID(roomName: string){

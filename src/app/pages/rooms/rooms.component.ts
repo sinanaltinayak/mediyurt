@@ -19,10 +19,9 @@ import { TooltipPosition } from '@angular/material/tooltip';
   templateUrl: './rooms.component.html',
   styleUrls: ['./rooms.component.css']
 })
-export class RoomsComponent implements OnDestroy{
+export class RoomsComponent{
 
   currentRoom = new Map<string, Room>();
-  //allRooms = new Map<string, Room>();
   allRooms = [];
   roomImages = new Map<string, string>();
 
@@ -53,9 +52,6 @@ export class RoomsComponent implements OnDestroy{
     this.getAllRooms();
   }
 
-  ngOnDestroy(): void {
-      
-  }
 
   getDownloadURL(roomName: string){
     return this.roomImages.get(roomName);
@@ -77,6 +73,7 @@ export class RoomsComponent implements OnDestroy{
         )
       )
     ).subscribe(data => { 
+      this.allRooms = [];
       data.forEach(el=> {
 
         this.allRooms.push({
@@ -114,13 +111,6 @@ export class RoomsComponent implements OnDestroy{
       });
   }
 
-  getRoomId(roomName: string) {
-    // this._roomService.getRoomIDByRoomName(roomName).get().subscribe((ss) =>{
-    //   ss.
-    // });
-    //return "3VlWhAwLk1upvsuKE8tE";
-  }
-
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
     this.pageSize = event.pageSize;
@@ -152,6 +142,7 @@ export class RoomsComponent implements OnDestroy{
       console.log(`Dialog result: ${result}`);
       if(result == true){
         this.myapp.openSnackBar("Room information was updated.", "Close");
+        this.myapp.reload("rooms",250);
       }
     });
   }
@@ -185,6 +176,7 @@ export class RoomsComponent implements OnDestroy{
 
   remove(id: string){
     this._roomService.delete(id);
+    this.myapp.openSnackBar("Room removed successfully.", "Close");
   }
 
   openAddRoomDialog(): void {
@@ -197,7 +189,7 @@ export class RoomsComponent implements OnDestroy{
       console.log(`Dialog result: ${result}`);
       if(result == true){
         this.myapp.openSnackBar("New room was added.", "Close");
-        this.ngOnInit();
+        this.myapp.reload("rooms",250);
       }
     });
   }

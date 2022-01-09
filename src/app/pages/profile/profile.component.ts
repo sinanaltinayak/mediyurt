@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
   currentStudentCurrentRoomID = Array.from(this.currentStudent.values())[0].currentRoomID;
   currentStudentCurrentRoomName = "";
 
-  currentStudentPayment = [];
+  currentStudentPayment;
 
   paymentIsExist:number = 0;
   hidden = false;
@@ -33,7 +33,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getStudentRoomName();
-    this.getPaymentsofStudent(Array.from(this.currentStudent.keys())[0]);
+    this.getPaymentofStudent(Array.from(this.currentStudent.keys())[0]);
   }
 
 
@@ -43,9 +43,8 @@ export class ProfileComponent implements OnInit {
       data: {
         studentName: this.currentStudentFullName,
         roomName: this.currentStudentCurrentRoomName,
-        price: this.currentStudentPayment[0].price,
+        price: this.currentStudentPayment.price,
       },
-      disableClose: true,
       hasBackdrop: true,
       autoFocus: false
     });
@@ -54,8 +53,9 @@ export class ProfileComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       if(result==true){
-        this.ngOnInit;
+        this.onPay(this.currentStudentPayment.id);
         this.paymentIsExist = 0;
+        this.currentStudentPayment = {};
       }
     });
   }
@@ -80,7 +80,7 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  getPaymentsofStudent(id: string){
+  getPaymentofStudent(id: string){
     this._paymentService.getPaymentsofStudent(id).snapshotChanges().pipe(
       map(changes => changes.map(c=>({
         id: c.payload.doc.id,
@@ -91,18 +91,23 @@ export class ProfileComponent implements OnInit {
         status: c.payload.doc.data().status,
       })))
     ).subscribe(data => {
+      this.currentStudentPayment = {};
       data.forEach(el=> {
-        this.currentStudentPayment.push({
+        this.currentStudentPayment = {
           id: el.id,
           date: el.date,
           studentID: el.studentID,
           roomID: el.roomID,
           status: el.status,
           price: el.price
-        })
+        }
+        this.paymentIsExist = this.currentStudentPayment.length;
       });
-      this.paymentIsExist = this.currentStudentPayment.length;
-      console.log(this.currentStudentPayment)
+      console.log("curpay",this.currentStudentPayment)
     })
+  }
+
+  onPay(id: string){
+    this._paymentService.makePayment(id);
   }
 }

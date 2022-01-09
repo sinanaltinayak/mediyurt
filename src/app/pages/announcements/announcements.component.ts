@@ -7,6 +7,7 @@ import { AnnouncementsService } from 'src/app/services/announcements.service';
 import { map } from 'rxjs';
 import { Announcement } from 'src/app/models/announcement';
 import { AppModule } from 'src/app/app.module';
+import { AppComponent } from 'src/app/app.component';
 
 
 @Component({
@@ -18,7 +19,6 @@ export class AnnouncementsComponent implements OnInit {
   
   currentAnnouncement = new Map<string, Announcement>();
   allAnnouncements = [];
-  //allAnnouncements = new Map<string, Announcement>();
   
   gridColumns = 3;
   length = 0;
@@ -31,13 +31,13 @@ export class AnnouncementsComponent implements OnInit {
 
   title = 'Announcements';
 
-  constructor(public dialog: MatDialog, public _service: AnnouncementsService) { }
+  constructor(public dialog: MatDialog, public _service: AnnouncementsService, public myapp: AppComponent) { }
 
   ngOnInit(): void {
-    this.getAllRooms();
+    this.getAllAnnouncements();
   }
 
-  getAllRooms(){
+  getAllAnnouncements(){
     this._service.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
         ({id: c.payload.doc.id, 
@@ -48,6 +48,7 @@ export class AnnouncementsComponent implements OnInit {
         )
       )
     ).subscribe(data => { 
+      this.allAnnouncements = [];
       data.forEach(el=> {
 
         this.allAnnouncements.push({
@@ -60,9 +61,9 @@ export class AnnouncementsComponent implements OnInit {
         this.allAnnouncements.sort((a, b) => {
           return <any>new Date(b.date) - <any>new Date(a.date);
         });
+        this.length = this.allAnnouncements.length;
       }); 
      
-      this.length = this.allAnnouncements.length;
     }); 
   }
 
@@ -92,9 +93,17 @@ export class AnnouncementsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      if(result==true){
+        this.myapp.openSnackBar("Announcement was added.", "Close");
+        this.myapp.reload("announcements",250);
+      }
     });
   }
-
+  
+  removeAnnouncement(id: string){
+    this._service.delete(id);
+    this.myapp.openSnackBar("Announcement deleted successfully.", "Close");
+  }
 }
 
 

@@ -2,6 +2,7 @@ import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore} from '@angular/fire/compat/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { collection, query, doc, deleteDoc } from 'firebase/firestore';
 import { flatMap, map, Observable } from 'rxjs';
 import { AppModule } from './app.module';
@@ -18,7 +19,7 @@ export class AppComponent {
   title = 'mediyurt';
 
 
-  constructor (private store: AngularFirestore, private _snackBar: MatSnackBar) { }
+  constructor (private store: AngularFirestore, private _snackBar: MatSnackBar, private myRoute: Router) { }
 
   openSnackBar(title: string, action: string) {
     this._snackBar.open(title, action, {
@@ -26,6 +27,15 @@ export class AppComponent {
       verticalPosition: "bottom",
       duration: 5000,
     });
+  }
+
+  
+  reload(location: string, time: number){
+    setTimeout(() => {
+      this.myRoute.navigateByUrl("/"+location);
+    },
+    time);
+    this.myRoute.navigateByUrl("/loading");
   }
 
   delete() {

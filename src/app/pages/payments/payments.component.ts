@@ -45,7 +45,12 @@ export class PaymentsComponent implements AfterViewInit {
     this.sort.active = sortState.active;
     this.sort.direction = sortState.direction;
     this.sort.sortChange.emit(sortState);
+
     this.dataSource.paginator = this.paginator;
+
+    this.dataSource.filterPredicate = function(data, filter: string): boolean {
+      return data.date.toLowerCase().includes(filter) || data.studentID.toLowerCase().includes(filter) || data.price.toString() === filter;
+    };
   }
 
   getStudentName(studentId: string){
@@ -60,6 +65,7 @@ export class PaymentsComponent implements AfterViewInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
+    console.log(this.dataSource.filter);
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }

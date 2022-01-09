@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AppModule } from 'src/app/app.module';
-import { MediyurtService } from 'src/app/services/mediyurt.service';
 import { StudentsService } from 'src/app/services/students.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
@@ -41,7 +40,7 @@ export class SidebarComponent implements OnInit {
   currentStudent = new Map<string, Student>();
   allStudents = new Map<string, Student>();
 
-  constructor(public _service: StudentsService, public _appService: ApplicationsService, public _paymentService: PaymentsService, public _roomService: RoomsService, public myapp: AppComponent, private _router: Router, private ms: MediyurtService) { }
+  constructor(public _service: StudentsService, public _appService: ApplicationsService, public _paymentService: PaymentsService, public _roomService: RoomsService, public myapp: AppComponent, private _router: Router) { }
 
   ngOnInit(): void {
     this.getAllStudents();
@@ -80,7 +79,7 @@ export class SidebarComponent implements OnInit {
           this.userType = "management";
           AppModule.userManager = this.currentManager;
           AppModule.userType = this.userType;
-          this.ms.getAllApplications();
+          this._appService.getAllApplications();
           this.getAllPayments();
           this.getAllRooms();
           this.myapp.openSnackBar("Welcome "+data[0].fullname, "Continue");
@@ -185,35 +184,6 @@ export class SidebarComponent implements OnInit {
       }
       );
     });
-  }
-
-  getAllApplications(){
-
-    let result: Application[] =[];
-
-    this._appService.getAll().snapshotChanges().pipe(
-      map(changes=> changes.map(c=>
-        ({id: c.payload.doc.id, 
-          appliedRoomID: c.payload.doc.data().appliedRoomID,
-          currentRoomID: c.payload.doc.data().currentRoomID, 
-          dateSent: c.payload.doc.data().dateSent, 
-          dateReturned: c.payload.doc.data().dateReturned, 
-          note: c.payload.doc.data().note,
-          studentID: c.payload.doc.data().studentID, 
-          type: c.payload.doc.data().type, 
-          status: c.payload.doc.data().status, 
-        })
-        )
-      )
-    ).subscribe(data => { 
-      data.forEach(el=> {
-        let row = new Application(el.type, el.studentID, el.currentRoomID, el.appliedRoomID, el.dateSent, el.dateReturned, el.note, el.status);
-        result.push(row);
-        AppModule.allApplications.set(el.id, row);
-        });
-      AppModule.applicationsInfo = result; 
-    }); 
-
   }
 
   getAllPayments(){

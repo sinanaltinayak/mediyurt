@@ -14,9 +14,8 @@ import { PaymentsService } from 'src/app/services/payments.service';
 import { Payment } from 'src/app/models/payment';
 import { StudentsService } from 'src/app/services/students.service';
 import { RoomsService } from 'src/app/services/rooms.service';
-import { SidebarComponent } from 'src/app/layout/sidebar/sidebar.component';
-import { MediyurtService } from 'src/app/services/mediyurt.service';
 import { Router } from '@angular/router';
+import { AppComponent } from 'src/app/app.component';
 
 
 @Component({
@@ -42,9 +41,7 @@ export class ManagementComponent implements AfterViewInit{
 
   public dataSource: MatTableDataSource<Application>;
 
-  constructor(public _applicationService: ApplicationsService, public _paymentService: PaymentsService, public _studentService: StudentsService, public _roomService: RoomsService, private db: AngularFirestore, private ms: MediyurtService, private myRoute: Router) { 
-    console.log("const",AppModule.applicationsInfo);
-    
+  constructor(public _applicationService: ApplicationsService, public _paymentService: PaymentsService, public _studentService: StudentsService, public _roomService: RoomsService, private db: AngularFirestore, private myapp: AppComponent) {     
     this.dataSource = new MatTableDataSource(AppModule.applicationsInfo);
     this.allApplications = AppModule.allApplications;
     this.allStudents = AppModule.allStudents;
@@ -150,21 +147,11 @@ export class ManagementComponent implements AfterViewInit{
       }
       
     }
-    console.log("appmod",AppModule.applicationsInfo);
     AppModule.applicationsInfo = [];
     AppModule.allApplications.clear();
-    console.log("appmod",AppModule.applicationsInfo);
-    this.ms.getAllApplications();
-    this.travel();
-    console.log("xd")
+    this._applicationService.getAllApplications();
+    this.myapp.reload("management",150);
  
   }
 
-  travel(){
-    setTimeout(() => {
-      this.myRoute.navigateByUrl("/management");
-    },
-    150);
-    this.myRoute.navigateByUrl("/loading");
-  }
 }

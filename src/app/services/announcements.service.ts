@@ -18,6 +18,10 @@ export class AnnouncementsService {
     return this.announcementsRef;
   }
 
+  delete(id: string): Promise<void> {
+    return this.announcementsRef.doc(id).delete();
+  }
+
   create(announcement: Announcement): any {
     return this.announcementsRef.add({ ...announcement });
   }

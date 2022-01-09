@@ -23,6 +23,7 @@
                     </mat-card-content>
                     <mat-card-actions>
                         <button mat-button (click)="openExamineAnnouncementDialog(num.value.id)">Examine</button>
+                        <button *ngIf=" userType=='management'" mat-button (click)="removeAnnouncement(num.value.id)">Delete</button>
                     </mat-card-actions>
                 </mat-card>
             </div>

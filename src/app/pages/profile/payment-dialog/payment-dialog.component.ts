@@ -45,12 +45,13 @@ export class PaymentDialogComponent implements OnInit {
         )
       )
     ).subscribe(data => {
-      console.log("DENEME");
+      this.paymentID = "";
       data.forEach(el=> {
         if(this.currentStudentCurrentRoomID == el.roomID) {
           this.currentStudent.forEach((student, key) => {
             if (key == el.studentID) {
               this.paymentID = el.id;
+              console.log(this.paymentID);
             }
           });
         }
@@ -59,7 +60,4 @@ export class PaymentDialogComponent implements OnInit {
 
   }
 
-  onPay(){
-    this._paymentService.makePayment(this.paymentID);
-  }
 }
