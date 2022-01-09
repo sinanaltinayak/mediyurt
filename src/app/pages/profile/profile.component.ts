@@ -5,6 +5,7 @@ import { AppModule } from 'src/app/app.module';
 import { Payment } from 'src/app/models/payment';
 import { Student } from 'src/app/models/student';
 import { ApplicationsService } from 'src/app/services/applications.service';
+import { PaymentsService } from 'src/app/services/payments.service';
 import { RoomsService } from 'src/app/services/rooms.service';
 import { PaymentDialogComponent } from './payment-dialog/payment-dialog.component';
 
@@ -23,22 +24,27 @@ export class ProfileComponent implements OnInit {
   currentStudentCurrentRoomID = Array.from(this.currentStudent.values())[0].currentRoomID;
   currentStudentCurrentRoomName = "";
 
-  currentStudentPayments = new Map<string, Payment>();
+  currentStudentPayment = [];
 
-  number = 1;
+  paymentIsExist:number = 0;
   hidden = false;
 
-  constructor(private dialog: MatDialog, public _roomService: RoomsService, public _applicationService: ApplicationsService) { }
+  constructor(private dialog: MatDialog, public _roomService: RoomsService, public _paymentService: PaymentsService, public _applicationService: ApplicationsService) { }
 
   ngOnInit(): void {
     this.getStudentRoomName();
+    this.getPaymentsofStudent(Array.from(this.currentStudent.keys())[0]);
   }
 
 
-  toggleBadgeVisibility() {
-    this.number = 0;
+  openPaymentDialog() {
     const dialogRef = this.dialog.open(PaymentDialogComponent, {
       width: "50%",
+      data: {
+        studentName: this.currentStudentFullName,
+        roomName: this.currentStudentCurrentRoomName,
+        price: this.currentStudentPayment[0].price,
+      },
       disableClose: true,
       hasBackdrop: true,
       autoFocus: false
@@ -47,6 +53,10 @@ export class ProfileComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      if(result==true){
+        this.ngOnInit;
+        this.paymentIsExist = 0;
+      }
     });
   }
 
@@ -67,5 +77,32 @@ export class ProfileComponent implements OnInit {
         }
       ); 
     }); 
+
+  }
+
+  getPaymentsofStudent(id: string){
+    this._paymentService.getPaymentsofStudent(id).snapshotChanges().pipe(
+      map(changes => changes.map(c=>({
+        id: c.payload.doc.id,
+        studentID: c.payload.doc.data().studentID,
+        roomID: c.payload.doc.data().roomID,
+        date: c.payload.doc.data().date,
+        price: c.payload.doc.data().price,
+        status: c.payload.doc.data().status,
+      })))
+    ).subscribe(data => {
+      data.forEach(el=> {
+        this.currentStudentPayment.push({
+          id: el.id,
+          date: el.date,
+          studentID: el.studentID,
+          roomID: el.roomID,
+          status: el.status,
+          price: el.price
+        })
+      });
+      this.paymentIsExist = this.currentStudentPayment.length;
+      console.log(this.currentStudentPayment)
+    })
   }
 }

@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { map } from 'rxjs';
+import { AppModule } from '../app.module';
+import { Application } from '../models/application';
 import { Student } from '../models/student';
+import { ApplicationsService } from './applications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +14,7 @@ export class MediyurtService {
 
   // bu service biraz deneme service'i gibi kullandım, her model için ayrı service açsak daha güzel olabilir
 
-  constructor(private store: AngularFirestore) { }
+  constructor(private store: AngularFirestore, private _appService: ApplicationsService) { }
 
   login(username: string, password: string): any{
 
@@ -20,6 +24,44 @@ export class MediyurtService {
     //     console.log(el.data()))
     // );
   }
+
+
+  getAllApplications(){
+
+    AppModule.allApplications.clear();
+    AppModule.applicationsInfo = [];
+    let result: Application[] =[];
+
+    this._appService.getAll().snapshotChanges().pipe(
+      map(changes=> changes.map(c=>
+        ({id: c.payload.doc.id, 
+          appliedRoomID: c.payload.doc.data().appliedRoomID,
+          currentRoomID: c.payload.doc.data().currentRoomID, 
+          dateSent: c.payload.doc.data().dateSent, 
+          dateReturned: c.payload.doc.data().dateReturned, 
+          note: c.payload.doc.data().note,
+          studentID: c.payload.doc.data().studentID, 
+          type: c.payload.doc.data().type, 
+          status: c.payload.doc.data().status, 
+        })
+        )
+      )
+    ).subscribe(data => { 
+      data.forEach(el=> {
+        let row = new Application(el.type, el.studentID, el.currentRoomID, el.appliedRoomID, el.dateSent, el.dateReturned, el.note, el.status);
+        result.push(row);
+        AppModule.allApplications.set(el.id, row);
+
+        console.log(el)
+        });
+      AppModule.applicationsInfo = result; 
+      console.log(AppModule.applicationsInfo);
+    }); 
+
+  }
+
+
+
 
   getAll(){    
 

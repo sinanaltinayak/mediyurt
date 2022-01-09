@@ -1,12 +1,12 @@
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
+import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { AppModule } from 'src/app/app.module';
 import { Payment } from 'src/app/models/payment';
 import { Room } from 'src/app/models/room';
 import { Student } from 'src/app/models/student';
-import { PaymentService } from 'src/app/services/payment.service';
+import { PaymentsService } from 'src/app/services/payments.service';
 
 @Component({
   selector: 'app-payments',
@@ -30,7 +30,7 @@ export class PaymentsComponent implements AfterViewInit {
 
   public dataSource: MatTableDataSource<Payment>;
 
-  constructor(public _service: PaymentService) { 
+  constructor(public _service: PaymentsService) { 
     this.dataSource = new MatTableDataSource(AppModule.paymentsInfo);
     this.allPayments = AppModule.allPayments;
     this.allStudents = AppModule.allStudents;
@@ -39,8 +39,13 @@ export class PaymentsComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.sort = this.sort;
+    const sortState: Sort = {active: 'date', direction: 'desc'};
+    this.sort.active = sortState.active;
+    this.sort.direction = sortState.direction;
+    this.sort.sortChange.emit(sortState);
+    this.dataSource.paginator = this.paginator;
   }
 
   getStudentName(studentId: string){

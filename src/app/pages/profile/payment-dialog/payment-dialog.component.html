@@ -3,15 +3,15 @@
 <mat-dialog-content class="container">
     <mat-form-field appearance="fill">
         <mat-label>Student</mat-label>
-        <input matInput readonly ngModel="{{currentStudentFullName}}">
+        <input matInput readonly ngModel="{{data.studentName}}">
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Room</mat-label>
-        <input matInput readonly ngModel="{{currentStudentCurrentRoomName}}">
+        <input matInput readonly ngModel="{{data.roomName}}">
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Price</mat-label>
-        <input matInput readonly ngModel="{{currentStudentCurrentRoomPrice}} TL">
+        <input matInput readonly ngModel="{{data.price.toString()}} TL">
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

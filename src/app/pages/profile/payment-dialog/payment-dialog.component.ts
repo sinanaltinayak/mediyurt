@@ -5,7 +5,7 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { map } from 'rxjs';
 import { AppModule } from 'src/app/app.module';
 import { Room } from 'src/app/models/room';
-import { PaymentService } from 'src/app/services/payment.service';
+import { PaymentsService } from 'src/app/services/payments.service';
 import { RoomsService } from 'src/app/services/rooms.service';
 
 @Component({
@@ -25,42 +25,10 @@ export class PaymentDialogComponent implements OnInit {
 
   paymentID = "";
 
-  constructor(public dialog: MatDialogModule, @Inject(MAT_DIALOG_DATA) public data: {applicationType: string},  public _paymentService: PaymentService, public _roomService: RoomsService,  private db: AngularFirestore) { }
+  constructor(public dialog: MatDialogModule, @Inject(MAT_DIALOG_DATA) public data: { studentName: string, roomName: string, price: number},  public _paymentService: PaymentsService, private db: AngularFirestore) { }
 
   ngOnInit(): void {
-    this.getRoom();
     this.getPayment();
-  }
-
-  currentRoom = new Map<string, Room>();
-
-  getRoom(){
-    this._roomService.getAll().snapshotChanges().pipe(
-      map(changes=> changes.map(c=>
-        ({id: c.payload.doc.id,
-          currentCapacity: c.payload.doc.data().currentCapacity,
-          description: c.payload.doc.data().description,
-          maxCapacity: c.payload.doc.data().maxCapacity,
-          name: c.payload.doc.data().name,
-          price: c.payload.doc.data().price,
-          status: c.payload.doc.data().status,
-          isFull: c.payload.doc.data().isFull,
-        })
-
-        )
-      )
-    ).subscribe(data => {
-      data.forEach(el=> {
-        if (el.id == this.currentStudentCurrentRoomID) {
-          this.currentRoom.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity, el.isFull));
-        }
-        if(el.id == this.currentStudentCurrentRoomID){
-          this.currentStudentCurrentRoomName = el.name;
-          this.currentStudentCurrentRoomPrice = el.price;
-        }
-      })
-    });
-
   }
 
   getPayment(){
@@ -92,8 +60,6 @@ export class PaymentDialogComponent implements OnInit {
   }
 
   onPay(){
-    this.db.collection('payments').doc(this.paymentID).update({
-      status: 'Paid', 
-    });
+    this._paymentService.makePayment(this.paymentID);
   }
 }

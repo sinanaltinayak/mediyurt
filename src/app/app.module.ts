@@ -17,6 +17,7 @@ import { ProfileModule } from './pages/profile/profile.module';
 import { ManagementModule } from './pages/management/management.module';
 import { MatListModule } from '@angular/material/list';
 import { PaymentsModule } from './pages/payments/payments.module';
+import { LoadingModule } from './pages/loading/loading.module';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 
@@ -40,6 +41,7 @@ import { Application } from './models/application';
 import { Room } from './models/room';
 import { Payment } from './models/payment';
 
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 const routes: Routes = [
@@ -71,6 +73,7 @@ const routes: Routes = [
     ManagementModule,
     MatListModule,
     PaymentsModule,
+    LoadingModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAnalytics(() => getAnalytics()),
     provideAuth(() => getAuth()),
@@ -85,6 +88,7 @@ const routes: Routes = [
     AngularFirestoreModule,
     AngularFireDatabaseModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},

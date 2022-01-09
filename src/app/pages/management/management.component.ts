@@ -2,7 +2,7 @@ import { Component, AfterViewInit, ViewChild, OnInit, ChangeDetectionStrategy } 
 import { MatTableDataSource } from '@angular/material/table';
 import { Application } from 'src/app/models/application';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { map } from 'rxjs';
 import { ApplicationsService } from 'src/app/services/applications.service';
 
@@ -10,10 +10,13 @@ import { AppModule } from 'src/app/app.module';
 import { Student } from 'src/app/models/student';
 import { Room } from 'src/app/models/room';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { PaymentService } from 'src/app/services/payment.service';
+import { PaymentsService } from 'src/app/services/payments.service';
 import { Payment } from 'src/app/models/payment';
 import { StudentsService } from 'src/app/services/students.service';
 import { RoomsService } from 'src/app/services/rooms.service';
+import { SidebarComponent } from 'src/app/layout/sidebar/sidebar.component';
+import { MediyurtService } from 'src/app/services/mediyurt.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -39,7 +42,7 @@ export class ManagementComponent implements AfterViewInit{
 
   public dataSource: MatTableDataSource<Application>;
 
-  constructor(public _applicationService: ApplicationsService, public _paymentService: PaymentService, public _studentService: StudentsService, public _roomService: RoomsService, private db: AngularFirestore) { 
+  constructor(public _applicationService: ApplicationsService, public _paymentService: PaymentsService, public _studentService: StudentsService, public _roomService: RoomsService, private db: AngularFirestore, private ms: MediyurtService, private myRoute: Router) { 
     this.dataSource = new MatTableDataSource(AppModule.applicationsInfo);
     this.allApplications = AppModule.allApplications;
     this.allStudents = AppModule.allStudents;
@@ -52,8 +55,13 @@ export class ManagementComponent implements AfterViewInit{
 
   ngAfterViewInit() {
   
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    const sortState: Sort = {active: 'dateSent', direction: 'desc'};
+    this.sort.active = sortState.active;
+    this.sort.direction = sortState.direction;
+    this.sort.sortChange.emit(sortState);
+
+    this.dataSource.paginator = this.paginator;
   }
 
   getStudentName(studentId: string){
@@ -115,8 +123,8 @@ export class ManagementComponent implements AfterViewInit{
       });
 
       roomCurrentCapacity = this.getRoomCurrentCapacity(application.appliedRoomID);;
-console.log(roomMaxCapacity);
-console.log(roomCurrentCapacity);
+      console.log(roomMaxCapacity);
+      console.log(roomCurrentCapacity);
 
       if (roomMaxCapacity == roomCurrentCapacity) {
 
@@ -138,8 +146,21 @@ console.log(roomCurrentCapacity);
           }
         })
       }
+      
     }
+    AppModule.applicationsInfo = [];
+    AppModule.allApplications.clear();
+    this.ms.getAllApplications();
+    this.travel();
+    console.log("xd")
  
   }
 
+  travel(){
+    setTimeout(() => {
+      this.myRoute.navigateByUrl("/management");
+    },
+    150);
+    this.myRoute.navigateByUrl("/loading");
+  }
 }

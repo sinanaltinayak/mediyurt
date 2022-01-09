@@ -5,13 +5,13 @@
         <img mat-card-image [src]="getDownloadURL(currentRoom.get(this.data.roomId)?.name)">
     </div>
     <div class="container-info">
-        <h3>Description</h3>
+        <b><h2>Description</h2></b>
         <p>{{currentRoom.get(this.data.roomId)?.description}}</p>
 
-        <h3>Capacity</h3>
+        <b><h2>Capacity</h2></b>
         <p>{{currentRoom.get(this.data.roomId)?.maxCapacity}}</p>
 
-        <h3>Price</h3>
+        <b><h2>Price</h2></b>
         <p>{{currentRoom.get(this.data.roomId)?.price}} TL</p>
     </div>
 </mat-dialog-content>

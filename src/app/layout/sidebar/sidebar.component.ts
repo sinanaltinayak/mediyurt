@@ -13,7 +13,7 @@ import { ApplicationsService } from 'src/app/services/applications.service';
 import { Application } from 'src/app/models/application';
 import { RoomsService } from 'src/app/services/rooms.service';
 import { Room } from 'src/app/models/room';
-import { PaymentService } from 'src/app/services/payment.service';
+import { PaymentsService } from 'src/app/services/payments.service';
 import { Payment } from 'src/app/models/payment';
 
 @Component({
@@ -41,7 +41,7 @@ export class SidebarComponent implements OnInit {
   currentStudent = new Map<string, Student>();
   allStudents = new Map<string, Student>();
 
-  constructor(public _service: StudentsService, public _appService: ApplicationsService, public _paymentService: PaymentService, public _roomService: RoomsService, public myapp: AppComponent, private _router: Router) { }
+  constructor(public _service: StudentsService, public _appService: ApplicationsService, public _paymentService: PaymentsService, public _roomService: RoomsService, public myapp: AppComponent, private _router: Router) { }
 
   ngOnInit(): void {
     this.getAllStudents();

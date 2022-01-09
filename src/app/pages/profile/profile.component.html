@@ -33,7 +33,7 @@
             </div>
 
         </mat-card>
-        <button matBadge="{{number}}" [matBadgeHidden]="number==0" (click)="toggleBadgeVisibility()" matBadgeColor="warn" mat-raised-button style="font-size: 18px;"><img src="../../../assets/photos/profile/payment-history.png"> <br>Payments On Wait</button>
+        <button [disabled]="paymentIsExist==0" matBadge="{{paymentIsExist}}" [matBadgeHidden]="paymentIsExist==0" (click)="openPaymentDialog()" matBadgeColor="warn" mat-raised-button style="font-size: 18px;"><img src="../../../assets/photos/profile/payment-history.png"> <br>Payments On Wait</button>
     </div>
 
 </div>

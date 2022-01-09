@@ -7,7 +7,7 @@
             </button>
         </mat-toolbar>
         <div fxLayout="row wrap" fxLayoutGap="16px grid">
-            <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let num of sortByDate() | keyvalue | slice:pageIndex*pageSize:pageIndex*pageSize + pageSize">
+            <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let num of allAnnouncements | keyvalue | slice:pageIndex*pageSize:pageIndex*pageSize + pageSize">
                 <mat-card class="mat-elevation-z4">
                     <mat-card-header>
                         <mat-card-title>{{num.value.title}}</mat-card-title>
@@ -22,7 +22,7 @@
                         </p>
                     </mat-card-content>
                     <mat-card-actions>
-                        <button mat-button (click)="openExamineAnnouncementDialog(num.key)">Examine</button>
+                        <button mat-button (click)="openExamineAnnouncementDialog(num.value.id)">Examine</button>
                     </mat-card-actions>
                 </mat-card>
             </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ExamineRoomDialogComponent } from './examine-room-dialog/examine-room-dialog.component';
@@ -19,18 +19,20 @@ import { TooltipPosition } from '@angular/material/tooltip';
   templateUrl: './rooms.component.html',
   styleUrls: ['./rooms.component.css']
 })
-export class RoomsComponent {
+export class RoomsComponent implements OnDestroy{
 
   currentRoom = new Map<string, Room>();
-  allRooms = new Map<string, Room>();
+  //allRooms = new Map<string, Room>();
+  allRooms = [];
   roomImages = new Map<string, string>();
+
 
   currentStudent = AppModule.userStudent;
   currentManager = AppModule.userManager;
   studentRoomID = "";
 
   gridColumns = 3;
-  length = this.allRooms.size;
+  length = this.allRooms.length;
   pageSize = 9;
   pageIndex = 0;
   pageSizeOptions = [3, 9, 18];
@@ -49,13 +51,15 @@ export class RoomsComponent {
       this.studentRoomID = Array.from(this.currentStudent.values())[0].currentRoomID;
     }
     this.getAllRooms();
+  }
 
+  ngOnDestroy(): void {
+      
   }
 
   getDownloadURL(roomName: string){
     return this.roomImages.get(roomName);
   }
-
 
   getAllRooms(){
     this._roomService.getAll().snapshotChanges().pipe(
@@ -74,15 +78,27 @@ export class RoomsComponent {
       )
     ).subscribe(data => { 
       data.forEach(el=> {
-        this.allRooms.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity, el.isFull))
+
+        this.allRooms.push({
+          id: el.id,
+          name: el.name,
+          currentCapacity: el.currentCapacity,
+          description: el.description,
+          isFull: el.isFull,
+          maxCapacity: el.maxCapacity,
+          price: el.price,
+          status: el.status,
+        });
+        
+        this.allRooms.sort((a, b) => a.name.localeCompare(b.name));
+
         this.storage.storage.ref("Rooms Images/"+el.name+".jpg").getDownloadURL().then(
           (url: string) => {
             this.roomImages.set(el.name, url);
           }
         );
-        this.length = this.allRooms.size;
-      }
-      ); 
+        this.length = this.allRooms.length;
+      }); 
     }); 
   }
 
@@ -112,6 +128,7 @@ export class RoomsComponent {
   }
 
   openExamineRoomDialog(id: string) {
+    console.log("xd");
     const dialogRef = this.dialog.open(ExamineRoomDialogComponent, {
       data: {roomId: id},
       hasBackdrop: true,
@@ -185,22 +202,4 @@ export class RoomsComponent {
     });
   }
 
-  
-  sortByRoomName(){
-    let ary = [];
-    this.allRooms.forEach((el, key) => ary.push({
-      id: key,
-      name: el.name,
-      currentCapacity: el.currentCapacity,
-      description: el.description,
-      isFull: el.isFull,
-      maxCapacity: el.maxCapacity,
-      price: el.price,
-      status: el.status,
-    }));
-
-    return ary.sort((a, b) => {
-      return <any>new Date(a.name) - <any>new Date(b.name);
-    });
-  }
 }

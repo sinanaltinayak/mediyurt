@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PrivateLayoutComponent } from 'src/app/layout/private-layout/private-layout.component';
-import { HomeComponent } from './home.component';
+import { LoadingComponent } from './loading.component';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: 'loading',
     component: PrivateLayoutComponent,
     children: [
-      { path: '', component: HomeComponent }
+      { path: '', component: LoadingComponent }
     ]
   }
 ];
@@ -17,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class HomeRoutingModule { }
+export class LoadingRoutingModule { }

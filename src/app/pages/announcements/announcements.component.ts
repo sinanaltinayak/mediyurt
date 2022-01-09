@@ -17,7 +17,8 @@ import { AppModule } from 'src/app/app.module';
 export class AnnouncementsComponent implements OnInit {
   
   currentAnnouncement = new Map<string, Announcement>();
-  allAnnouncements = new Map<string, Announcement>();
+  allAnnouncements = [];
+  //allAnnouncements = new Map<string, Announcement>();
   
   gridColumns = 3;
   length = 0;
@@ -33,10 +34,10 @@ export class AnnouncementsComponent implements OnInit {
   constructor(public dialog: MatDialog, public _service: AnnouncementsService) { }
 
   ngOnInit(): void {
-    this.getAll();
+    this.getAllRooms();
   }
 
-  getAll(){
+  getAllRooms(){
     this._service.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
         ({id: c.payload.doc.id, 
@@ -48,10 +49,20 @@ export class AnnouncementsComponent implements OnInit {
       )
     ).subscribe(data => { 
       data.forEach(el=> {
-        this.allAnnouncements.set(el.id, new Announcement(el.title, el.content, el.date))
-        this.length = this.allAnnouncements.size;
-      }
-      ); 
+
+        this.allAnnouncements.push({
+          id: el.id,
+          title: el.title,
+          content: el.content,
+          date: el.date,
+        });
+        
+        this.allAnnouncements.sort((a, b) => {
+          return <any>new Date(b.date) - <any>new Date(a.date);
+        });
+      }); 
+     
+      this.length = this.allAnnouncements.length;
     }); 
   }
 
@@ -81,20 +92,6 @@ export class AnnouncementsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-    });
-  }
-
-  sortByDate(){
-    let ary = [];
-    this.allAnnouncements.forEach((el, key) => ary.push({
-      id: key,
-      title: el.title,
-      content: el.content,
-      date: el.date,
-    }));
-
-    return ary.sort((a, b) => {
-      return <any>new Date(b.date) - <any>new Date(a.date);
     });
   }
 

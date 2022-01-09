@@ -7,7 +7,7 @@ import { Student } from '../models/student';
 @Injectable({
   providedIn: 'root'
 })
-export class PaymentService {
+export class PaymentsService {
 
   private dbPath = '/payments';
 
@@ -29,12 +29,22 @@ export class PaymentService {
     return this.paymentsRef.add({ ...room });
   }
 
+  getPaymentsofStudent(id: string): AngularFirestoreCollection<Payment> {
+    return this.db.collection("payments", ref => ref.where("status","==","Pending").where("studentID","==",id));
+  }
+
   getRoom(roomId: string): AngularFirestoreDocument<Room> {
     return this.db.collection("rooms").doc(roomId);
   }
 
   getStudent(studentId: string): AngularFirestoreDocument<Student> {
     return this.db.collection("students").doc(studentId);
+  }
+
+  makePayment(id: string){
+    this.db.collection('payments').doc(id).update({
+      status: 'Paid', 
+    });
   }
 
 }
