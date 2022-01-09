@@ -18,8 +18,10 @@
                         <p>
                             {{num.value.description.substring(0,255)}}<span *ngIf="num.value.description.length > 254">...</span>
                         </p>
+
+                        <p><b>Capacity: </b>{{num.value.currentCapacity}} / {{num.value.maxCapacity}} </p>
                     </mat-card-content>
-                    <mat-card-actions>
+                    <mat-card-actions align="end">
                         <button mat-button (click)="openExamineRoomDialog(num.value.id)">Examine</button>
 
                         <div *ngIf="userType == 'student'; then studentButtons; else managementButtons"></div>
@@ -28,14 +30,14 @@
                             <ng-template #apply>
                                 <div [matTooltip]="studentHasApplication ? 'You already submitted an application' : null" [matTooltipPosition]="left">
                                     <div [matTooltip]="num.value.isFull ? 'Room is full' : null" [matTooltipPosition]="left">
-                                        <button mat-button [disabled]="num.value.isFull  || studentHasApplication " (click)="openApplicationDialog('Room Application', num.value.id)">Apply {{num.value.currentCapacity}} / {{num.value.maxCapacity}} </button>
+                                        <button mat-button [disabled]="num.value.isFull  || studentHasApplication " (click)="openApplicationDialog('Room Application', num.value.id)">Apply</button>
                                     </div>
                                 </div>
                             </ng-template>
                             <ng-template #requestChange>
                                 <div [matTooltip]="studentHasApplication ? 'You already submitted an application' : null" [matTooltipPosition]="left">
                                     <div [matTooltip]="num.value.isFull ? 'Room is full' : null" [matTooltipPosition]="left">
-                                        <button mat-button [disabled]="num.value.isFull  || studentHasApplication " (click)=" openApplicationDialog( 'Room Change Request', num.value.id) ">Request a Room Change {{num.value.currentCapacity}} / {{num.value.maxCapacity}} </button>
+                                        <button mat-button [disabled]="num.value.isFull  || studentHasApplication " (click)=" openApplicationDialog( 'Room Change Request', num.value.id) ">Request a Room Change</button>
                                     </div>
                                 </div>
                             </ng-template>

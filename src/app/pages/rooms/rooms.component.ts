@@ -63,7 +63,6 @@ export class RoomsComponent{
       this.studentRoomID = Array.from(this.currentStudent.values())[0].currentRoomID;
     }
     this.getAllRooms();
-    console.log(AppModule.studentHasApplication);
     this.studentHasApplication = AppModule.studentHasApplication;
   }
 
@@ -190,6 +189,7 @@ export class RoomsComponent{
         console.log(`Dialog result: ${result}`);
         if(result == true){
           this.myapp.openSnackBar("Your application was sent.", "Close");
+          this.myapp.reload("rooms",250);
         }
       });
     }

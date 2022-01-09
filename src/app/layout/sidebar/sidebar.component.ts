@@ -261,7 +261,6 @@ export class SidebarComponent implements OnInit {
   // same as above, gets all the applications and stores them
   getAllApplications(){
 
-    AppModule.applicationsInfo = [];
 
     this._appService.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
@@ -278,6 +277,8 @@ export class SidebarComponent implements OnInit {
         )
       )
     ).subscribe(data => { 
+      AppModule.applicationsInfo = [];
+      AppModule.studentHasApplication = false;
       let result = [];
       data.forEach(el=> {
         let row = ({
@@ -298,6 +299,7 @@ export class SidebarComponent implements OnInit {
             AppModule.studentHasApplication = true;
           }
         result.push(row);
+        console.log(result.length)
         });
         AppModule.applicationsInfo = result; 
     }); 

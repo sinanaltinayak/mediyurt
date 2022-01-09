@@ -14,6 +14,7 @@ import { Payment } from 'src/app/models/payment';
 import { StudentsService } from 'src/app/services/students.service';
 import { RoomsService } from 'src/app/services/rooms.service';
 import { AppComponent } from 'src/app/app.component';
+import { lastValueFrom } from 'rxjs';
 
 
 // Typescript file of the management component, this component is for displaying the management page
@@ -122,10 +123,11 @@ export class ManagementComponent implements AfterViewInit{
     let currentApplication: Application;
 
     // gets the application data from its id and stores them above
-    this.allApplicationInfo.forEach(el => {
+    this.allApplicationInfo.forEach(async el => {
       if(el.id == id){
         this.applicationID = el.id;
-        this._applicationService.getApplication(id).get().subscribe(data => {currentApplication = data.data()});
+        currentApplication = await (await lastValueFrom(this._applicationService.getApplication(id).get())).data();
+        console.log(currentApplication);
       }
     });
     
