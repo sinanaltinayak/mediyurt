@@ -4,7 +4,8 @@ import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map } from 'rxjs';
 import { Room } from 'src/app/models/room';
 import { RoomsService } from 'src/app/services/rooms.service';
-import { RoomsComponent } from '../rooms.component';
+
+// a component for the storing the content and the functions which is needed in the examining room dialog
 
 @Component({
   selector: 'app-examine-room-dialog',
@@ -13,16 +14,26 @@ import { RoomsComponent } from '../rooms.component';
 })
 export class ExamineRoomDialogComponent implements OnInit {
 
+  // variables that hold the necessary data
   currentRoom = new Map<string, Room>();
   roomImages = new Map<string, string>();
 
-  constructor(public dialog: MatDialogModule, public _service: RoomsService, @Inject(MAT_DIALOG_DATA) public data: {roomId: string}, private storage: AngularFireStorage) {}
+  constructor(
+    public dialog: MatDialogModule, 
+    public _service: RoomsService, 
+    @Inject(MAT_DIALOG_DATA) public data: {
+      roomId: string
+    }, 
+    private storage: AngularFireStorage
+  ) {}
 
+  // launch commands
   ngOnInit(): void {
     this.getRoom();
     this.getAllRooms();
   }
 
+  // gets the room data by its id
   getRoom(){
     this._service.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
@@ -35,7 +46,6 @@ export class ExamineRoomDialogComponent implements OnInit {
           status: c.payload.doc.data().status, 
           isFull: c.payload.doc.data().isFull, 
         })
-        
         )
       )
     ).subscribe(data => { 
@@ -48,7 +58,7 @@ export class ExamineRoomDialogComponent implements OnInit {
     });
   }
 
-
+  // gets every room data and stores them
   getAllRooms(){
     this._service.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
@@ -76,6 +86,7 @@ export class ExamineRoomDialogComponent implements OnInit {
     }); 
   }
   
+  // gets the url of room image
   getDownloadURL(roomName: string){
     return this.roomImages.get(roomName);
   }

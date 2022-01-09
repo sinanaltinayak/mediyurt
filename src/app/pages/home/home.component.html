@@ -2,12 +2,15 @@
     <div class="content">
 
         <div class="container">
-            <div class="container-image">
-                <ng-image-slider #nav [images]="imageObject" [infinite]="true" [autoSlide]="5" [imageSize]="{width: '100%', height: '50%', space:'5'}" slideImage="1" [animationSpeed]="0.3" [manageImageRatio]="true"> </ng-image-slider>
-            </div>
+
+            <ng-image-slider #nav [images]="imageObject" [infinite]="true" [autoSlide]="5" [imageSize]="{width: '100%', height: '50%', space:'5'}" slideImage="1" [animationSpeed]="0.3" [manageImageRatio]="true"></ng-image-slider>
+
             <div class="container-text-border">
-                <div class="container-text">Istanbul Medipol University Student Dorms</div>
+                <div class="container-text">
+                    Istanbul Medipol University Student Dorms
+                </div>
             </div>
+
         </div>
 
         <div class="card-container" fxLayout="row wrap" fxLayoutGap="16px grid">

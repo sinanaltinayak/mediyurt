@@ -6,6 +6,8 @@ import { map } from 'rxjs';
 import { Room } from 'src/app/models/room';
 import { RoomsService } from 'src/app/services/rooms.service';
 
+// a component for the storing the content and the functions which is needed in the editing room dialog
+
 @Component({
   selector: 'app-edit-room-dialog',
   templateUrl: './edit-room-dialog.component.html',
@@ -13,22 +15,32 @@ import { RoomsService } from 'src/app/services/rooms.service';
 })
 export class EditRoomDialogComponent implements OnInit {
 
+  // variables that hold the necessary data
   currentRoom = new Map<string, Room>();
-
   name: string = "";
   description: string = "";
   maxCapacity: number = 0;
   price: number = 0;
 
+  // values for formatting
   acceptedImageFileTypes:string = ".png,.jpg";
   selectedImage!: any;
 
-  constructor(private db: AngularFirestore, private storage: AngularFireStorage, public dialog: MatDialogModule, public _service: RoomsService, @Inject(MAT_DIALOG_DATA) public data: {roomId: string}) {}
+  constructor(
+    private storage: AngularFireStorage, 
+    public dialog: MatDialogModule, 
+    public _service: RoomsService,
+    @Inject(MAT_DIALOG_DATA) public data: {
+      roomId: string
+    }
+  ) {}
 
+  // starts on launch
   ngOnInit(): void {
     this.getRoom();
   }
 
+  // gets the values of the current room
   getRoom(){
     this._service.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
@@ -53,36 +65,32 @@ export class EditRoomDialogComponent implements OnInit {
     });
   }
 
+  // updates the values of the room
   updateDoc(_name: any, _maxCapacity: any, _price: any, _description: any) {
 
+    // if a formfield is empty, it is not changed
     if(_name == "") {
       _name = this.currentRoom.get(this.data.roomId)?.name;
     }
-
     if(_maxCapacity == 0) {
       _maxCapacity = this.currentRoom.get(this.data.roomId)?.maxCapacity;
     }
-
     if(_price == 0) {
       _price = this.currentRoom.get(this.data.roomId)?.price;
     }
-
     if(_description == "") {
       _description = this.currentRoom.get(this.data.roomId)?.description;
     }
-
     if(this.selectedImage){
       const file = this.selectedImage;
       this.storage.upload('Rooms Images/'+_name+'.jpg', file);
     }
     
-
     this._service.roomsRef.doc(this.data.roomId).update({name:_name, description: _description, maxCapacity: _maxCapacity, price: _price });
    }
    
+   // takes the file uploaded
   onFileSelected(event: any) {
-
     this.selectedImage = event.target.files[0];
-
   }
 }

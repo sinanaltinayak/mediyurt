@@ -3,6 +3,8 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Manager } from '../models/manager';
 import { Student } from '../models/student';
 
+// service for operations about the students table in firebase
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,10 +17,12 @@ export class StudentsService {
     this.studentsRef = db.collection(this.dbPath);
   }
 
+  // finds the student with the provided username and password
   loginStudent(username: string, password: string): AngularFirestoreCollection<Student>{
     return this.db.collection("students", ref=>ref.where("username","==",username).where("password","==",password));
    }  
    
+  // finds the manager with the provided username and password
   loginManager(username: string, password: string): AngularFirestoreCollection<Manager>{
     return this.db.collection("managers", ref=>ref.where("username","==",username).where("password","==",password));
   }
@@ -27,8 +31,8 @@ export class StudentsService {
     return this.studentsRef;
   }
 
-  getStudent(roomId: string): AngularFirestoreDocument<Student> {
-    return this.db.collection("students").doc(roomId);
+  getStudent(studentId: string): AngularFirestoreDocument<Student> {
+    return this.db.collection("students").doc(studentId);
   }
 
   create(student: Student): any {

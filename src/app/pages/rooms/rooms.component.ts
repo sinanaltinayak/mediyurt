@@ -67,11 +67,12 @@ export class RoomsComponent{
     this.studentHasApplication = AppModule.studentHasApplication;
   }
 
-
+  // gets the url of the necessary picture
   getDownloadURL(roomName: string){
     return this.roomImages.get(roomName);
   }
 
+  // a function for getting all the rooms from the database and storing them
   getAllRooms(){
     this._roomService.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
@@ -114,37 +115,39 @@ export class RoomsComponent{
     }); 
   }
 
+  // gets room status from its id
   getRoomStatus(roomId: string){
     this._roomService.getRoom(roomId).ref.get().then((doc) => {
       return doc.data()!.status;
       });
   }
 
+  // gets room currentcapacity from its id
   getCurrentCapacity(roomId: string){
     this._roomService.getRoom(roomId).ref.get().then((doc) => {
       return doc.data()!.currentCapacity;
       });
   }
 
+  // a function for pagination processes
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
   }
 
+  // a function for handling examine room buttons
   openExamineRoomDialog(id: string) {
-    console.log("xd");
+    // opens a dialog
     const dialogRef = this.dialog.open(ExamineRoomDialogComponent, {
       data: {roomId: id},
       hasBackdrop: true,
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 
+  // a function for handling edit room buttons
   openEditRoomDialog(id: string) {
+    // opens a dialog
     const dialogRef = this.dialog.open(EditRoomDialogComponent, {
       width: "50%", 
       data: {
@@ -153,6 +156,7 @@ export class RoomsComponent{
       hasBackdrop: true,
     });
 
+    // if the dialog gets closed with the right button, it displays the necessary notification
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       if(result == true){
@@ -162,10 +166,13 @@ export class RoomsComponent{
     });
   }
   
+  // a function for handling apply room buttons
   openApplicationDialog(appType: string, id: string) {
+    // checks if the applied room is the student's current room
     if(id == Array.from(this.currentStudent.values())[0].currentRoomID){
       this.myapp.openSnackBar("You cannot apply to your own room.", "Close");
     }
+    // if not it opens a dialog
     else{
       const dialogRef = this.dialog.open(ApplicationDialogComponent, {
         width: "50%",
@@ -178,7 +185,7 @@ export class RoomsComponent{
         autoFocus: false
       });
   
-  
+    // if the dialog gets closed with the right button, it displays the necessary notification
       dialogRef.afterClosed().subscribe(result => {
         console.log(`Dialog result: ${result}`);
         if(result == true){
@@ -189,17 +196,21 @@ export class RoomsComponent{
     
   }
 
+  // function for removing rooms
   remove(id: string){
     this._roomService.delete(id);
     this.myapp.openSnackBar("Room removed successfully.", "Close");
   }
 
+  // a function for handling add room button
   openAddRoomDialog(): void {
+    // if not it opens a dialog
     const dialogRef = this.dialog.open(AddRoomComponent, {
       width: "50%",
       hasBackdrop: true,
     });
 
+    // if the dialog gets closed with the right button, it displays the necessary notification
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       if(result == true){

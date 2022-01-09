@@ -8,6 +8,8 @@ import { AppModule } from 'src/app/app.module';
 import { ApplicationsService } from 'src/app/services/applications.service';
 import { Application } from 'src/app/models/application';
 
+// a component for the storing the content and the functions which is needed in the submitting an application dialog
+
 @Component({
   selector: 'app-application-dialog',
   templateUrl: './application-dialog.component.html',
@@ -15,22 +17,34 @@ import { Application } from 'src/app/models/application';
 })
 export class ApplicationDialogComponent implements OnInit {
 
+  // variables that hold the necessary data
   currentRoom = new Map<string, Room>();
   currentStudent = AppModule.userStudent;
-
   currentStudentFullName = Array.from(this.currentStudent.values())[0].fullname;
   currentStudentCurrentRoomID = Array.from(this.currentStudent.values())[0].currentRoomID;
   currentStudentCurrentRoomName = "";
-
-  date: string = new Date().toString();
   note: string = "";
 
-  constructor(public dialog: MatDialogModule, public _roomService: RoomsService, public _applicationService: ApplicationsService, @Inject(MAT_DIALOG_DATA) public data: {applicationType: string, roomId: string, studentId: string}) {}
+  // current date
+  date: string = new Date().toString();
 
+  constructor(
+    public dialog: MatDialogModule, 
+    public _roomService: RoomsService, 
+    public _applicationService: ApplicationsService, 
+    @Inject(MAT_DIALOG_DATA) public data: {
+      applicationType: string, 
+      roomId: string, 
+      studentId: string
+    }
+  ) {}
+
+  // launch commands
   ngOnInit(): void {
     this.getRoom();
   }
 
+  // gets the room info
   getRoom(){
     this._roomService.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
@@ -61,6 +75,7 @@ export class ApplicationDialogComponent implements OnInit {
 
   }
 
+  // creates an application
   handleApply(){
     let application = new Application(this.data.applicationType, Array.from(this.currentStudent.keys())[0], this.currentStudentCurrentRoomID, Array.from(this.currentRoom.keys())[0], this.date, "", this.note, "Pending");
     this._applicationService.create(application);

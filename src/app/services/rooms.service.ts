@@ -3,6 +3,8 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Room } from '../models/room';
 import { Student } from '../models/student';
 
+// service for operations about the rooms table in firebase
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,11 +35,7 @@ export class RoomsService {
   }
 
   getRoom(roomId: string): AngularFirestoreDocument<Room> {
-    return  this.db.collection("rooms").doc(roomId);
-  }
-
-  getStudent(studentId: string): AngularFirestoreDocument<Student> {
-    return this.db.collection("students").doc(studentId);
+    return this.db.collection("rooms").doc(roomId);
   }
 
 }

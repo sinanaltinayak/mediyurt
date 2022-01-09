@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { Announcement } from '../models/announcement';
 
+// service for operations about the announcements table in firebase
+
 @Injectable({
   providedIn: 'root'
 })

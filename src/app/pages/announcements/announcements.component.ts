@@ -103,7 +103,7 @@ export class AnnouncementsComponent implements OnInit {
       hasBackdrop: true,
     });
 
-    // if the dialog closed with the right button, it displays the necessary notification
+    // if the dialog gets closed with the right button, it displays the necessary notification
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       if(result==true){

@@ -15,7 +15,7 @@ import { PaymentsService } from 'src/app/services/payments.service';
 })
 export class PaymentDialogComponent implements OnInit {
 
-  // variables that hold the form field values
+  // variables that hold the necessary data
   currentStudent = AppModule.userStudent;
   currentStudentFullName = Array.from(this.currentStudent.values())[0].fullname;
   currentStudentCurrentRoomID = Array.from(this.currentStudent.values())[0].currentRoomID;

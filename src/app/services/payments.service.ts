@@ -4,6 +4,8 @@ import { Payment } from '../models/payment';
 import { Room } from '../models/room';
 import { Student } from '../models/student';
 
+// service for operations about the applications table in firebase
+
 @Injectable({
   providedIn: 'root'
 })
@@ -29,16 +31,9 @@ export class PaymentsService {
     return this.paymentsRef.add({ ...room });
   }
 
+  // finds the payment for a student
   getPaymentsofStudent(id: string): AngularFirestoreCollection<Payment> {
     return this.db.collection("payments", ref => ref.where("status","==","Pending").where("studentID","==",id));
-  }
-
-  getRoom(roomId: string): AngularFirestoreDocument<Room> {
-    return this.db.collection("rooms").doc(roomId);
-  }
-
-  getStudent(studentId: string): AngularFirestoreDocument<Student> {
-    return this.db.collection("students").doc(studentId);
   }
 
   makePayment(id: string){
