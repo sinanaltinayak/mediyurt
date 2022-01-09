@@ -15,7 +15,6 @@ import { PaymentsService } from 'src/app/services/payments.service';
 })
 export class PaymentsComponent implements AfterViewInit {
 
-  allPayments = new Map<string, Payment>();
   allStudents = new Map<string, Student>();
   allRooms = new Map<string, Room>();
 
@@ -28,18 +27,16 @@ export class PaymentsComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
 
-  public dataSource: MatTableDataSource<Payment>;
+  public dataSource: MatTableDataSource<any>;
 
   constructor(public _service: PaymentsService) { 
     this.dataSource = new MatTableDataSource(AppModule.paymentsInfo);
-    this.allPayments = AppModule.allPayments;
     this.allStudents = AppModule.allStudents;
     this.allRooms = AppModule.allRooms;
 
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
     this.dataSource.sort = this.sort;
     const sortState: Sort = {active: 'date', direction: 'desc'};
     this.sort.active = sortState.active;
@@ -49,17 +46,10 @@ export class PaymentsComponent implements AfterViewInit {
     this.dataSource.paginator = this.paginator;
 
     this.dataSource.filterPredicate = function(data, filter: string): boolean {
-      return data.date.toLowerCase().includes(filter) || data.studentID.toLowerCase().includes(filter) || data.price.toString() === filter;
+      return data.date.toLowerCase().includes(filter) || data.studentName.toLowerCase().includes(filter) || data.roomName.toLowerCase().includes(filter) || data.price.toString() === filter;
     };
   }
 
-  getStudentName(studentId: string){
-    return this.allStudents.get(studentId).fullname;
-  }
-
-  getRoomName(roomId: string){
-    return this.allRooms.get(roomId).name;
-  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

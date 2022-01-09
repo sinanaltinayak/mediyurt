@@ -104,10 +104,10 @@ export class AppModule {
   static userManager = new Map<string, Manager>();
 
   static allApplications = new Map<string, Application>();
-  static applicationsInfo: Application[] = [];
+  static applicationsInfo = [];
 
   static allPayments = new Map<string, Payment>();
-  static paymentsInfo: Payment[] = [];
+  static paymentsInfo = [];
 
   static allStudents = new Map<string, Student>();
   static allRooms = new Map<string, Room>();

@@ -101,9 +101,8 @@ export class ProfileComponent implements OnInit {
           status: el.status,
           price: el.price
         }
-        this.paymentIsExist = this.currentStudentPayment.length;
+        this.paymentIsExist = 1;
       });
-      console.log("curpay",this.currentStudentPayment)
     })
   }
 

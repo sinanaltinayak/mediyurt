@@ -33,7 +33,7 @@ export class RoomsService {
   }
 
   getRoom(roomId: string): AngularFirestoreDocument<Room> {
-    return this.db.collection("rooms").doc(roomId);
+    return  this.db.collection("rooms").doc(roomId);
   }
 
   getStudent(studentId: string): AngularFirestoreDocument<Student> {

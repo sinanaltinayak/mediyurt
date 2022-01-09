@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Manager } from '../models/manager';
 import { Student } from '../models/student';
 
@@ -25,6 +25,10 @@ export class StudentsService {
 
   getAll(): AngularFirestoreCollection<Student> {
     return this.studentsRef;
+  }
+
+  getStudent(roomId: string): AngularFirestoreDocument<Student> {
+    return this.db.collection("students").doc(roomId);
   }
 
   create(student: Student): any {

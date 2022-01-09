@@ -5,6 +5,8 @@ import { AppModule } from '../app.module';
 import { Application } from '../models/application';
 import { Room } from '../models/room';
 import { Student } from '../models/student';
+import { RoomsService } from './rooms.service';
+import { StudentsService } from './students.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ export class ApplicationsService {
 
   applicationsRef: AngularFirestoreCollection<Application>;
 
-  constructor(private db: AngularFirestore) { 
+  constructor(private db: AngularFirestore, private _roomService: RoomsService, private _studentService: StudentsService) { 
     this.applicationsRef = db.collection(this.dbPath);
   }
   
@@ -24,12 +26,9 @@ export class ApplicationsService {
     return this.applicationsRef;
   }
 
-  
   getAllApplications(){
 
-    AppModule.allApplications.clear();
     AppModule.applicationsInfo = [];
-    let result: Application[] = [];
 
     this.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
@@ -46,16 +45,33 @@ export class ApplicationsService {
         )
       )
     ).subscribe(data => { 
-      result = [];
+      let result = [];
       data.forEach(el=> {
-        let row = new Application(el.type, el.studentID, el.currentRoomID, el.appliedRoomID, el.dateSent, el.dateReturned, el.note, el.status);
+        let row = ({
+          id: el.id,
+          type: el.type, 
+          studentID: el.studentID, 
+          studentName: this._studentService.getStudent(el.studentID).get().subscribe(async data => {return await data.data().fullname}),
+          curentRoomID: el.currentRoomID, 
+          curentRoomName: this._roomService.getRoom(el.currentRoomID).get().subscribe(async data => {return await data.data().name}),
+          appliedRoomID: el.appliedRoomID, 
+          appliedRoomName: this._roomService.getRoom(el.currentRoomID).get().subscribe(async data => {return await data.data().name}),
+          dateSent: el.dateSent, 
+          dateReturned: el.dateReturned, 
+          note: el.note, 
+          status: el.status});
+        
         result.push(row);
-        AppModule.allApplications.set(el.id, row);
         AppModule.applicationsInfo = result; 
+
+        console.log(AppModule.applicationsInfo);
         });
     }); 
   }
 
+  getApplication(appId: string): AngularFirestoreDocument<Application>{
+    return this.applicationsRef.doc(appId);
+  }
 
   getApplicationByStudentID(id: string): AngularFirestoreCollection<Application>{
     return this.db.collection('rooms', ref => ref.where('studentID','==',id).where('status','==','Pending'));

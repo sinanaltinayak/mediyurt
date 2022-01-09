@@ -26,9 +26,9 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class ManagementComponent implements AfterViewInit{
 
-  allApplications = new Map<string, Application>();
   allStudents = new Map<string, Student>();
   allRooms = new Map<string, Room>();
+  allApplicationInfo = [];
 
   date: string = new Date().toString();
 
@@ -39,11 +39,11 @@ export class ManagementComponent implements AfterViewInit{
   @ViewChild(MatSort) sort: MatSort;
 
 
-  public dataSource: MatTableDataSource<Application>;
+  public dataSource: MatTableDataSource<any>;
 
   constructor(public _applicationService: ApplicationsService, public _paymentService: PaymentsService, public _studentService: StudentsService, public _roomService: RoomsService, private db: AngularFirestore, private myapp: AppComponent) {     
     this.dataSource = new MatTableDataSource(AppModule.applicationsInfo);
-    this.allApplications = AppModule.allApplications;
+    this.allApplicationInfo = AppModule.applicationsInfo;
     this.allStudents = AppModule.allStudents;
     this.allRooms = AppModule.allRooms;
 
@@ -61,6 +61,10 @@ export class ManagementComponent implements AfterViewInit{
     this.sort.sortChange.emit(sortState);
 
     this.dataSource.paginator = this.paginator;
+    
+    this.dataSource.filterPredicate = function(data, filter: string): boolean {
+      return data.dateSent.toLowerCase().includes(filter) || data.studentName.toLowerCase().includes(filter) || data.currentRoomName.toLowerCase().includes(filter)|| data.appliedRoomName.toLowerCase().includes(filter) || data.note.toString() === filter || data.status.toString() === filter;
+    };
   }
 
   getStudentName(studentId: string){
@@ -93,11 +97,14 @@ export class ManagementComponent implements AfterViewInit{
     }
   }
 
-  async handleApproveReject(application: Application, choice: string){
+  async handleApproveReject(id: string, choice: string){
 
-    this.allApplications.forEach((app, key) => {
-      if(app == application){
-        this.applicationID = key;
+    let currentApplication: Application;
+
+    this.allApplicationInfo.forEach(el => {
+      if(el.id == id){
+        this.applicationID = el.id;
+        this._applicationService.getApplication(id).get().subscribe(async data => {currentApplication = await data.data()});
       }
     });
     
@@ -106,37 +113,37 @@ export class ManagementComponent implements AfterViewInit{
     });
 
     if(choice == 'Approved') {
-      const price = this.getRoomPrice(application.appliedRoomID);
-      const payment = new Payment(application.studentID, application.appliedRoomID, price, this.date, "Pending");
+      const price = this.getRoomPrice(currentApplication.appliedRoomID);
+      const payment = new Payment(currentApplication.studentID, currentApplication.appliedRoomID, price, this.date, "Pending");
       await this._paymentService.create(payment);
 
-      await this._studentService.studentsRef.doc(application.studentID).update({
-        currentRoomID: application.appliedRoomID, 
+      await this._studentService.studentsRef.doc(currentApplication.studentID).update({
+        currentRoomID: currentApplication.appliedRoomID, 
       });
 
-      const roomMaxCapacity = this.getRoomMaxCapacity(application.appliedRoomID);
-      let roomCurrentCapacity = this.getRoomCurrentCapacity(application.appliedRoomID);
+      const roomMaxCapacity = this.getRoomMaxCapacity(currentApplication.appliedRoomID);
+      let roomCurrentCapacity = this.getRoomCurrentCapacity(currentApplication.appliedRoomID);
       
-      await this._roomService.roomsRef.doc(application.appliedRoomID).update({
+      await this._roomService.roomsRef.doc(currentApplication.appliedRoomID).update({
         currentCapacity: roomCurrentCapacity + 1, 
       });
 
-      roomCurrentCapacity = this.getRoomCurrentCapacity(application.appliedRoomID);;
+      roomCurrentCapacity = this.getRoomCurrentCapacity(currentApplication.appliedRoomID);;
       console.log(roomMaxCapacity);
       console.log(roomCurrentCapacity);
 
       if (roomMaxCapacity == roomCurrentCapacity) {
 
-        console.log("HADİ");
-        await this._roomService.roomsRef.doc(application.appliedRoomID).update({
+        await this._roomService.roomsRef.doc(currentApplication.appliedRoomID).update({
           isFull: true, 
         });
-        
-        this.allApplications.forEach((app, key) => {
-          if(app.appliedRoomID == application.appliedRoomID){
-            this.roomIDList.push(key);
+
+        this.allApplicationInfo.forEach(el => {
+          if(el.appliedRoomID == currentApplication.appliedRoomID){
+            this.roomIDList.push(el.id);
           }
         });
+
         this.roomIDList.forEach(async (appID) => {
           if (appID != this.applicationID) {
             await this.db.collection('applications').doc(appID).update({
@@ -148,8 +155,6 @@ export class ManagementComponent implements AfterViewInit{
       
     }
     AppModule.applicationsInfo = [];
-    AppModule.allApplications.clear();
-    this._applicationService.getAllApplications();
     this.myapp.reload("management",150);
  
   }

@@ -19,12 +19,12 @@
 
                 <ng-container matColumnDef="studentName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Student Name </th>
-                    <td mat-cell *matCellDef="let row"> {{getStudentName(row.studentID)}} </td>
+                    <td mat-cell *matCellDef="let row"> {{row.studentName}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="roomName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Room </th>
-                    <td mat-cell *matCellDef="let row"> {{getRoomName(row.roomID)}} </td>
+                    <td mat-cell *matCellDef="let row"> {{row.roomName}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="price">

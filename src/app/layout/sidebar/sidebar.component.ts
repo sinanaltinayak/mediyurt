@@ -40,10 +40,13 @@ export class SidebarComponent implements OnInit {
   currentStudent = new Map<string, Student>();
   allStudents = new Map<string, Student>();
 
+  allRooms = new Map<string, Room>();
+
   constructor(public _service: StudentsService, public _appService: ApplicationsService, public _paymentService: PaymentsService, public _roomService: RoomsService, public myapp: AppComponent, private _router: Router) { }
 
   ngOnInit(): void {
     this.getAllStudents();
+    this.getAllRooms();
   }
 
   loginUser(){
@@ -79,7 +82,7 @@ export class SidebarComponent implements OnInit {
           this.userType = "management";
           AppModule.userManager = this.currentManager;
           AppModule.userType = this.userType;
-          this._appService.getAllApplications();
+          this.getAllApplications();
           this.getAllPayments();
           this.getAllRooms();
           this.myapp.openSnackBar("Welcome "+data[0].fullname, "Continue");
@@ -188,31 +191,96 @@ export class SidebarComponent implements OnInit {
 
   getAllPayments(){
 
-    let result: Payment[] =[];
 
     this._paymentService.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
         ({id: c.payload.doc.id, 
           roomID: c.payload.doc.data().roomID,
           date: c.payload.doc.data().date, 
-          isPaid: c.payload.doc.data().status,
           studentID: c.payload.doc.data().studentID, 
           price: c.payload.doc.data().price, 
+          status: c.payload.doc.data().status,
         })
         )
       )
     ).subscribe(data => { 
+      let result= [];
       data.forEach(el=> {
-        let row = new Payment(el.studentID, el.roomID, el.price, el.date, el.isPaid);
+        let row = ({
+          studentID: el.studentID, 
+          studentName: this.getStudentName(el.studentID),
+          roomID: el.roomID, 
+          roomName: this.getRoomName(el.roomID),
+          price: el.price, 
+          date: el.date, 
+          status: el.status
+        });
         result.push(row);
-        AppModule.allPayments.set(el.id, row);
         });
       AppModule.paymentsInfo = result; 
     }); 
 
   }
 
-  
+   
+  getAllApplications(){
+
+    AppModule.applicationsInfo = [];
+
+    this._appService.getAll().snapshotChanges().pipe(
+      map(changes=> changes.map(c=>
+        ({id: c.payload.doc.id, 
+          appliedRoomID: c.payload.doc.data().appliedRoomID,
+          currentRoomID: c.payload.doc.data().currentRoomID, 
+          dateSent: c.payload.doc.data().dateSent, 
+          dateReturned: c.payload.doc.data().dateReturned, 
+          note: c.payload.doc.data().note,
+          studentID: c.payload.doc.data().studentID, 
+          type: c.payload.doc.data().type, 
+          status: c.payload.doc.data().status, 
+        })
+        )
+      )
+    ).subscribe(data => { 
+      let result = [];
+      data.forEach(el=> {
+        let row = ({
+          id: el.id,
+          type: el.type, 
+          studentID: el.studentID, 
+          studentName: this.getStudentName(el.studentID),
+          currentRoomID: el.currentRoomID, 
+          currentRoomName: this.getRoomName(el.currentRoomID),
+          appliedRoomID: el.appliedRoomID, 
+          appliedRoomName: this.getRoomName(el.appliedRoomID),
+          dateSent: el.dateSent, 
+          dateReturned: el.dateReturned, 
+          note: el.note, 
+          status: el.status});
+        result.push(row);
+        AppModule.applicationsInfo = result; 
+        });
+    }); 
+  }
+
+  getStudentName(studentId: string){
+    if( this.allStudents.get(studentId) != undefined){
+      return this.allStudents.get(studentId).fullname;
+    }
+    else{
+      return "Student Removed";
+    }
+  }
+
+  getRoomName(roomId: string){
+    if( this.allRooms.get(roomId) != undefined){
+      return this.allRooms.get(roomId).name;
+    }
+    else{
+      return "Room Removed";
+    }
+  }
+
   getAllRooms(){
     this._roomService.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
@@ -229,6 +297,7 @@ export class SidebarComponent implements OnInit {
       )
     ).subscribe(data => { 
       data.forEach(el=> {
+        this.allRooms.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity, el.isFull));
         AppModule.allRooms.set(el.id, new Room(el.name, el.maxCapacity, el.description, el.price, el.status, el.currentCapacity, el.isFull))
       }
       );
