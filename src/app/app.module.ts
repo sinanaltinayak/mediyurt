@@ -101,6 +101,8 @@ export class AppModule {
 
   static userType: string = "default";
   static userStudent = new Map<string, Student>();
+  static studentHasApplication = false;
+
   static userManager = new Map<string, Manager>();
 
   static allApplications = new Map<string, Application>();

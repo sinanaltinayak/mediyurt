@@ -26,49 +26,6 @@ export class ApplicationsService {
     return this.applicationsRef;
   }
 
-  getAllApplications(){
-
-    AppModule.applicationsInfo = [];
-
-    this.getAll().snapshotChanges().pipe(
-      map(changes=> changes.map(c=>
-        ({id: c.payload.doc.id, 
-          appliedRoomID: c.payload.doc.data().appliedRoomID,
-          currentRoomID: c.payload.doc.data().currentRoomID, 
-          dateSent: c.payload.doc.data().dateSent, 
-          dateReturned: c.payload.doc.data().dateReturned, 
-          note: c.payload.doc.data().note,
-          studentID: c.payload.doc.data().studentID, 
-          type: c.payload.doc.data().type, 
-          status: c.payload.doc.data().status, 
-        })
-        )
-      )
-    ).subscribe(data => { 
-      let result = [];
-      data.forEach(el=> {
-        let row = ({
-          id: el.id,
-          type: el.type, 
-          studentID: el.studentID, 
-          studentName: this._studentService.getStudent(el.studentID).get().subscribe(async data => {return await data.data().fullname}),
-          curentRoomID: el.currentRoomID, 
-          curentRoomName: this._roomService.getRoom(el.currentRoomID).get().subscribe(async data => {return await data.data().name}),
-          appliedRoomID: el.appliedRoomID, 
-          appliedRoomName: this._roomService.getRoom(el.currentRoomID).get().subscribe(async data => {return await data.data().name}),
-          dateSent: el.dateSent, 
-          dateReturned: el.dateReturned, 
-          note: el.note, 
-          status: el.status});
-        
-        result.push(row);
-        AppModule.applicationsInfo = result; 
-
-        console.log(AppModule.applicationsInfo);
-        });
-    }); 
-  }
-
   getApplication(appId: string): AngularFirestoreDocument<Application>{
     return this.applicationsRef.doc(appId);
   }

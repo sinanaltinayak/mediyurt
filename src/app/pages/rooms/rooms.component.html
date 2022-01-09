@@ -26,13 +26,17 @@
                         <ng-template #studentButtons>
                             <div *ngIf="studentRoomID == ''; then apply; else requestChange"></div>
                             <ng-template #apply>
-                                <div [matTooltip]="num.value.isFull ? 'Room is full' : null" [matTooltipPosition]="left">
-                                    <button mat-button [disabled]="num.value.isFull" (click)="openApplicationDialog('Room Application', num.value.id)">Apply {{num.value.currentCapacity}} / {{num.value.maxCapacity}} </button>
+                                <div [matTooltip]="studentHasApplication ? 'You already submitted an application' : null" [matTooltipPosition]="left">
+                                    <div [matTooltip]="num.value.isFull ? 'Room is full' : null" [matTooltipPosition]="left">
+                                        <button mat-button [disabled]="num.value.isFull  || studentHasApplication " (click)="openApplicationDialog('Room Application', num.value.id)">Apply {{num.value.currentCapacity}} / {{num.value.maxCapacity}} </button>
+                                    </div>
                                 </div>
                             </ng-template>
                             <ng-template #requestChange>
-                                <div [matTooltip]="num.value.isFull ? 'Room is full' : null" [matTooltipPosition]="left">
-                                    <button mat-button [disabled]="num.value.isFull" (click)=" openApplicationDialog( 'Room Change Request', num.value.id) ">Request a Room Change {{num.value.currentCapacity}} / {{num.value.maxCapacity}} </button>
+                                <div [matTooltip]="studentHasApplication ? 'You already submitted an application' : null" [matTooltipPosition]="left">
+                                    <div [matTooltip]="num.value.isFull ? 'Room is full' : null" [matTooltipPosition]="left">
+                                        <button mat-button [disabled]="num.value.isFull  || studentHasApplication " (click)=" openApplicationDialog( 'Room Change Request', num.value.id) ">Request a Room Change {{num.value.currentCapacity}} / {{num.value.maxCapacity}} </button>
+                                    </div>
                                 </div>
                             </ng-template>
                         </ng-template>

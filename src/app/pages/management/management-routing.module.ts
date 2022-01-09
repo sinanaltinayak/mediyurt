@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PrivateLayoutComponent } from 'src/app/layout/private-layout/private-layout.component';
-import { PublicLayoutComponent } from '../../layout/public-layout/public-layout.component';
 import { ManagementComponent } from './management.component';
 
 const routes: Routes = [

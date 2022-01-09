@@ -51,6 +51,10 @@ export class LoadingComponent implements OnInit {
           dateReturned: el.dateReturned, 
           note: el.note, 
           status: el.status});
+          
+        if(el.id ==Array.from(AppModule.userStudent.keys())[0]){
+          AppModule.studentHasApplication = true;
+        }
         result.push(row);
         AppModule.applicationsInfo = result; 
         });

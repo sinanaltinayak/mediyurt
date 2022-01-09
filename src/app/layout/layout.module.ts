@@ -1,9 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
-import { FooterComponent } from "./footer/footer.component";
 import { PrivateLayoutComponent } from "./private-layout/private-layout.component";
-import { PublicLayoutComponent } from "./public-layout/public-layout.component";
 import { SidebarComponent } from "./sidebar/sidebar.component";
 
 import { RouterModule } from "@angular/router";
@@ -36,14 +34,14 @@ import { ReactiveFormsModule } from "@angular/forms";
         ReactiveFormsModule,
     ],
     exports: [
-        PublicLayoutComponent,
         PrivateLayoutComponent,
     ],
     declarations: [
-        PublicLayoutComponent,
         PrivateLayoutComponent,
-        FooterComponent,
         SidebarComponent,
     ]
 })
 export class LayoutModule {}
+
+
+// This module is for importing the needed modules in order to use them in the components inside the 'layout' folder.

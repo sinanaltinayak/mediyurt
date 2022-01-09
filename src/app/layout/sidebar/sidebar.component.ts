@@ -1,19 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AppModule } from 'src/app/app.module';
 import { StudentsService } from 'src/app/services/students.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { Student } from 'src/app/models/student';
 import { Manager } from 'src/app/models/manager';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import {AppComponent} from '../../app.component';
+import { AppComponent } from '../../app.component';
 import { ApplicationsService } from 'src/app/services/applications.service';
-import { Application } from 'src/app/models/application';
 import { RoomsService } from 'src/app/services/rooms.service';
 import { Room } from 'src/app/models/room';
 import { PaymentsService } from 'src/app/services/payments.service';
-import { Payment } from 'src/app/models/payment';
 
 @Component({
   selector: 'app-sidebar',
@@ -22,35 +18,54 @@ import { Payment } from 'src/app/models/payment';
 })
 export class SidebarComponent implements OnInit {
 
+  // These variables are for storing the values that are entered in the form fields in HTML file
   username: string = "";
   studentNumber!: number;
   fullname: string = "";
   password: string = "";
   confirmPassword: string = "";
+  hidePassword = true;
 
+  // Error messages
   usernameErrorMessage: string = "";
   studentNumberErrorMessage: string = "";
   passwordErrorMessage: string = "";
 
+  // userType is for determining the accessibility of some features
   userType:string = AppModule.userType;
-  signMode:string = "signin";
-  hidePassword = true;
 
+  // signMode is for deciding which menu will be shown in the log in part
+  signMode:string = "signin";
+
+  // these maps store the user information with the format of <"User ID","User Information"> 
   currentManager = new Map<string, Manager>();
   currentStudent = new Map<string, Student>();
   allStudents = new Map<string, Student>();
 
+  // stores the rooms
   allRooms = new Map<string, Room>();
 
-  constructor(public _service: StudentsService, public _appService: ApplicationsService, public _paymentService: PaymentsService, public _roomService: RoomsService, public myapp: AppComponent, private _router: Router) { }
+  // constructor with the needed classes
+  constructor(
+    public _studentService: StudentsService, 
+    public _appService: ApplicationsService, 
+    public _paymentService: PaymentsService, 
+    public _roomService: RoomsService, 
+    public myapp: AppComponent, 
+    private _router: Router) 
+  { }
 
+  // ngOnInit function is called in launch
   ngOnInit(): void {
     this.getAllStudents();
     this.getAllRooms();
   }
 
+  // loginUser function is for taking necessary information from the user and trying to find a user with those information.
   loginUser(){
-    this._service.loginStudent(this.username, this.password).snapshotChanges().pipe(map(changes=> changes.map(c=>
+
+    // tries to find a student first
+    this._studentService.loginStudent(this.username, this.password).snapshotChanges().pipe(map(changes=> changes.map(c=>
       ({id: c.payload.doc.id, 
         fullname: c.payload.doc.data().fullname, 
         number: c.payload.doc.data().number, 
@@ -61,15 +76,20 @@ export class SidebarComponent implements OnInit {
       )
     )
   ).subscribe(data => { 
+    // if there is a student exist with those values, local and global variables are changed accordingly
     if(data.length != 0){
       this.currentStudent.set(data[0].id, new Student(data[0].fullname, data[0].number, data[0].currentRoomID, data[0].username, data[0].password));
       this.userType = "student";
       AppModule.userStudent = this.currentStudent;
       AppModule.userType = this.userType;
+      // gets necessary data from the database
+      this.getAllApplications();
+      // welcome message
       this.myapp.openSnackBar("Welcome "+data[0].fullname, "Continue");
     }
+    // if there is not a student, it tries to find a manager
     else{
-      this._service.loginManager(this.username, this.password).snapshotChanges().pipe(map(changes=>changes.map(c=>
+      this._studentService.loginManager(this.username, this.password).snapshotChanges().pipe(map(changes=>changes.map(c=>
         ({id: c.payload.doc.id,
           fullname: c.payload.doc.data().fullname, 
           username: c.payload.doc.data().username, 
@@ -77,16 +97,20 @@ export class SidebarComponent implements OnInit {
           )
         )
       ).subscribe(data => {
+        // if there is a manager exist with those values, local and global variables are changed accordingly
         if(data.length != 0){
           this.currentManager.set(data[0].id, new Manager(data[0].fullname, data[0].username, data[0].password));
           this.userType = "management";
           AppModule.userManager = this.currentManager;
           AppModule.userType = this.userType;
+
+          // gets necessary data from the database
           this.getAllApplications();
           this.getAllPayments();
           this.getAllRooms();
           this.myapp.openSnackBar("Welcome "+data[0].fullname, "Continue");
         }
+        // if there is not any user, displays error message
         else{
           this.usernameErrorMessage = "User could not be found."
         }
@@ -96,6 +120,7 @@ export class SidebarComponent implements OnInit {
   });
   }
 
+  // logoutUser function is for clearing the global variables and heading out to the home page
   logoutUser(){
     if(this._router.url != "/home"){
       this._router.navigate(['home']);
@@ -112,6 +137,7 @@ export class SidebarComponent implements OnInit {
     this.myapp.openSnackBar("Successfully logged out.", "Continue");
   }
 
+  // changeSignMode function is a switch for changing the log in menu
   changeSignMode(){
     if(this.signMode == "signin"){
       this.signMode = "signup";
@@ -121,8 +147,10 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  // registerUser function is for creating a new student account
   registerUser(){
 
+    // checks for necessary conditions and changes error message variables accordingly
     if(Array.from(this.allStudents.values()).find(x => x.username == this.username)){
       this.usernameErrorMessage = "User Name is taken.";
     }
@@ -144,8 +172,8 @@ export class SidebarComponent implements OnInit {
 
     if(this.usernameErrorMessage == "" && this.studentNumberErrorMessage == "" && this.passwordErrorMessage == ""){
       let registerStudent = new Student(this.fullname, this.studentNumber, "", this.username, this.password);
-      this._service.create(registerStudent);
-      this._service.loginStudent(this.username, this.password).snapshotChanges().pipe(map(changes=> changes.map(c=>
+      this._studentService.create(registerStudent);
+      this._studentService.loginStudent(this.username, this.password).snapshotChanges().pipe(map(changes=> changes.map(c=>
         ({id: c.payload.doc.id, 
           fullname: c.payload.doc.data().fullname, 
           number: c.payload.doc.data().number, 
@@ -168,7 +196,7 @@ export class SidebarComponent implements OnInit {
   }
 
   getAllStudents(){
-    this._service.getAll().snapshotChanges().pipe(
+    this._studentService.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
         ({id: c.payload.doc.id, 
           fullname: c.payload.doc.data().fullname, 
@@ -257,9 +285,13 @@ export class SidebarComponent implements OnInit {
           dateReturned: el.dateReturned, 
           note: el.note, 
           status: el.status});
+        
+          if(el.studentID == Array.from(AppModule.userStudent.keys())[0] && el.status == "Pending"){
+            AppModule.studentHasApplication = true;
+          }
         result.push(row);
-        AppModule.applicationsInfo = result; 
         });
+        AppModule.applicationsInfo = result; 
     }); 
   }
 

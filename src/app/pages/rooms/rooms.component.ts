@@ -13,6 +13,7 @@ import { StudentsService } from 'src/app/services/students.service';
 import { AppComponent } from 'src/app/app.component';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { TooltipPosition } from '@angular/material/tooltip';
+import { ApplicationsService } from 'src/app/services/applications.service';
 
 @Component({
   selector: 'app-room',
@@ -24,6 +25,7 @@ export class RoomsComponent{
   currentRoom = new Map<string, Room>();
   allRooms = [];
   roomImages = new Map<string, string>();
+  studentHasApplication = false;
 
 
   currentStudent = AppModule.userStudent;
@@ -43,13 +45,15 @@ export class RoomsComponent{
 
   title = 'Rooms';
 
-  constructor(private dialog: MatDialog, public myapp: AppComponent, public _roomService: RoomsService, public _studentService: StudentsService, private storage: AngularFireStorage) {}
+  constructor(private dialog: MatDialog, public myapp: AppComponent, public _roomService: RoomsService, public _studentService: StudentsService, public _appService: ApplicationsService, private storage: AngularFireStorage) {}
 
   ngOnInit(): void {
     if(this.currentStudent.size != 0){
       this.studentRoomID = Array.from(this.currentStudent.values())[0].currentRoomID;
     }
     this.getAllRooms();
+    console.log(AppModule.studentHasApplication);
+    this.studentHasApplication = AppModule.studentHasApplication;
   }
 
 

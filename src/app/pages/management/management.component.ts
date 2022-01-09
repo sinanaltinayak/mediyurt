@@ -153,6 +153,10 @@ export class ManagementComponent implements AfterViewInit{
         })
       }
       
+      this.myapp.openSnackBar("Application Accepted Successfully.","Close");
+    }
+    else if(choice == 'Rejected'){
+      this.myapp.openSnackBar("Application Rejected Successfully.","Close");
     }
     AppModule.applicationsInfo = [];
     this.myapp.reload("management",150);
