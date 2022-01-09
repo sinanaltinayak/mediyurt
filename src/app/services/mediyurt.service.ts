@@ -32,6 +32,8 @@ export class MediyurtService {
     AppModule.applicationsInfo = [];
     let result: Application[] =[];
 
+    console.log("appinfo",AppModule.applicationsInfo);
+
     this._appService.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
         ({id: c.payload.doc.id, 
@@ -47,16 +49,15 @@ export class MediyurtService {
         )
       )
     ).subscribe(data => { 
+      result = [];
       data.forEach(el=> {
         let row = new Application(el.type, el.studentID, el.currentRoomID, el.appliedRoomID, el.dateSent, el.dateReturned, el.note, el.status);
         result.push(row);
         AppModule.allApplications.set(el.id, row);
-
-        console.log(el)
         });
-      AppModule.applicationsInfo = result; 
-      console.log(AppModule.applicationsInfo);
     }); 
+    AppModule.applicationsInfo = [];
+    AppModule.applicationsInfo = result; 
 
   }
 

@@ -43,6 +43,8 @@ export class ManagementComponent implements AfterViewInit{
   public dataSource: MatTableDataSource<Application>;
 
   constructor(public _applicationService: ApplicationsService, public _paymentService: PaymentsService, public _studentService: StudentsService, public _roomService: RoomsService, private db: AngularFirestore, private ms: MediyurtService, private myRoute: Router) { 
+    console.log("const",AppModule.applicationsInfo);
+    
     this.dataSource = new MatTableDataSource(AppModule.applicationsInfo);
     this.allApplications = AppModule.allApplications;
     this.allStudents = AppModule.allStudents;
@@ -148,8 +150,10 @@ export class ManagementComponent implements AfterViewInit{
       }
       
     }
+    console.log("appmod",AppModule.applicationsInfo);
     AppModule.applicationsInfo = [];
     AppModule.allApplications.clear();
+    console.log("appmod",AppModule.applicationsInfo);
     this.ms.getAllApplications();
     this.travel();
     console.log("xd")

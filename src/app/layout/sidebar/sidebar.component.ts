@@ -41,7 +41,7 @@ export class SidebarComponent implements OnInit {
   currentStudent = new Map<string, Student>();
   allStudents = new Map<string, Student>();
 
-  constructor(public _service: StudentsService, public _appService: ApplicationsService, public _paymentService: PaymentsService, public _roomService: RoomsService, public myapp: AppComponent, private _router: Router) { }
+  constructor(public _service: StudentsService, public _appService: ApplicationsService, public _paymentService: PaymentsService, public _roomService: RoomsService, public myapp: AppComponent, private _router: Router, private ms: MediyurtService) { }
 
   ngOnInit(): void {
     this.getAllStudents();
@@ -80,7 +80,7 @@ export class SidebarComponent implements OnInit {
           this.userType = "management";
           AppModule.userManager = this.currentManager;
           AppModule.userType = this.userType;
-          this.getAllApplications();
+          this.ms.getAllApplications();
           this.getAllPayments();
           this.getAllRooms();
           this.myapp.openSnackBar("Welcome "+data[0].fullname, "Continue");
