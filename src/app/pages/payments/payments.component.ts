@@ -18,11 +18,14 @@ import { PaymentsService } from 'src/app/services/payments.service';
 })
 export class PaymentsComponent implements AfterViewInit {
 
+  // variables for holding necessary data
   allStudents = new Map<string, Student>();
   allRooms = new Map<string, Room>();
 
+  // current date
   date: string = new Date().toString();
 
+  // columns of the table
   displayedColumns: string[] = [ 'date', 'studentName', 'roomName', 'price', 'status'];
 
 
@@ -30,16 +33,22 @@ export class PaymentsComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
 
+  // data source for table
   public dataSource: MatTableDataSource<any>;
 
   constructor(public _service: PaymentsService) { 
+
+    // data taken from the global variables
     this.dataSource = new MatTableDataSource(AppModule.paymentsInfo);
     this.allStudents = AppModule.allStudents;
     this.allRooms = AppModule.allRooms;
 
   }
 
+  // commands that are getting called on launch
   ngAfterViewInit() {
+    
+    // sorting by date in default
     this.dataSource.sort = this.sort;
     const sortState: Sort = {active: 'date', direction: 'desc'};
     this.sort.active = sortState.active;
@@ -54,6 +63,7 @@ export class PaymentsComponent implements AfterViewInit {
   }
 
 
+  // functoin for filtering
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

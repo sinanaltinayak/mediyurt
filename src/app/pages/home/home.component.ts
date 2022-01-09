@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
 
   gridColumns = 3;
 
+  // image urls
   imageObject: Array<object> = [{
     image: '../../../assets/photos/home/6.jpg',
     thumbImage: '../../../assets/photos/home/6.jpg',

@@ -15,11 +15,12 @@ export class LoadingComponent implements OnInit {
 
   constructor(private _appService: ApplicationsService) { }
 
+  // launch functions
   ngOnInit(): void {
     this.getAllApplications();
   }
 
-    
+  // gets all the applications from the database and stores them globally
   getAllApplications(){
 
     AppModule.applicationsInfo = [];
@@ -64,7 +65,7 @@ export class LoadingComponent implements OnInit {
     }); 
   }
 
-  
+  // gets the student name from their id
   getStudentName(studentId: string){
     if( AppModule.allStudents.get(studentId) != undefined){
       return AppModule.allStudents.get(studentId).fullname;
@@ -74,6 +75,7 @@ export class LoadingComponent implements OnInit {
     }
   }
 
+  // gets the student name from its id
   getRoomName(roomId: string){
     if( AppModule.allRooms.get(roomId) != undefined){
       return AppModule.allRooms.get(roomId).name;

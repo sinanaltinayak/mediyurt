@@ -4,9 +4,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { map } from 'rxjs';
 import { AppModule } from 'src/app/app.module';
-import { Room } from 'src/app/models/room';
 import { PaymentsService } from 'src/app/services/payments.service';
-import { RoomsService } from 'src/app/services/rooms.service';
+
+// a component for the storing the content and the functions which is needed in the making payment dialog
 
 @Component({
   selector: 'app-payment-dialog',
@@ -15,22 +15,31 @@ import { RoomsService } from 'src/app/services/rooms.service';
 })
 export class PaymentDialogComponent implements OnInit {
 
-  //currentRoom = new Map<string, Room>();
+  // variables that hold the form field values
   currentStudent = AppModule.userStudent;
-
   currentStudentFullName = Array.from(this.currentStudent.values())[0].fullname;
   currentStudentCurrentRoomID = Array.from(this.currentStudent.values())[0].currentRoomID;
   currentStudentCurrentRoomName = "";
   currentStudentCurrentRoomPrice = 0;
-
   paymentID = "";
 
-  constructor(public dialog: MatDialogModule, @Inject(MAT_DIALOG_DATA) public data: { studentName: string, roomName: string, price: number},  public _paymentService: PaymentsService, private db: AngularFirestore) { }
+  constructor(
+    public dialog: MatDialogModule, 
+    @Inject(MAT_DIALOG_DATA) public data: { 
+      studentName: string, 
+      roomName: string, 
+      price: number
+      }, 
+    public _paymentService: PaymentsService, 
+    private db: AngularFirestore
+  ) { }
 
+  // launch commands
   ngOnInit(): void {
     this.getPayment();
   }
 
+  // gets the payment info
   getPayment(){
     this._paymentService.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
@@ -41,7 +50,6 @@ export class PaymentDialogComponent implements OnInit {
           date: c.payload.doc.data().date,
           status: c.payload.doc.data().status,
         })
-
         )
       )
     ).subscribe(data => {

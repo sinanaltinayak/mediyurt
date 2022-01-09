@@ -87,7 +87,7 @@
                                     <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                                 </button>
                             </mat-form-field>
-                            <button mat-button (click)='registerUser()'>Sign up</button>
+                            <button mat-button (click)='registerUser()' [disabled]="!username || !studentNumber || !fullname || !password || !confirmPassword ">Sign up</button>
                             <div class="dropdown-divider"></div>
                             <button mat-button ngbDropdownItem (click)="changeSignMode()">Already have an account? Sign in</button>
                         </div>

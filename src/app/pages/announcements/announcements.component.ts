@@ -22,7 +22,7 @@ export class AnnouncementsComponent implements OnInit {
   // list for storing announcements
   allAnnouncements = [];
   
-  // values for pagination
+  // values for pagination and formatting
   gridColumns = 3;
   length = 0;
   pageSize = 6;

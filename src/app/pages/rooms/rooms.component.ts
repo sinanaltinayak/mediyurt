@@ -25,31 +25,39 @@ import { ApplicationsService } from 'src/app/services/applications.service';
 })
 export class RoomsComponent{
 
+  // list for storing announcements
   currentRoom = new Map<string, Room>();
   allRooms = [];
   roomImages = new Map<string, string>();
   studentHasApplication = false;
-
-
   currentStudent = AppModule.userStudent;
   currentManager = AppModule.userManager;
   studentRoomID = "";
 
+  // values for pagination and formatting
   gridColumns = 3;
   length = this.allRooms.length;
   pageSize = 9;
   pageIndex = 0;
   pageSizeOptions = [3, 9, 18];
   showFirstLastButtons = true;
-
   left: TooltipPosition = 'left';
 
+  // user type in order to prevent some features
   userType:string = AppModule.userType;
 
   title = 'Rooms';
 
-  constructor(private dialog: MatDialog, public myapp: AppComponent, public _roomService: RoomsService, public _studentService: StudentsService, public _appService: ApplicationsService, private storage: AngularFireStorage) {}
+  constructor(
+    private dialog: MatDialog, 
+    public myapp: AppComponent, 
+    public _roomService: RoomsService, 
+    public _studentService: StudentsService, 
+    public _appService: ApplicationsService, 
+    private storage: AngularFireStorage
+  ) {}
 
+  // starts on launch
   ngOnInit(): void {
     if(this.currentStudent.size != 0){
       this.studentRoomID = Array.from(this.currentStudent.values())[0].currentRoomID;

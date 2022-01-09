@@ -148,6 +148,8 @@ export class SidebarComponent implements OnInit {
     else{
       this.signMode = "signin";
     }
+    this.username = "";
+    this.password = "";
   }
 
   // registerUser function is for creating a new student account
