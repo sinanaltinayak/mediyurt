@@ -11,6 +11,9 @@ import { RoomsService } from 'src/app/services/rooms.service';
 import { Room } from 'src/app/models/room';
 import { PaymentsService } from 'src/app/services/payments.service';
 
+// Typescript file of the sidebar component, this component is included in every page of the website
+// and it has all the necessary operations when the users enters to an account
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: `./sidebar.component.html`,
@@ -170,6 +173,7 @@ export class SidebarComponent implements OnInit {
       this.passwordErrorMessage = "";
     }
 
+    // if there is not a single error message, it creates a student account and changes global&local variables
     if(this.usernameErrorMessage == "" && this.studentNumberErrorMessage == "" && this.passwordErrorMessage == ""){
       let registerStudent = new Student(this.fullname, this.studentNumber, "", this.username, this.password);
       this._studentService.create(registerStudent);
@@ -195,6 +199,7 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  // this function is for getting all the students with their information and storing them globally
   getAllStudents(){
     this._studentService.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
@@ -204,7 +209,6 @@ export class SidebarComponent implements OnInit {
           username: c.payload.doc.data().username, 
           password: c.payload.doc.data().password, 
           currentRoomID: c.payload.doc.data().currentRoomID  })
-        
         )
       )
     ).subscribe(data => { 
@@ -217,8 +221,10 @@ export class SidebarComponent implements OnInit {
     });
   }
 
+  // same as above, gets all the payments and stores them
   getAllPayments(){
 
+    AppModule.paymentsInfo = [];
 
     this._paymentService.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
@@ -249,8 +255,8 @@ export class SidebarComponent implements OnInit {
     }); 
 
   }
-
    
+  // same as above, gets all the applications and stores them
   getAllApplications(){
 
     AppModule.applicationsInfo = [];
@@ -295,24 +301,7 @@ export class SidebarComponent implements OnInit {
     }); 
   }
 
-  getStudentName(studentId: string){
-    if( this.allStudents.get(studentId) != undefined){
-      return this.allStudents.get(studentId).fullname;
-    }
-    else{
-      return "Student Removed";
-    }
-  }
-
-  getRoomName(roomId: string){
-    if( this.allRooms.get(roomId) != undefined){
-      return this.allRooms.get(roomId).name;
-    }
-    else{
-      return "Room Removed";
-    }
-  }
-
+  // same as above, gets all the rooms and stores them
   getAllRooms(){
     this._roomService.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
@@ -335,5 +324,25 @@ export class SidebarComponent implements OnInit {
       );
     });
   }
+  // a function for getting a student name from their id
+  getStudentName(studentId: string){
+    if( this.allStudents.get(studentId) != undefined){
+      return this.allStudents.get(studentId).fullname;
+    }
+    else{
+      return "Student Removed";
+    }
+  }
+
+  // a function for getting a room name from its id
+  getRoomName(roomId: string){
+    if( this.allRooms.get(roomId) != undefined){
+      return this.allRooms.get(roomId).name;
+    }
+    else{
+      return "Room Removed";
+    }
+  }
+
 
 }

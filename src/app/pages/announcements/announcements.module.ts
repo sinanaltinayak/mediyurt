@@ -16,6 +16,8 @@ import { AddAnnouncementComponent } from './add-announcement/add-announcement.co
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
+// importing classes that is needed for announcements page
+
 @NgModule({
   imports: [
     CommonModule,

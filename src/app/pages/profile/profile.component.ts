@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { map } from 'rxjs';
 import { AppModule } from 'src/app/app.module';
-import { Payment } from 'src/app/models/payment';
-import { Student } from 'src/app/models/student';
 import { ApplicationsService } from 'src/app/services/applications.service';
 import { PaymentsService } from 'src/app/services/payments.service';
 import { RoomsService } from 'src/app/services/rooms.service';
 import { PaymentDialogComponent } from './payment-dialog/payment-dialog.component';
+
+// Typescript file of the profile component, this component is for displaying the profile page
+// and it has all the necessary operations for the page
 
 @Component({
   selector: 'app-profile',

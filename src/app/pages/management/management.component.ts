@@ -1,9 +1,8 @@
-import { Component, AfterViewInit, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Application } from 'src/app/models/application';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
-import { map } from 'rxjs';
 import { ApplicationsService } from 'src/app/services/applications.service';
 
 import { AppModule } from 'src/app/app.module';
@@ -14,9 +13,11 @@ import { PaymentsService } from 'src/app/services/payments.service';
 import { Payment } from 'src/app/models/payment';
 import { StudentsService } from 'src/app/services/students.service';
 import { RoomsService } from 'src/app/services/rooms.service';
-import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 
+
+// Typescript file of the management component, this component is for displaying the management page
+// and it has all the necessary operations for the page
 
 @Component({
   selector: 'app-management',

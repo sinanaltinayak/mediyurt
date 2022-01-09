@@ -8,6 +8,9 @@ import { Room } from 'src/app/models/room';
 import { Student } from 'src/app/models/student';
 import { PaymentsService } from 'src/app/services/payments.service';
 
+// Typescript file of the payments component, this component is for displaying the payments page
+// and it has all the necessary operations for the page
+
 @Component({
   selector: 'app-payments',
   templateUrl: './payments.component.html',

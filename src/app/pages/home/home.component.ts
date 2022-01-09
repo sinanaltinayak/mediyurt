@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+// Typescript file of the home component, this component is for displaying the home page
+// and it has all the necessary operations for the page
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

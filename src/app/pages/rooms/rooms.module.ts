@@ -23,9 +23,7 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-
-
-
+// importing classes that is needed for rooms page
 
 @NgModule({
   imports: [

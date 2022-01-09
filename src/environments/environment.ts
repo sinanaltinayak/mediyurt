@@ -2,6 +2,9 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+
+
+// this file contains our firebase connection information
 export const environment = {
   production: false,
   firebase: {

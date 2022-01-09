@@ -3,6 +3,9 @@ import { map } from 'rxjs';
 import { AppModule } from 'src/app/app.module';
 import { ApplicationsService } from 'src/app/services/applications.service';
 
+// Typescript file of the loading component, this component is for displaying the loading page
+// and it has all the necessary operations for the page
+
 @Component({
   selector: 'app-loading',
   templateUrl: './loading.component.html',

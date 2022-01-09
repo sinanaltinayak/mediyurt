@@ -37,12 +37,13 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { Student } from './models/student';
 import { Manager } from './models/manager';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Application } from './models/application';
 import { Room } from './models/room';
 import { Payment } from './models/payment';
 
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
+// this module is for importing the necessary classes for the entirity of our project
 
 const routes: Routes = [
   {
@@ -99,6 +100,7 @@ const routes: Routes = [
 })
 export class AppModule { 
 
+  // These are our global variables, they contain necessary data for each session
   static userType: string = "default";
   static userStudent = new Map<string, Student>();
   static studentHasApplication = false;

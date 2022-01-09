@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ExamineRoomDialogComponent } from './examine-room-dialog/examine-room-dialog.component';
@@ -14,6 +14,9 @@ import { AppComponent } from 'src/app/app.component';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { ApplicationsService } from 'src/app/services/applications.service';
+
+// Typescript file of the rooms component, this component is for displaying the rooms page
+// and it has all the necessary operations for the page
 
 @Component({
   selector: 'app-room',

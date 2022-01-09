@@ -9,6 +9,8 @@ import { Announcement } from 'src/app/models/announcement';
 import { AppModule } from 'src/app/app.module';
 import { AppComponent } from 'src/app/app.component';
 
+// Typescript file of the announcements component, this component is for displaying the announcements page
+// and it has all the necessary operations for the announcements page
 
 @Component({
   selector: 'app-announcements',
@@ -17,9 +19,10 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class AnnouncementsComponent implements OnInit {
   
-  currentAnnouncement = new Map<string, Announcement>();
+  // list for storing announcements
   allAnnouncements = [];
   
+  // values for pagination
   gridColumns = 3;
   length = 0;
   pageSize = 6;
@@ -27,16 +30,23 @@ export class AnnouncementsComponent implements OnInit {
   pageSizeOptions = [3, 6, 9, 18];
   showFirstLastButtons = true;
 
+  // user type in order to prevent some features
   userType:string = AppModule.userType;
 
   title = 'Announcements';
 
-  constructor(public dialog: MatDialog, public _service: AnnouncementsService, public myapp: AppComponent) { }
+  constructor(
+    public dialog: MatDialog, 
+    public _service: AnnouncementsService, 
+    public myapp: AppComponent) 
+  { }
 
+  // starts on launch
   ngOnInit(): void {
     this.getAllAnnouncements();
   }
 
+  // a function for getting all the announcements from the database and storing them
   getAllAnnouncements(){
     this._service.getAll().snapshotChanges().pipe(
       map(changes=> changes.map(c=>
@@ -58,6 +68,7 @@ export class AnnouncementsComponent implements OnInit {
           date: el.date,
         });
         
+        // this is for sorting them by their date
         this.allAnnouncements.sort((a, b) => {
           return <any>new Date(b.date) - <any>new Date(a.date);
         });
@@ -67,30 +78,32 @@ export class AnnouncementsComponent implements OnInit {
     }); 
   }
 
+  // a function for pagination processes
   handlePageEvent(event: PageEvent) {
     this.length = event.length;
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
   }
 
+  // a function for handling examine announcement buttons
   openExamineAnnouncementDialog(id: string) {
+    // opens a dialog
     const dialogRef = this.dialog.open(ExamineAnnouncementComponent, {
       width: "50%", 
       data: {announcementId: id},
       hasBackdrop: true,
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
-
+  
+  // a function for handling add announcement button
   openAddAnnouncementDialog(): void {
+    // opens a dialog
     const dialogRef = this.dialog.open(AddAnnouncementComponent, {
       width: "50%",
       hasBackdrop: true,
     });
 
+    // if the dialog closed with the right button, it displays the necessary notification
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       if(result==true){
@@ -100,6 +113,7 @@ export class AnnouncementsComponent implements OnInit {
     });
   }
   
+  // a function for handling add announcement button
   removeAnnouncement(id: string){
     this._service.delete(id);
     this.myapp.openSnackBar("Announcement deleted successfully.", "Close");

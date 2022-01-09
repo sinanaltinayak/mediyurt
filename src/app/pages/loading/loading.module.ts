@@ -7,6 +7,7 @@ import { LoadingComponent } from './loading.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
+// importing classes that is needed for loading page
 
 @NgModule({
   imports: [
