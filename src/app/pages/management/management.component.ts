@@ -68,12 +68,25 @@ export class ManagementComponent implements AfterViewInit{
   // commands that are getting called on launch
   ngAfterViewInit() {
   
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'dateSent': {
+          console.log(item);
+          let newDate = new Date(item.dateSent);
+          return newDate;
+        }
+        default: return item[property];
+      }
+    };
+
     // sorting by date in default
     this.dataSource.sort = this.sort;
+
     const sortState: Sort = {active: 'dateSent', direction: 'desc'};
     this.sort.active = sortState.active;
     this.sort.direction = sortState.direction;
     this.sort.sortChange.emit(sortState);
+
 
     this.dataSource.paginator = this.paginator;
     

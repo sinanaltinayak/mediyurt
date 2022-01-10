@@ -90,6 +90,7 @@ export class SidebarComponent implements OnInit {
       this.getAllApplications();
       // welcome message
       this.myapp.openSnackBar("Welcome "+data[0].fullname, "Continue");
+      this.myapp.reload("home",150);
     }
     // if there is not a student, it tries to find a manager
     else{
@@ -112,6 +113,7 @@ export class SidebarComponent implements OnInit {
           this.getAllApplications();
           this.getAllPayments();
           this.getAllRooms();
+          this.myapp.reload("home",150);
           this.myapp.openSnackBar("Welcome "+data[0].fullname, "Continue");
         }
         // if there is not any user, displays error message
@@ -196,6 +198,7 @@ export class SidebarComponent implements OnInit {
         this.userType = "student";
         AppModule.userStudent = this.currentStudent;
         AppModule.userType = this.userType;
+        this.myapp.reload("home",150);
         this.myapp.openSnackBar("Welcome "+data[0].fullname, "Continue");
       }
     });
@@ -300,7 +303,6 @@ export class SidebarComponent implements OnInit {
             AppModule.studentHasApplication = true;
           }
         result.push(row);
-        console.log(result.length)
         });
         AppModule.applicationsInfo = result; 
     }); 
