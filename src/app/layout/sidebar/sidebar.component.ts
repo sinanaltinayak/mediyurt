@@ -31,6 +31,7 @@ export class SidebarComponent implements OnInit {
 
   // Error messages
   usernameErrorMessage: string = "";
+  usernameRegisterErrorMessage: string = "";
   studentNumberErrorMessage: string = "";
   passwordErrorMessage: string = "";
 
@@ -157,7 +158,7 @@ export class SidebarComponent implements OnInit {
 
     // checks for necessary conditions and changes error message variables accordingly
     if(Array.from(this.allStudents.values()).find(x => x.username == this.username)){
-      this.usernameErrorMessage = "User Name is taken.";
+      this.usernameRegisterErrorMessage = "User Name is taken.";
     }
     else{
       this.usernameErrorMessage = "";
@@ -176,7 +177,7 @@ export class SidebarComponent implements OnInit {
     }
 
     // if there is not a single error message, it creates a student account and changes global&local variables
-    if(this.usernameErrorMessage == "" && this.studentNumberErrorMessage == "" && this.passwordErrorMessage == ""){
+    if(this.usernameRegisterErrorMessage == "" && this.studentNumberErrorMessage == "" && this.passwordErrorMessage == ""){
       let registerStudent = new Student(this.fullname, this.studentNumber, "", this.username, this.password);
       this._studentService.create(registerStudent);
       this._studentService.loginStudent(this.username, this.password).snapshotChanges().pipe(map(changes=> changes.map(c=>
