@@ -48,7 +48,17 @@ export class PaymentsComponent implements AfterViewInit {
   // commands that are getting called on launch
   ngAfterViewInit() {
     
-    // sorting by date in default
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'date': {
+          let newDate = new Date(item.date);
+          return newDate;
+        }
+        default: return item[property];
+      }
+    };
+
+    // sorting by date by default
     this.dataSource.sort = this.sort;
     const sortState: Sort = {active: 'date', direction: 'desc'};
     this.sort.active = sortState.active;

@@ -89,28 +89,31 @@ export class RoomsComponent{
       )
     ).subscribe(data => { 
       this.allRooms = [];
-      data.forEach(el=> {
 
+      for (let i = 0; i < data.length; i++) {
+        
         this.allRooms.push({
-          id: el.id,
-          name: el.name,
-          currentCapacity: el.currentCapacity,
-          description: el.description,
-          isFull: el.isFull,
-          maxCapacity: el.maxCapacity,
-          price: el.price,
-          status: el.status,
+          id: data[i].id,
+          name: data[i].name,
+          currentCapacity: data[i].currentCapacity,
+          description: data[i].description,
+          isFull: data[i].isFull,
+          maxCapacity: data[i].maxCapacity,
+          price: data[i].price,
+          status: data[i].status,
         });
         
         this.allRooms.sort((a, b) => a.name.localeCompare(b.name));
 
-        this.storage.storage.ref("Rooms Images/"+el.name+".jpg").getDownloadURL().then(
+        this.storage.storage.ref("Rooms Images/"+data[i].name+".jpg").getDownloadURL().then(
           (url: string) => {
-            this.roomImages.set(el.name, url);
+            this.roomImages.set(data[i].name, url);
           }
         );
         this.length = this.allRooms.length;
-      }); 
+
+        
+      }
     }); 
   }
 

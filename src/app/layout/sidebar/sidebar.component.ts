@@ -118,7 +118,7 @@ export class SidebarComponent implements OnInit {
         }
         // if there is not any user, displays error message
         else{
-          this.usernameErrorMessage = "User could not be found."
+          this.usernameErrorMessage = "Username or password is wrong."
         }
       })
     }
@@ -163,7 +163,7 @@ export class SidebarComponent implements OnInit {
       this.usernameRegisterErrorMessage = "User Name is taken.";
     }
     else{
-      this.usernameErrorMessage = "";
+      this.usernameRegisterErrorMessage = "";
     }
     if(Array.from(this.allStudents.values()).find(x => x.number == this.studentNumber)){
       this.studentNumberErrorMessage = "This student already has an account.";

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppModule } from 'src/app/app.module';
 
 // Typescript file of the home component, this component is for displaying the home page
 // and it has all the necessary operations for the page
@@ -34,5 +35,6 @@ export class HomeComponent implements OnInit {
     title: 'Male Dorm - North Campus',
     alt: 'Image alt',
   }];
+
   
 }

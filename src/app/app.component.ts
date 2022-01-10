@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AppModule } from './app.module';
 
 // this class contains the functions that can be used in every page
 
@@ -29,6 +30,7 @@ export class AppComponent {
   reload(location: string, time: number){
     setTimeout(() => {
       this.myRoute.navigateByUrl("/"+location);
+      console.log(AppModule.userType);
     },
     time);
     this.myRoute.navigateByUrl("/loading");

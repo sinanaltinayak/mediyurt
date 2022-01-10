@@ -24,45 +24,46 @@ export class LoadingComponent implements OnInit {
   getAllApplications(){
 
     AppModule.applicationsInfo = [];
+    if(AppModule.userType == "student" || AppModule.userType == "management"){
+      this._appService.getAll().snapshotChanges().pipe(
+        map(changes=> changes.map(c=>
+          ({id: c.payload.doc.id, 
+            appliedRoomID: c.payload.doc.data().appliedRoomID,
+            currentRoomID: c.payload.doc.data().currentRoomID, 
+            dateSent: c.payload.doc.data().dateSent, 
+            dateReturned: c.payload.doc.data().dateReturned, 
+            note: c.payload.doc.data().note,
+            studentID: c.payload.doc.data().studentID, 
+            type: c.payload.doc.data().type, 
+            status: c.payload.doc.data().status, })))).subscribe(data => { 
+          let result = [];
 
-    this._appService.getAll().snapshotChanges().pipe(
-      map(changes=> changes.map(c=>
-        ({id: c.payload.doc.id, 
-          appliedRoomID: c.payload.doc.data().appliedRoomID,
-          currentRoomID: c.payload.doc.data().currentRoomID, 
-          dateSent: c.payload.doc.data().dateSent, 
-          dateReturned: c.payload.doc.data().dateReturned, 
-          note: c.payload.doc.data().note,
-          studentID: c.payload.doc.data().studentID, 
-          type: c.payload.doc.data().type, 
-          status: c.payload.doc.data().status, 
-        })
-        )
-      )
-    ).subscribe(data => { 
-      let result = [];
-      data.forEach(el=> {
-        let row = ({
-          id: el.id,
-          type: el.type, 
-          studentID: el.studentID, 
-          studentName: this.getStudentName(el.studentID),
-          currentRoomID: el.currentRoomID, 
-          currentRoomName: this.getRoomName(el.currentRoomID),
-          appliedRoomID: el.appliedRoomID, 
-          appliedRoomName: this.getRoomName(el.appliedRoomID),
-          dateSent: el.dateSent, 
-          dateReturned: el.dateReturned, 
-          note: el.note, 
-          status: el.status});
-          
-        if(el.id ==Array.from(AppModule.userStudent.keys())[0]){
-          AppModule.studentHasApplication = true;
-        }
-        result.push(row);
-        AppModule.applicationsInfo = result; 
-        });
-    }); 
+          for(let i = 0; i< data.length; i++){
+              let row = ({
+                id: data[i].id,
+                type: data[i].type, 
+                studentID: data[i].studentID, 
+                studentName: this.getStudentName(data[i].studentID),
+                currentRoomID: data[i].currentRoomID, 
+                currentRoomName: this.getRoomName(data[i].currentRoomID),
+                appliedRoomID: data[i].appliedRoomID, 
+                appliedRoomName: this.getRoomName(data[i].appliedRoomID),
+                dateSent: data[i].dateSent, 
+                dateReturned: data[i].dateReturned, 
+                note: data[i].note, 
+                status: data[i].status
+            });
+            if(data[i].id ==Array.from(AppModule.userStudent.keys())[0]){
+              AppModule.studentHasApplication = true;
+            }
+            
+            result.push(row);
+            AppModule.applicationsInfo = result; 
+          }
+            });
+      }
+    
+   
   }
 
   // gets the student name from their id

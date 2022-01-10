@@ -71,7 +71,6 @@ export class ManagementComponent implements AfterViewInit{
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
         case 'dateSent': {
-          console.log(item);
           let newDate = new Date(item.dateSent);
           return newDate;
         }
@@ -79,7 +78,7 @@ export class ManagementComponent implements AfterViewInit{
       }
     };
 
-    // sorting by date in default
+    // sorting by date by default
     this.dataSource.sort = this.sort;
 
     const sortState: Sort = {active: 'dateSent', direction: 'desc'};
@@ -136,13 +135,12 @@ export class ManagementComponent implements AfterViewInit{
     let currentApplication: Application;
 
     // gets the application data from its id and stores them above
-    this.allApplicationInfo.forEach(async el => {
-      if(el.id == id){
-        this.applicationID = el.id;
+    for (let i = 0; i < this.allApplicationInfo.length; i++) {
+      if(this.allApplicationInfo[i].id == id){
+        this.applicationID = this.allApplicationInfo[i].id;
         currentApplication = await (await lastValueFrom(this._applicationService.getApplication(id).get())).data();
-        console.log(currentApplication);
       }
-    });
+    }
     
     // changes the status of the application
     await this._applicationService.applicationsRef.doc(this.applicationID).update({
@@ -153,7 +151,7 @@ export class ManagementComponent implements AfterViewInit{
     if(choice == 'Approved') {
 
       // a payment is created automatically to the student
-      const price = this.getRoomPrice(currentApplication.appliedRoomID);
+      const price = await this.getRoomPrice(currentApplication.appliedRoomID);
       const payment = new Payment(currentApplication.studentID, currentApplication.appliedRoomID, price, this.date, "Pending");
       await this._paymentService.create(payment);
 
@@ -163,16 +161,35 @@ export class ManagementComponent implements AfterViewInit{
       });
 
       // current capacity of the room changes
-      const roomMaxCapacity = this.getRoomMaxCapacity(currentApplication.appliedRoomID);
-      let roomCurrentCapacity = this.getRoomCurrentCapacity(currentApplication.appliedRoomID);
+      const appliedRoomMaxCapacity = this.getRoomMaxCapacity(currentApplication.appliedRoomID);
+      let appliedRoomCurrentCapacity = this.getRoomCurrentCapacity(currentApplication.appliedRoomID);
+
+      if(currentApplication.currentRoomID != ""){
+        const currentRoomMaxCapacity = this.getRoomMaxCapacity(currentApplication.currentRoomID);
+        let currentRoomCurrentCapacity = this.getRoomCurrentCapacity(currentApplication.currentRoomID);
+
+        await this._roomService.roomsRef.doc(currentApplication.currentRoomID).update({
+          currentCapacity: currentRoomCurrentCapacity - 1, 
+        });
+
+        currentRoomCurrentCapacity = this.getRoomCurrentCapacity(currentApplication.currentRoomID);
+        if (currentRoomMaxCapacity != currentRoomCurrentCapacity) {
+          await this._roomService.roomsRef.doc(currentApplication.currentRoomID).update({
+            isFull: false, 
+          });
+        }
+      }
     
       await this._roomService.roomsRef.doc(currentApplication.appliedRoomID).update({
-        currentCapacity: roomCurrentCapacity + 1, 
+        currentCapacity: appliedRoomCurrentCapacity + 1, 
       });
 
+
+
+
       // if the current capacity reaches to the max capacity, isFull value becomes true
-      roomCurrentCapacity = this.getRoomCurrentCapacity(currentApplication.appliedRoomID);;
-      if (roomMaxCapacity == roomCurrentCapacity) {
+      appliedRoomCurrentCapacity = this.getRoomCurrentCapacity(currentApplication.appliedRoomID);;
+      if (appliedRoomMaxCapacity <= appliedRoomCurrentCapacity) {
 
         await this._roomService.roomsRef.doc(currentApplication.appliedRoomID).update({
           isFull: true, 
@@ -180,20 +197,21 @@ export class ManagementComponent implements AfterViewInit{
 
         // when the room becomes full, it automatically rejects all other pending applications that was submitted to the same room
 
-        this.allApplicationInfo.forEach(el => {
-          if(el.appliedRoomID == currentApplication.appliedRoomID){
-            this.roomIDList.push(el.id);
+        for(let i = 0; i< this.allApplicationInfo.length; i++){
+          if(this.allApplicationInfo[i].appliedRoomID == currentApplication.appliedRoomID){
+            this.roomIDList.push(this.allApplicationInfo[i].id);
           }
-        });
-
-        this.roomIDList.forEach(async (appID) => {
-          if (appID != this.applicationID) {
-            await this.db.collection('applications').doc(appID).update({
+        }
+        
+        for(let i = 0; i< this.roomIDList.length; i++){
+          if (this.roomIDList[i] != this.applicationID) {
+            await this.db.collection('applications').doc(this.roomIDList[i] ).update({
               status: 'Rejected', 
             });
           }
-        })
+        }
       }
+
       // notif display
       this.myapp.openSnackBar("Application Accepted Successfully.","Close");
     }
@@ -205,6 +223,7 @@ export class ManagementComponent implements AfterViewInit{
     // page reload to get latest data
     AppModule.applicationsInfo = [];
     this.myapp.reload("management",150);
+
  
   }
 
