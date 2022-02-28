@@ -1,5 +1,7 @@
 # Mediyurt
 
+This project is made by Tuğçe Yenisey Erkan and Sinan Altınayak.
+
 Mediyurt is a web application for a dormitory system of a university. Users can create accounts and browse the announcements and the rooms. They can submit an application to the rooms. Admin accounts can accept or reject those applications and create new rooms/announcements. 
 Admin login information is "admin" and "123".
 
